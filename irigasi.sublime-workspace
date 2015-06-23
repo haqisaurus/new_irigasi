@@ -1,0 +1,455 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"bord",
+				"border-radius"
+			],
+			[
+				"region",
+				"region-id"
+			],
+			[
+				"reg",
+				"regionName"
+			],
+			[
+				"of",
+				"offset"
+			],
+			[
+				"fun",
+				"fun	function …"
+			],
+			[
+				"arr",
+				"array"
+			],
+			[
+				"sta",
+				"status"
+			],
+			[
+				"if",
+				"if?	$… = ( … ) ? … : …"
+			],
+			[
+				"pass",
+				"password"
+			],
+			[
+				"user",
+				"username"
+			],
+			[
+				"role",
+				"role_id"
+			],
+			[
+				"form",
+				"form_close	CI - Form Helper - Close"
+			],
+			[
+				"click",
+				"clickController"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			],
+			[
+				"fu",
+				"fun	function …"
+			],
+			[
+				"func",
+				"func_get_arg"
+			],
+			[
+				"func_",
+				"func_get_args"
+			],
+			[
+				"fo",
+				"foreach	foreach …"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"prin",
+				"print_r"
+			],
+			[
+				"redi",
+				"redirect"
+			],
+			[
+				"base",
+				"base_url"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "application/controllers/frontend/page_controller.php",
+			"settings":
+			{
+				"buffer_size": 774,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 127.0,
+		"last_filter": "insta",
+		"selected_items":
+		[
+			[
+				"insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 400.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/~www/new_irigasi",
+		"/D/~www/new_irigasi/application",
+		"/D/~www/new_irigasi/application/models",
+		"/D/~www/new_irigasi/application/views",
+		"/D/~www/new_irigasi/application/views/backend/pages",
+		"/D/~www/new_irigasi/application/views/backend/part",
+		"/D/~www/new_irigasi/application/views/frontend",
+		"/D/~www/new_irigasi/application/views/frontend/part",
+		"/D/~www/new_irigasi/assets",
+		"/D/~www/new_irigasi/assets/frontend",
+		"/D/~www/new_irigasi/assets/frontend/css",
+		"/D/~www/new_irigasi/assets/frontend/js",
+		"/D/~www/OP_Irigasi"
+	],
+	"file_history":
+	[
+		"/D/~www/new_irigasi/application/config/routes.php",
+		"/D/~www/new_irigasi/application/views/backend/part/nav-admin.php",
+		"/D/~www/new_irigasi/application/controllers/backend/water.php",
+		"/D/~www/new_irigasi/application/views/frontend/part/nav-right.php",
+		"/D/~www/new_irigasi/application/views/frontend/master.php",
+		"/D/~www/new_irigasi/assets/frontend/css/SimpleBlog.css",
+		"/D/~www/new_irigasi/application/views/frontend/pages/home.php",
+		"/D/~www/new_irigasi/application/views/frontend/part/nav-top.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/water/view.php",
+		"/C/Users/haqi/Downloads/q_cokrobedog.sql",
+		"/C/Users/haqi/Downloads/q_debit.sql",
+		"/C/Users/haqi/Downloads/q_mrican.sql",
+		"/D/~www/new_irigasi/application/views/backend/pages/water/create.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/water/update.php",
+		"/D/~www/new_irigasi/application/views/backend/master.php",
+		"/D/~www/new_irigasi/assets/backend/js/admin.js",
+		"/D/~www/new_irigasi/application/models/water_model.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/wide/view.php",
+		"/D/~www/new_irigasi/application/models/wide_model.php",
+		"/D/~www/new_irigasi/application/controllers/backend/wide.php",
+		"/D/~www/OP_Irigasi/koneksi.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/wide/create.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/wide/update.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/user/view.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/user/popup.php",
+		"/D/~www/new_irigasi/application/models/region_model.php",
+		"/D/~www/new_irigasi/application/controllers/backend/region.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/region/create.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/region/update.php",
+		"/D/~www/new_irigasi/application/models/user_model.php",
+		"/D/~www/new_irigasi/application/controllers/backend/user.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/user/create.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/user/update.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/region/view.php",
+		"/D/~www/new_irigasi/application/config/autoload.php",
+		"/D/~www/new_irigasi/application/helpers/my_helper.php",
+		"/D/~www/new_irigasi/application/config/database.php",
+		"/D/~www/new_irigasi/application/config/config.php",
+		"/D/~www/new_irigasi/application/controllers/auth.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/role/view.php",
+		"/D/~www/new_irigasi/application/models/role_model.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/landing.php",
+		"/D/~www/new_irigasi/application/controllers/backend/dashboard.php",
+		"/C/Users/haqi/AppData/Roaming/Sublime Text 3/Packages/User/print.sublime-snippet",
+		"/D/~www/new_irigasi/application/views/welcome_message.php",
+		"/C/Users/haqi/Downloads/startbootstrap-sb-admin-1.0.3/tables.html",
+		"/C/Users/haqi/Downloads/startbootstrap-sb-admin-1.0.3/forms.html",
+		"/C/Users/haqi/Downloads/startbootstrap-sb-admin-1.0.3/index.html",
+		"/C/Users/haqi/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
+		"/D/~www/new_irigasi/.htaccess"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"footer",
+			"../",
+			"url",
+			"http://all-free-download.com/free-website-templates/",
+			"`id`,",
+			"('',",
+			"-18', 0, 0.164, 1.043),",
+			"INSERT",
+			"(",
+			"105,",
+			"105",
+			"(",
+			"1215",
+			"1227",
+			"(''",
+			"(",
+			"1214",
+			"(",
+			"2468",
+			"(",
+			"100,",
+			"1214",
+			"M<",
+			"wide",
+			"Daerah irigasi",
+			"M<sup>",
+			"M",
+			"left",
+			"right",
+			"wide",
+			"ide-location",
+			"wide",
+			"wide_model",
+			"wide",
+			"region",
+			"region-wide",
+			"-wide",
+			"region",
+			"name",
+			"wide",
+			"optionsRadiosInline",
+			"region-name",
+			"region",
+			"Daerah",
+			"region_model",
+			"region",
+			"region_name",
+			"username",
+			"region_name",
+			"username",
+			"user",
+			"$name",
+			"name",
+			"nama",
+			"user",
+			"username",
+			"user",
+			"User",
+			"user",
+			"Pengguna",
+			"user_model",
+			"user",
+			"button",
+			"$update->username",
+			"email",
+			"messave",
+			"placeholder",
+			"id=",
+			"email",
+			"ase",
+			"base",
+			"username",
+			"inputPassword3",
+			"inputEmail3",
+			"button",
+			"this",
+			"('/')",
+			"role_id",
+			"backend/user",
+			" -> ",
+			"data",
+			"Data",
+			"Dashboard",
+			"user"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"../images/",
+			"",
+			"(",
+			"5,",
+			"5",
+			"4",
+			"3",
+			"1",
+			"2,",
+			"1"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "application/controllers/frontend/page_controller.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 774,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								360,
+								360
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 21.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "irigasi.sublime-project",
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 207.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
