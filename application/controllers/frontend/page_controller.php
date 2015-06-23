@@ -54,54 +54,80 @@ class Page_controller extends CI_Controller {
 
 		$thisMonth = date('F',strtotime($maxMonthInYear . '-' . $qMonth . '-1'));
 		$countDate = max($dayInMounth);
-		$start_date = $qYear . '-' . $qMonth . '-01';
-		$end_date = $qYear . '-' . $qMonth . '-' . $countDate;
+		
 		
 		$dataTR = '';
 		foreach ($years as $key => $year) {
 			$dataTR .= '<tr>
 			            	<td style="width: 40px;">' . ($key + 1) . '</td>
 			            	<td style="width: 60px;">' . $year->tahun . '</td>'
-							. $this->dataTD($start_date, $end_date, $year->tahun, $id) . 
+							. $this->dataTD($countDate, $qMonth, $year->tahun, $id) . 
 			            '</tr>';
 		}
+
+		$dataDate = $this->dataDate($countDate, $qMonth, $year->tahun, $id);
 
 		$data = array();
 		$data['years'] = $years;
 		$data['table'] = '<table class="table-global">
             <tr>
-                <th >No</th>
-                <th >Name</th>
+                <th rowspan="2">No</th>
+                <th rowspan="2">Name</th>
                 <th colspan="15">' . $thisMonth . ' 1</th>
                 <th colspan="' . ($countDate - 15) . '">' . $thisMonth . ' 2</th>
             </tr>
-            ' . $dataTR . '
+            ' . $dataDate 
+             . $dataTR . '
         </table>';
 
 		$this->template['content'] = $this->load->view('frontend/pages/data-region', $data, true);
 		$this->load->view('frontend/master', $this->template);
 	}
 
-	private function dataTD($startDate, $endDate, $year, $id)
+	private function dataTD($countDate, $month, $year, $id)
 	{
 		$dataTD = '';
-		$nextDate = $startDate;
 
-		while(strtotime($nextDate) <= strtotime($endDate))
-		{
+		for ($i=1; $i <= $countDate; $i++) { 
+
 			if ($year > 1000) {
-				$dataWater = $this->water_model->find(array('date'=> $nextDate, 'region_id' => $id))->row();
-				if ($dataWater->date) {
-					$dataTD .= "<td><a href='" . base_url('data-detail/' . $dataWater->id) . "'>" . "Kanan : " . $dataWater->date . $nextDate .  $dataWater->right . " | Kiri : " . $dataWater->left . " | Limpas : " . $dataWater->limpas . "</a></td>";
+				$day = $year . '-' . $month . '-' . $i;
+				$data = $this->water_model->find(array('date'=> $day, 'region_id' => $id), 1, 0);
+				$dataWater = $data->row();
+				if ($data->num_rows()) {
+					$dataTD .= "<td><a href='" . base_url('data-detail/' . $dataWater->id) . "'>" . "Kanan : " .  $dataWater->right . " <br> Kiri : " . $dataWater->left . " <br> Limpas : " . $dataWater->limpas . "</a></td>";
 				} else {
-					$dataTD .= "<td> none </td>";
+					$dataTD .= "<td class='none'> none </td>";
 
 				}
 			}
-			$nextDate = date ("Y-m-d", strtotime("+1 day", strtotime($nextDate)));
 		}
 
 		return $dataTD;
+	}
+
+	private function dataDate($countDate, $month, $year, $id)
+	{
+		$dataDate = '<tr>';
+
+		for ($i=1; $i <= $countDate; $i++) { 
+
+			$dataDate .= "<td> hari ke - " .  $i . "</td>";
+		}
+		$dataDate .= '</tr>';
+		return $dataDate;
+	}
+
+	private function addOrdinalNumberSuffix($num) {
+		if (!in_array(($num % 100),array(11,12,13))){
+			switch ($num % 10) {
+        // Handle 1st, 2nd, 3rd
+				case 1:  return $num.'st';
+				case 2:  return $num.'nd';
+				case 3:  return $num.'rd';
+			}
+		}
+		return $num.'th';
 	}
 
 	public function dataDetail($id)

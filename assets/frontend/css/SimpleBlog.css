@@ -340,11 +340,24 @@
       background: #DFDFDF;  /* Darken header a bit */
       font-weight: bold;
       padding-left: 5px;
+      height: 25px;
+   }
+
+   th:nth-child(3) {
+      background-color: #CCCCCC ;
+   }
+
+   th:nth-child(4) {
+      background-color: #e5e5e5;
    }
 
    td {
       background: #FAFAFA;
       text-align: center;
+   }
+
+   td.none {
+      background: #F00!important;
    }
 
    /* Cells in even rows (2,4,6...) are one color */ 
