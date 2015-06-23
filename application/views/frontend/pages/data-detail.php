@@ -1,6 +1,10 @@
 <div id="main"> 
 	<a name="SampleTags"></a>
 	<h1>Detail catatan per tanggal <?php echo $detail->date ?></h1>
+	<br>
+	<a href="javascript:window.history.go(-1);"><button>Kembali</button></a>
+	<br>
+	<br>
 	<table class="table-detail">
 		<tr>
 			<td>Tanggal</td>

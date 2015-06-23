@@ -34,10 +34,12 @@ class Page_controller extends CI_Controller {
 
 		date_default_timezone_set('UTC');
 
-		$qMonth = '02';
-		$qYear = '1998';
+		$maxYear = $this->water_model->maxYear(array(), 1, 0)->row();
+		$qMonth = $this->input->post('month')?: '01';
+		$qYear = $this->input->post('year')?: $maxYear->max_year;
 		// kurang id daerah
 		// getlongest day in a month
+
 
 		$years = $this->water_model->findYear(array('region_id' => $id))->result();
 		$dayInMounth = array();

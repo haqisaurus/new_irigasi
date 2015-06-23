@@ -56,6 +56,8 @@ Class Water_model extends CI_Model
 
     public function find($condition = array(), $limit = null, $offset = null)
     {
+        $this->db->where('date > ', '0000-00-00');
+        $this->db->order_by('id', 'DESC');
         $query = $this->db->get_where($this->table, $condition, $limit, $offset);
 
         return $query;
@@ -75,7 +77,16 @@ Class Water_model extends CI_Model
     {
         $this->db->select('EXTRACT(YEAR FROM date) AS tahun');
         $this->db->where($condition);
+        $this->db->order_by('date', 'DESC');
         $this->db->group_by('YEAR(date)');
+        $query = $this->find($condition, $limit, $offset);
+        return $query;
+    }
+
+    public function maxYear($condition = array(), $limit = null, $offset = null)
+    {
+        $this->db->select('MAX(EXTRACT(YEAR FROM date)) AS max_year');
+        $this->db->where($condition);
         $query = $this->find($condition, $limit, $offset);
         return $query;
     }
