@@ -28,7 +28,7 @@
     }
     // echo form_dropdown('year', $options, '', 'class="form-control"');
     ?>
-    <input type="submit" value="Cari">
+    <input type="submit" value="&nbsp;Cari&nbsp;">
     <?php 
     ?>
     <?php echo form_close(); ?>

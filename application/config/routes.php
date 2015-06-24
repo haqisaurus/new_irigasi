@@ -78,6 +78,8 @@ $route['water/delete-action/(:num)'] = 'backend/water/delete/$1';
 // frontend
 $route['data-region/(:num)'] = 'frontend/page_controller/dataRegion/$1';
 $route['data-detail/(:num)'] = 'frontend/page_controller/dataDetail/$1';
+$route['user-login'] = 'frontend/page_controller/showLogin';
+$route['account-detail'] = 'frontend/page_controller/accountDetail';
 
 
 $route['404_override'] = '';

@@ -32,13 +32,14 @@ class Auth extends CI_Controller {
 
 		if($this->form_validation->run() == FALSE)
 		{
-	     //Field validation failed.  User redirected to login page
-			echo validation_errors();
+		    //Field validation failed.  User redirected to login page
+			$this->session->set_flashdata('error', validation_errors());
+			redirect('user-login');
 		}
 		else
 		{
 	     	//Go to private area
-			redirect('dashboard');
+			redirect('account-detail');
 		}
 	}
 

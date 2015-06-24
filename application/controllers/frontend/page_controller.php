@@ -140,4 +140,24 @@ class Page_controller extends CI_Controller {
 		$this->template['content'] = $this->load->view('frontend/pages/data-detail', $data, true);
 		$this->load->view('frontend/master', $this->template);
 	}
+
+	public function showLogin()
+	{
+		if ($this->session->userdata('logged_in')) {
+			redirect('account-detail');
+		} else {
+			$data = array();
+
+			$this->template['content'] = $this->load->view('frontend/pages/login', $data, true);
+			$this->load->view('frontend/master', $this->template);
+		}
+	}
+
+	public function accountDetail()
+	{
+		$data = array();
+
+		$this->template['content'] = $this->load->view('frontend/pages/account-detail', $data, true);
+		$this->load->view('frontend/master', $this->template);
+	}
 }

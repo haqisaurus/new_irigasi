@@ -84,7 +84,8 @@
 
    /* form elements */
    form {
-   	margin:10px; padding: 0 5px;
+   	margin:10px 0; 
+      padding: 10px;
    	border: 1px solid #f2f2f2; 
    	background-color: #FAFAFA; 
    }
@@ -220,7 +221,7 @@
    	background: #FFF; 
    	color: #333;  
    }
-   #menu ul li#current a {	
+   #menu ul li.current a {	
    	background: #30899F; 
    	color: #FFF;	
    }
