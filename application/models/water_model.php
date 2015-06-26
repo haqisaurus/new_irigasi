@@ -57,7 +57,7 @@ Class Water_model extends CI_Model
     public function find($condition = array(), $limit = null, $offset = null)
     {
         $this->db->where('date > ', '0000-00-00');
-        $this->db->order_by('id', 'DESC');
+        $this->db->order_by('water.id', 'DESC');
         $query = $this->db->get_where($this->table, $condition, $limit, $offset);
 
         return $query;
