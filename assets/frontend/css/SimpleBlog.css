@@ -344,17 +344,11 @@
       height: 25px;
    }
 
-   th:nth-child(3) {
-      background-color: #CCCCCC ;
-   }
-
-   th:nth-child(4) {
-      background-color: #e5e5e5;
-   }
 
    td {
       background: #FAFAFA;
       text-align: center;
+      padding: 3px;
    }
 
    td.none {
@@ -384,6 +378,27 @@
 
    .table-wrapper {
       overflow-x: auto; 
+   }
+
+   .table-form {
+      border: 0px transparent;
+   }
+
+   .table-form td {
+      text-align: left;
+      border: 0px transparent;
+   }
+
+   .table-form p {
+      display: inline;
+      color: #f00;
+   }
+
+   .success {
+      color: black;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #BDFFC8;
    }
 
    .table-global {

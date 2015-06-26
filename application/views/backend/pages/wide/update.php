@@ -64,7 +64,7 @@
                 <div class="col-sm-2">
                     <input type="text" class="form-control" id="wide" name="wide" placeholder="Luas daerah" value="<?php echo set_value('wide', $update->wide); ?>">
                 </div>
-                <div class="col-sm-1">M<sup>2</sup></div>
+                <div class="col-sm-1">ha
             </div>
             
             <div class="form-group">

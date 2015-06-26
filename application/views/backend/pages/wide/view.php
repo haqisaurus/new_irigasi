@@ -56,7 +56,7 @@
                         <td><?php echo $this->uri->segment(2) + $key + 1 ?></td>
                         <td><?php echo $wide->region_name ?></td>
                         <td><?php echo $wide->area_name ?></td>
-                        <td><?php echo $wide->wide ?> M<sup>2</sup></td>
+                        <td><?php echo $wide->wide ?> ha
                         <td>
                             <a href="<?php echo site_url('wide/update/' . $wide->id); ?>" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-text-width"></span> Edit</a> | 
                             <a href="#" data-href="<?php echo site_url('wide/delete-action/' . $wide->id); ?>" class="btn btn-danger btn-xs delete-row" data-toggle="modal" data-target="#confirm-delete"><span class="glyphicon glyphicon-trash"></span> Hapus</a>

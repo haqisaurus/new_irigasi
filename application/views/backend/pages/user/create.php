@@ -68,7 +68,7 @@
                                       '4' => 'Pengamat',
                                     );
 
-                    echo form_dropdown('role_id', $options, '', 'class="form-control"');
+                    echo form_dropdown('role_id', $options, set_value('role_id'), 'class="form-control"');
                     ?>
                 </div>
             </div>

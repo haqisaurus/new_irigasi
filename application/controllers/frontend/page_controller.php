@@ -31,58 +31,41 @@ class Page_controller extends CI_Controller {
 
 	public function dataRegion($id='')
 	{
+		$data = array();
+		$data['wides'] = $this->region_model->regionWithWide(array('region.id' => $id))->result();
+		$data['totalWide'] = $this->region_model->regionWithTotalWide(array('region.id' => $id))->row();
+
+		$this->template['content'] = $this->load->view('frontend/pages/data-region', $data, true);
+		$this->load->view('frontend/master', $this->template);
+	}
+
+	public function dataWater($id='')
+	{
 
 		date_default_timezone_set('UTC');
 
-		$maxYear = $this->water_model->maxYear(array(), 1, 0)->row();
+
+		$data['regions'] = $this->region_model->find()->result();
+		$queryYear = $data['regions'] ? array('region_id' => $data['regions'][0]->id) : array();
+		$data['years'] = $this->water_model->findYear($queryYear)->result();
+
 		$qMonth = $this->input->post('month')?: '01';
-		$qYear = $this->input->post('year')?: $maxYear->max_year;
-		// kurang id daerah
-		// getlongest day in a month
+		$qYear = $this->input->post('year')?: $data['years'][0]->tahun;
+		$qRegion = $this->input->post('region')?: $data['regions'][0]->id;
 
+		$data['qMonth'] = $qMonth ? : '';
+		$data['qYear'] = $qYear ? : '';
+		$data['qRegion'] = $qRegion ? : '';
 
-		$years = $this->water_model->findYear(array('region_id' => $id))->result();
-		$dayInMounth = array();
-		$maxMonthInYear = '';
+		$query = array(
+			'YEAR(date)' => $data['qYear'],
+			'MONTH(date)' => $data['qMonth'],
+			'region_id' => $data['qRegion'],
+			);
 
-		foreach ($years as $key => $year) {
-			if($year->tahun > 1000) {
-				$dayInMounth[$key] = cal_days_in_month(CAL_GREGORIAN, $qMonth, $year->tahun);
-				if($year->tahun%4 == 0) $maxMonthInYear = $year->tahun;
-			}
+		$data['table'] = $this->water_model->findASCDate($query)->result();
 
-			
-		}
-
-		$thisMonth = date('F',strtotime($maxMonthInYear . '-' . $qMonth . '-1'));
-		$countDate = max($dayInMounth);
-		
-		
-		$dataTR = '';
-		foreach ($years as $key => $year) {
-			$dataTR .= '<tr>
-			            	<td style="width: 40px;">' . ($key + 1) . '</td>
-			            	<td style="width: 60px;">' . $year->tahun . '</td>'
-							. $this->dataTD($countDate, $qMonth, $year->tahun, $id) . 
-			            '</tr>';
-		}
-
-		$dataDate = $this->dataDate($countDate, $qMonth, $year->tahun, $id);
-
-		$data = array();
-		$data['years'] = $years;
-		$data['table'] = '<table class="table-global">
-            <tr>
-                <th rowspan="2">No</th>
-                <th rowspan="2">Name</th>
-                <th colspan="15">' . $thisMonth . ' 1</th>
-                <th colspan="' . ($countDate - 15) . '">' . $thisMonth . ' 2</th>
-            </tr>
-            ' . $dataDate 
-             . $dataTR . '
-        </table>';
-
-		$this->template['content'] = $this->load->view('frontend/pages/data-region', $data, true);
+		$this->template['content'] = $this->load->view('frontend/pages/data-water', $data, true);
 		$this->load->view('frontend/master', $this->template);
 	}
 
@@ -108,30 +91,122 @@ class Page_controller extends CI_Controller {
 		return $dataTD;
 	}
 
-	private function dataDate($countDate, $month, $year, $id)
+	public function inputWater()
 	{
-		$dataDate = '<tr>';
+		$data = array();
+		$data['regions'] = $this->region_model->find()->result();
 
-		for ($i=1; $i <= $countDate; $i++) { 
-
-			$dataDate .= "<td> hari ke - " .  $i . "</td>";
-		}
-		$dataDate .= '</tr>';
-		return $dataDate;
+		$this->template['content'] = $this->load->view('frontend/pages/data-entri', $data, true);
+		$this->load->view('frontend/master', $this->template);
 	}
 
-	private function addOrdinalNumberSuffix($num) {
-		if (!in_array(($num % 100),array(11,12,13))){
-			switch ($num % 10) {
-        // Handle 1st, 2nd, 3rd
-				case 1:  return $num.'st';
-				case 2:  return $num.'nd';
-				case 3:  return $num.'rd';
+	public function doInputWater()
+	{
+		$regionID = $this->input->post('region-id');
+		$date = $this->input->post('date');
+		$left = $this->input->post('left');
+		$right = $this->input->post('right');
+		$limpas = $this->input->post('limpas');
+		
+
+		$this->form_validation->set_rules('region-id', 'Nama daerah', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('date', 'Tanggal', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('left', 'Kanan', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('right', 'Kiri', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('limpas', 'Limpas', 'trim|required|xss_clean');
+
+		if($this->form_validation->run() == FALSE)
+		{
+		    //Field validation failed.  User redirected to login page
+			$data = array();
+			$data['regions'] = $this->region_model->find()->result();
+			$data['region_id'] = $regionID;
+			$this->template['content'] = $this->load->view('frontend/pages/data-entri', $data, true);
+			$this->load->view('frontend/master', $this->template);
+		}
+		else
+		{
+			$data = array(
+				'region_id' => $regionID,
+				'date' => $date,
+				'left' => $left,
+				'right' => $right,
+				'limpas' => $limpas,
+				);
+
+			$result = $this->water_model->insert($data);
+
+			if ($result['status']) {
+				$message = array('status' => 1, 'data' => $result['id'], 'msg' => 'Data berhasil dimasukan');
+			} else {
+				$message = array('status' => 0, 'data' => '', 'msg' => 'Terdapat kesalahan');
 			}
+        	
+        	$this->session->set_flashdata('message', $message);
+
+			redirect('entri-water');
 		}
-		return $num.'th';
 	}
 
+	public function editWater($id='')
+	{
+		$data = array();
+		$data['regions'] = $this->region_model->find()->result();
+		$data['update'] = $this->water_model->findWithRegion(array('water.id' => $id), 1, 0)->row();
+		$this->template['content'] = $this->load->view('frontend/pages/data-edit', $data, true);
+		$this->load->view('frontend/master', $this->template);
+	}
+
+	public function doEditWater()
+	{
+		$id = $this->input->post('id');
+		$regionID = $this->input->post('region-id');
+		$date = $this->input->post('date');
+		$left = $this->input->post('left');
+		$right = $this->input->post('right');
+		$limpas = $this->input->post('limpas');
+		
+
+		$this->form_validation->set_rules('region-id', 'Nama daerah', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('date', 'Tanggal', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('left', 'Kanan', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('right', 'Kiri', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('limpas', 'Limpas', 'trim|required|xss_clean');
+
+
+		if($this->form_validation->run() == FALSE)
+		{
+		    //Field validation failed.  User redirected to login page
+			$data = array();
+			$data['update'] = $this->water_model->find(array('water.id' => $id))->row();
+			$this->template['content'] = $this->load->view('backend/pages/water/update', $data, true);
+			$this->load->view('backend/master', $this->template);
+		}
+		else
+		{
+			$data = array(
+				'region_id' => $regionID,
+				'date' => $date,
+				'left' => $left,
+				'right' => $right,
+				'limpas' => $limpas,
+				);
+
+
+			$result = $this->water_model->update(array('water.id' => $id), $data);
+
+			if ($result['status']) {
+				$message = array('status' => 1, 'data' => $result['id'], 'msg' => 'Data berhasil diperbarui');
+			} else {
+				$message = array('status' => 0, 'data' => '', 'msg' => 'Terdapat kesalahan');
+			}
+        	
+        	$this->session->set_flashdata('message', $message);
+
+			redirect('data-water');
+		}
+
+	}
 	public function dataDetail($id)
 	{
 		$dataWater = $this->water_model->findWithRegion(array('water.id'=> $id))->row();

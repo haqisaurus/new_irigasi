@@ -61,4 +61,19 @@ Class Region_model extends CI_Model
         return $query;
     }
 
+    public function regionWithWide($condition = array(), $limit = null, $offset = null)
+    {
+        $this->db->join('wide', 'region.id = wide.region_id');
+        $query = $this->find($condition, $limit, $offset);
+        return $query;
+    }
+
+    public function regionWithTotalWide($condition = array(), $limit = null, $offset = null)
+    {
+        $this->db->select('sum(wide) as total_wide, wide.*');
+        $this->db->join('wide', 'region.id = wide.region_id');
+        $query = $this->find($condition, $limit, $offset);
+        return $query;
+    }
+
 }

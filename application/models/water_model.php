@@ -63,6 +63,15 @@ Class Water_model extends CI_Model
         return $query;
     }
 
+    public function findASCDate($condition = array(), $limit = null, $offset = null)
+    {
+        $this->db->order_by('water.date', 'ASC');
+        $this->db->group_by('date');
+        $query = $this->find($condition, $limit, $offset);
+
+        return $query;
+    }
+
     public function findWithRegion($condition = array(), $limit = null, $offset = null)
     {
         $this->db->select('region.*, water.*');
@@ -75,7 +84,7 @@ Class Water_model extends CI_Model
     // SELECT EXTRACT(YEAR FROM tanggal) AS tahun FROM q_debit group by YEAR(tanggal)
     public function findYear($condition = array(), $limit = null, $offset = null)
     {
-        $this->db->select('EXTRACT(YEAR FROM date) AS tahun');
+        $this->db->select('YEAR(date) AS tahun');
         $this->db->where($condition);
         $this->db->order_by('date', 'DESC');
         $this->db->group_by('YEAR(date)');

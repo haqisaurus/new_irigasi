@@ -78,6 +78,11 @@ $route['water/delete-action/(:num)'] = 'backend/water/delete/$1';
 // frontend
 $route['data-region/(:num)'] = 'frontend/page_controller/dataRegion/$1';
 $route['data-detail/(:num)'] = 'frontend/page_controller/dataDetail/$1';
+$route['data-water'] = 'frontend/page_controller/dataWater';
+$route['entri-water'] = 'frontend/page_controller/inputWater';
+$route['action-entri-water'] = 'frontend/page_controller/doInputWater';
+$route['edit-water/(:num)'] = 'frontend/page_controller/editWater/$1';
+$route['action-edit-water'] = 'frontend/page_controller/doEditWater';
 $route['user-login'] = 'frontend/page_controller/showLogin';
 $route['account-detail'] = 'frontend/page_controller/accountDetail';
 

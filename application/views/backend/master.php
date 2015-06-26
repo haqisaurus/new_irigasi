@@ -36,7 +36,8 @@
 </head>
 
 <body>
-
+    <input type="hidden" id="base_url" value="<?php echo base_url() ?>">
+    <input type="hidden" id="site_url" value="<?php echo site_url() ?>">
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -53,7 +54,7 @@
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
-                <li class="dropdown">
+                <!-- <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
                     <ul class="dropdown-menu message-dropdown">
                         <li class="message-preview">
@@ -132,11 +133,13 @@
                             <a href="#">View All</a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                    <?php $currentUser = $this->session->userdata('logged_in') ?>
+
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $currentUser['first_name'] . ' ' . $currentUser['last_name'] ?> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li>
+                        <!-- <li>
                             <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
                         </li>
                         <li>
@@ -145,7 +148,7 @@
                         <li>
                             <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
                         </li>
-                        <li class="divider"></li>
+                        <li class="divider"></li> -->
                         <li>
                             <a href="<?php echo site_url('logout') ?>"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
