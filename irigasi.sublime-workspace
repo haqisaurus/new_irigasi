@@ -4,12 +4,116 @@
 		"selected_items":
 		[
 			[
-				"bord",
+				"mon",
+				"month"
+			],
+			[
+				"group",
+				"group_by"
+			],
+			[
+				"background-c",
+				"background-color"
+			],
+			[
+				"border",
 				"border-radius"
 			],
 			[
+				"data-",
+				"data-entri"
+			],
+			[
+				"bord",
+				"border"
+			],
+			[
+				"form",
+				"form_close	CI - Form Helper - Close"
+			],
+			[
+				"bor",
+				"border"
+			],
+			[
+				"y",
+				"year"
+			],
+			[
+				"re",
+				"region"
+			],
+			[
+				"num",
+				"num_rows"
+			],
+			[
 				"region",
-				"region-id"
+				"regions"
+			],
+			[
+				"year",
+				"yearOption"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"if",
+				"if	if …"
+			],
+			[
+				"array",
+				"array"
+			],
+			[
+				"fon",
+				"font-weight"
+			],
+			[
+				"text-",
+				"text-transform"
+			],
+			[
+				"tex",
+				"text-decoration"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"padd",
+				"padding-left"
+			],
+			[
+				"data",
+				"dataWater"
+			],
+			[
+				"echo",
+				"echo"
+			],
+			[
+				"day",
+				"dayInMounth"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			],
+			[
+				"this",
+				"thisMonth"
+			],
+			[
+				"star",
+				"startDate"
 			],
 			[
 				"reg",
@@ -32,10 +136,6 @@
 				"status"
 			],
 			[
-				"if",
-				"if?	$… = ( … ) ? … : …"
-			],
-			[
 				"pass",
 				"password"
 			],
@@ -48,16 +148,8 @@
 				"role_id"
 			],
 			[
-				"form",
-				"form_close	CI - Form Helper - Close"
-			],
-			[
 				"click",
 				"clickController"
-			],
-			[
-				"for",
-				"foreach	foreach …"
 			],
 			[
 				"fu",
@@ -96,11 +188,172 @@
 	"buffers":
 	[
 		{
+			"file": "application/config/routes.php",
+			"settings":
+			{
+				"buffer_size": 3653,
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "application/controllers/frontend/page_controller.php",
 			"settings":
 			{
-				"buffer_size": 774,
+				"buffer_size": 7526,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/models/region_model.php",
+			"settings":
+			{
+				"buffer_size": 2046,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/frontend/pages/data-detail.php",
+			"settings":
+			{
+				"buffer_size": 770,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/frontend/pages/data-water.php",
+			"settings":
+			{
+				"buffer_size": 3293,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/models/water_model.php",
+			"settings":
+			{
+				"buffer_size": 2875,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/frontend/pages/data-edit.php",
+			"settings":
+			{
+				"buffer_size": 1911,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/frontend/pages/data-region.php",
+			"settings":
+			{
+				"buffer_size": 709,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/frontend/pages/data-entri.php",
+			"settings":
+			{
+				"buffer_size": 1811,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "assets/backend/js/admin.js",
+			"settings":
+			{
+				"buffer_size": 689,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/backend/pages/wide/create.php",
+			"settings":
+			{
+				"buffer_size": 3178,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/backend/pages/wide/update.php",
+			"settings":
+			{
+				"buffer_size": 3349,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/backend/pages/wide/view.php",
+			"settings":
+			{
+				"buffer_size": 2834,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/frontend/part/nav-right.php",
+			"settings":
+			{
+				"buffer_size": 1934,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/backend/part/nav-admin.php",
+			"settings":
+			{
+				"buffer_size": 1473,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "assets/frontend/css/SimpleBlog.css",
+			"settings":
+			{
+				"buffer_size": 9013,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/backend/master.php",
+			"settings":
+			{
+				"buffer_size": 9991,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/frontend/pages/home.php",
+			"settings":
+			{
+				"buffer_size": 850,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/frontend/master.php",
+			"settings":
+			{
+				"buffer_size": 2036,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "assets/frontend/js/main.js",
+			"settings":
+			{
+				"buffer_size": 689,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "untuk yang belum login \ndata yang ditampilin itu \n\nluas daerah\nha\n\n\nlogin juru masuk front end \nability : \n - input data debit edit\n - liat data perbulan (pencarian berdasarkan bulan dan tahun, daerah)\n\n = tampilan debit per daerah\n = entry data debit \n = entry pola tanam usulan\n = \n\n\n",
+			"settings":
+			{
+				"buffer_size": 286,
+				"line_ending": "Windows",
+				"name": "untuk yang belum login"
 			}
 		}
 	],
@@ -111,7 +364,7 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 127.0,
+		"height": 380.0,
 		"last_filter": "insta",
 		"selected_items":
 		[
@@ -120,7 +373,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 400.0
+		"width": 464.0
 	},
 	"console":
 	{
@@ -143,13 +396,23 @@
 	[
 		"/D/~www/new_irigasi",
 		"/D/~www/new_irigasi/application",
+		"/D/~www/new_irigasi/application/controllers",
+		"/D/~www/new_irigasi/application/controllers/backend",
+		"/D/~www/new_irigasi/application/controllers/frontend",
 		"/D/~www/new_irigasi/application/models",
 		"/D/~www/new_irigasi/application/views",
+		"/D/~www/new_irigasi/application/views/backend",
 		"/D/~www/new_irigasi/application/views/backend/pages",
+		"/D/~www/new_irigasi/application/views/backend/pages/user",
+		"/D/~www/new_irigasi/application/views/backend/pages/water",
+		"/D/~www/new_irigasi/application/views/backend/pages/wide",
 		"/D/~www/new_irigasi/application/views/backend/part",
 		"/D/~www/new_irigasi/application/views/frontend",
+		"/D/~www/new_irigasi/application/views/frontend/pages",
 		"/D/~www/new_irigasi/application/views/frontend/part",
 		"/D/~www/new_irigasi/assets",
+		"/D/~www/new_irigasi/assets/backend",
+		"/D/~www/new_irigasi/assets/backend/js",
 		"/D/~www/new_irigasi/assets/frontend",
 		"/D/~www/new_irigasi/assets/frontend/css",
 		"/D/~www/new_irigasi/assets/frontend/js",
@@ -157,14 +420,24 @@
 	],
 	"file_history":
 	[
+		"/D/~www/new_irigasi/application/views/frontend/pages/data-region.php",
+		"/D/~www/new_irigasi/application/models/region_model.php",
+		"/D/~www/new_irigasi/application/views/backend/pages/user/create.php",
+		"/D/~www/new_irigasi/assets/frontend/css/SimpleBlog.css",
+		"/D/~www/new_irigasi/application/views/frontend/pages/data-water.php",
+		"/D/~www/new_irigasi/application/views/frontend/master.php",
+		"/D/~www/new_irigasi/application/models/water_model.php",
+		"/D/~www/new_irigasi/application/views/frontend/pages/login.php",
+		"/D/~www/new_irigasi/application/views/frontend/pages/data-detail.php",
+		"/D/~www/new_irigasi/application/views/frontend/pages/account-detail.php",
+		"/D/~www/new_irigasi/application/controllers/auth.php",
+		"/D/~www/new_irigasi/application/views/frontend/part/nav-top.php",
+		"/D/~www/new_irigasi/application/views/frontend/part/nav-right.php",
+		"/D/~www/new_irigasi/assets/backend/js/admin.js",
+		"/D/~www/new_irigasi/application/views/frontend/pages/home.php",
 		"/D/~www/new_irigasi/application/config/routes.php",
 		"/D/~www/new_irigasi/application/views/backend/part/nav-admin.php",
 		"/D/~www/new_irigasi/application/controllers/backend/water.php",
-		"/D/~www/new_irigasi/application/views/frontend/part/nav-right.php",
-		"/D/~www/new_irigasi/application/views/frontend/master.php",
-		"/D/~www/new_irigasi/assets/frontend/css/SimpleBlog.css",
-		"/D/~www/new_irigasi/application/views/frontend/pages/home.php",
-		"/D/~www/new_irigasi/application/views/frontend/part/nav-top.php",
 		"/D/~www/new_irigasi/application/views/backend/pages/water/view.php",
 		"/C/Users/haqi/Downloads/q_cokrobedog.sql",
 		"/C/Users/haqi/Downloads/q_debit.sql",
@@ -172,8 +445,6 @@
 		"/D/~www/new_irigasi/application/views/backend/pages/water/create.php",
 		"/D/~www/new_irigasi/application/views/backend/pages/water/update.php",
 		"/D/~www/new_irigasi/application/views/backend/master.php",
-		"/D/~www/new_irigasi/assets/backend/js/admin.js",
-		"/D/~www/new_irigasi/application/models/water_model.php",
 		"/D/~www/new_irigasi/application/views/backend/pages/wide/view.php",
 		"/D/~www/new_irigasi/application/models/wide_model.php",
 		"/D/~www/new_irigasi/application/controllers/backend/wide.php",
@@ -182,20 +453,17 @@
 		"/D/~www/new_irigasi/application/views/backend/pages/wide/update.php",
 		"/D/~www/new_irigasi/application/views/backend/pages/user/view.php",
 		"/D/~www/new_irigasi/application/views/backend/pages/user/popup.php",
-		"/D/~www/new_irigasi/application/models/region_model.php",
 		"/D/~www/new_irigasi/application/controllers/backend/region.php",
 		"/D/~www/new_irigasi/application/views/backend/pages/region/create.php",
 		"/D/~www/new_irigasi/application/views/backend/pages/region/update.php",
 		"/D/~www/new_irigasi/application/models/user_model.php",
 		"/D/~www/new_irigasi/application/controllers/backend/user.php",
-		"/D/~www/new_irigasi/application/views/backend/pages/user/create.php",
 		"/D/~www/new_irigasi/application/views/backend/pages/user/update.php",
 		"/D/~www/new_irigasi/application/views/backend/pages/region/view.php",
 		"/D/~www/new_irigasi/application/config/autoload.php",
 		"/D/~www/new_irigasi/application/helpers/my_helper.php",
 		"/D/~www/new_irigasi/application/config/database.php",
 		"/D/~www/new_irigasi/application/config/config.php",
-		"/D/~www/new_irigasi/application/controllers/auth.php",
 		"/D/~www/new_irigasi/application/views/backend/pages/role/view.php",
 		"/D/~www/new_irigasi/application/models/role_model.php",
 		"/D/~www/new_irigasi/application/views/backend/pages/landing.php",
@@ -224,6 +492,24 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Tanggal",
+			"input",
+			"entri",
+			"action-",
+			"action",
+			"backend",
+			"\n      ",
+			"th",
+			"form",
+			">\n",
+			"10",
+			"2",
+			"  ",
+			"limpas",
+			"month",
+			"style",
+			".=",
+			"tanggal",
 			"footer",
 			"../",
 			"url",
@@ -335,24 +621,111 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "application/controllers/frontend/page_controller.php",
+					"file": "application/config/routes.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 774,
+						"buffer_size": 3653,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								360,
-								360
+								3011,
+								3024
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 767.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "application/controllers/frontend/page_controller.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7526,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2752,
+								2752
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 892.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "application/models/region_model.php",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 2046,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1505,
+								1519
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 452.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "application/views/frontend/pages/data-detail.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 770,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								312,
+								312
 							]
 						],
 						"settings":
@@ -364,7 +737,511 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "application/views/frontend/pages/data-water.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3293,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2808,
+								2808
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 52.0,
+						"translation.y": 599.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "application/models/water_model.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2875,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2355,
+								2355
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 711.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "application/views/frontend/pages/data-edit.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1911,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								953,
+								960
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "application/views/frontend/pages/data-region.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 709,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								643,
+								643
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "application/views/frontend/pages/data-entri.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1811,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								918,
+								918
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "assets/backend/js/admin.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 689,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								364,
+								364
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 18,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "application/views/backend/pages/wide/create.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3178,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2801,
+								2801
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 450.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 17,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "application/views/backend/pages/wide/update.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3349,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2852,
+								2852
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 454.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 16,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "application/views/backend/pages/wide/view.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2834,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2114,
+								2114
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 299.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 15,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "application/views/frontend/part/nav-right.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1934,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								84,
+								84
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "application/views/backend/part/nav-admin.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1473,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1458,
+								1458
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 291.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "assets/frontend/css/SimpleBlog.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9013,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8818,
+								8818
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4574.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 19,
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "application/views/backend/master.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9991,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7454,
+								7454
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 249.0,
+						"translation.y": 349.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"file": "application/views/frontend/pages/home.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 850,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								843,
+								843
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"file": "application/views/frontend/master.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2036,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								206,
+								206
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 19,
+					"file": "assets/frontend/js/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 689,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								363,
+								363
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 20,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 286,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								131,
+								131
+							]
+						],
+						"settings":
+						{
+							"auto_name": "untuk yang belum login",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 20,
 					"type": "text"
 				}
 			]
@@ -409,7 +1286,7 @@
 	"project": "irigasi.sublime-project",
 	"replace":
 	{
-		"height": 62.0
+		"height": 38.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -423,12 +1300,12 @@
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 500.0,
 		"last_filter": "",
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 380.0
 	},
 	"select_symbol":
 	{
@@ -447,7 +1324,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 207.0,
+	"side_bar_width": 330.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
