@@ -27,21 +27,21 @@
 
     echo form_dropdown('month', $monthOption, $qMonth, 'class="form-control"');
 
-    $yearOption = array();
-    foreach ($years as $key => $year) {
-        if ($year->tahun > 1000) {
-            $yearOption[$year->tahun] = $year->tahun;
-        }
-    }
+    // $yearOption = array();
+    // foreach ($years as $key => $year) {
+    //     if ($year->tahun > 1000) {
+    //         $yearOption[$year->tahun] = $year->tahun;
+    //     }
+    // }
 
-    echo form_dropdown('year', $yearOption,  $qYear, 'class="form-control"');
+    // echo form_dropdown('year', $yearOption,  $qYear, 'class="form-control"');
 
     ?>
     <input type="submit" value="&nbsp;Cari&nbsp;">
     <?php 
     ?>
     <?php echo form_close(); ?>
-    <div class="table-wrapper">
+    <!-- <div class="table-wrapper">
         <h1>Setengah bulan pertama</h1>
         <table>
             <tr>
@@ -90,5 +90,9 @@
         </table>
         <br>
         <br>
+    </div> -->
+
+    <div class="table-wrapper">
+        <?php echo $table ?>
     </div>
 </div>

@@ -26,6 +26,9 @@
 			<td>Lokasi pemantauan</td>
 			<td><?php echo $detail->region_name ?></td>
 		</tr>
+		<tr>
+			<td colspan="2"><a href="<?php echo site_url('edit-water/' . $detail->id) ?>"><button>Edit</button></a></td>
+		</tr>
 	</table>
 	<br><br>
 </div>
