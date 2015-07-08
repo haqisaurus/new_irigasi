@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2015 at 06:16 PM
+-- Generation Time: Jul 08, 2015 at 05:17 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -19,6 +19,37 @@ SET time_zone = "+00:00";
 --
 -- Database: `new_irigasi`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `plan_plant`
+--
+
+CREATE TABLE IF NOT EXISTS `plan_plant` (
+  `id` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
+  `rice_1` varchar(100) NOT NULL,
+  `rice_2` varchar(100) NOT NULL,
+  `rice_3` varchar(100) NOT NULL,
+  `palawija_1` varchar(100) NOT NULL,
+  `palawija_2` varchar(100) NOT NULL,
+  `palawija_3` varchar(100) NOT NULL,
+  `sugar_1` varchar(100) NOT NULL,
+  `sugar_2` varchar(100) NOT NULL,
+  `sugar_3` varchar(100) NOT NULL,
+  `bero_1` varchar(100) NOT NULL,
+  `bero_2` varchar(100) NOT NULL,
+  `bero_3` varchar(100) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `plan_plant`
+--
+
+INSERT INTO `plan_plant` (`id`, `year`, `rice_1`, `rice_2`, `rice_3`, `palawija_1`, `palawija_2`, `palawija_3`, `sugar_1`, `sugar_2`, `sugar_3`, `bero_1`, `bero_2`, `bero_3`) VALUES
+(1, 2016, '', '', '', '', '', '', '', '', '', '', '', '0'),
+(2, 2015, '44ee', '6', '4', '', '66', '5', '66', '54', '89', '6', '0', '0');
 
 -- --------------------------------------------------------
 
@@ -6848,7 +6879,7 @@ INSERT INTO `water` (`id`, `date`, `left`, `right`, `limpas`, `region_id`) VALUE
 (6735, '2000-01-29', 0, 0.337, 7.161, 1),
 (6736, '2000-01-30', 0, 0.337, 7.161, 1),
 (6737, '2000-01-31', 0, 0.337, 7.161, 1),
-(6738, '2000-02-01', 0, 0.377, 8.321, 1),
+(6738, '2000-02-01', 0, 3.77, 83.21, 1),
 (6739, '2000-02-02', 0, 0.377, 8.321, 1),
 (6740, '2000-02-03', 0, 0.377, 8.321, 1),
 (6741, '2000-02-04', 0, 0.377, 7.733, 1),
@@ -42426,6 +42457,12 @@ INSERT INTO `wide` (`id`, `area_name`, `wide`, `region_id`) VALUES
 --
 
 --
+-- Indexes for table `plan_plant`
+--
+ALTER TABLE `plan_plant`
+  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `year` (`year`);
+
+--
 -- Indexes for table `region`
 --
 ALTER TABLE `region`
@@ -42459,6 +42496,11 @@ ALTER TABLE `wide`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `plan_plant`
+--
+ALTER TABLE `plan_plant`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `region`
 --

@@ -6,6 +6,7 @@
         <ul class="sidemenu">
             <li><a href="<?php echo site_url('data-water') ?>">Data debit perdaerah</a></li>
             <li><a href="<?php echo site_url('entri-water') ?>">Entery data debit air</a></li>
+            <li><a href="<?php echo site_url('plant-view') ?>">Pola tanam yang di setujui</a></li>
         </ul>
         <!-- login pengamat -->
     <?php elseif($currentUser && $currentUser['role_id'] == 3): ?>

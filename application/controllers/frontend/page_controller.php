@@ -11,6 +11,7 @@ class Page_controller extends CI_Controller {
 		// using model
 		$this->load->model('water_model');
 		$this->load->model('region_model');
+		$this->load->model('plant_model');
 		
 		//Do your magic here
 		$data['region'] = $this->region_model->find()->result();
@@ -312,5 +313,165 @@ class Page_controller extends CI_Controller {
 
 		$this->template['content'] = $this->load->view('frontend/pages/account-detail', $data, true);
 		$this->load->view('frontend/master', $this->template);
+	}
+
+	// plant suggesion page 
+
+	public function plantView()
+	{
+		$year = $this->input->post('year')?:date('Y', strtotime('today'));
+
+		$data = array();
+		$condition = array('year' => $year);
+		$data['year'] = $year;
+		$data['table'] = $this->plant_model->find($condition)->row();
+
+		$this->template['content'] = $this->load->view('frontend/pages/plant-view', $data, true);
+		$this->load->view('frontend/master', $this->template);	
+	}
+
+	public function plantEdit($id = 0)
+	{
+
+		$data = array();
+		$condition = array('id' => $id);
+		$data['update'] = $this->plant_model->find($condition)->row();
+
+		$this->template['content'] = $this->load->view('frontend/pages/plant-edit', $data, true);
+		$this->load->view('frontend/master', $this->template);	
+	}
+
+	public function plantUpdate()
+	{
+		$id = $this->input->post('id');
+		$year = $this->input->post('year');
+		$rice1 = $this->input->post('rice-1');
+		$rice2 = $this->input->post('rice-2');
+		$rice3 = $this->input->post('rice-3');
+		$palawija1 = $this->input->post('palawija-1');
+		$palawija2 = $this->input->post('palawija-2');
+		$palawija3 = $this->input->post('palawija-3');
+		$sugar1 = $this->input->post('sugar-1');
+		$sugar2 = $this->input->post('sugar-2');
+		$sugar3 = $this->input->post('sugar-3');
+		$bero1 = $this->input->post('bero-1');
+		$bero2 = $this->input->post('bero-2');
+		$bero3 = $this->input->post('bero-3');
+
+		$this->form_validation->set_rules('year', 'Tahun', 'trim|required|xss_clean');
+
+		if($this->form_validation->run() == FALSE)
+		{
+		    //Field validation failed.  User redirected to login page
+			$data = array();
+			$condition = array('id' => $id);
+
+			$data['update'] = $this->plant_model->find($condition)->row();
+
+			$this->template['content'] = $this->load->view('frontend/pages/plant-edit', $data, true);
+			$this->load->view('frontend/master', $this->template);
+		}
+		else
+		{
+			$data = array(
+				'year' => $year,
+				'rice_1' => $rice1,
+				'rice_2' => $rice2,
+				'rice_3' => $rice3,
+				'palawija_1' => $palawija1,
+				'palawija_2' => $palawija2,
+				'palawija_3' => $palawija3,
+				'sugar_1' => $sugar1,
+				'sugar_2' => $sugar2,
+				'sugar_3' => $sugar3,
+				'bero_1' => $bero1,
+				'bero_2' => $bero2,
+				'bero_3' => $bero3,
+				);
+
+			$condition = array('id' => $id);
+
+			$result = $this->plant_model->update($condition, $data);
+
+			if ($result['status']) {
+				$message = array('status' => 1, 'data' => $result['id'], 'msg' => 'Data berhasil dimasukan');
+			} else {
+				$message = array('status' => 0, 'data' => '', 'msg' => 'Terdapat kesalahan');
+			}
+        	
+        	$this->session->set_flashdata('message', $message);
+
+			redirect('plant-view');
+		}
+	}
+
+	public function plant()
+	{
+		$data = array();
+
+		$this->template['content'] = $this->load->view('frontend/pages/plant-entri', $data, true);
+		$this->load->view('frontend/master', $this->template);	
+	}
+
+	public function plantEntry()
+	{
+		$year = $this->input->post('year');
+		$rice1 = $this->input->post('rice-1');
+		$rice2 = $this->input->post('rice-2');
+		$rice3 = $this->input->post('rice-3');
+		$palawija1 = $this->input->post('palawija-1');
+		$palawija2 = $this->input->post('palawija-2');
+		$palawija3 = $this->input->post('palawija-3');
+		$sugar1 = $this->input->post('sugar-1');
+		$sugar2 = $this->input->post('sugar-2');
+		$sugar3 = $this->input->post('sugar-3');
+		$bero1 = $this->input->post('bero-1');
+		$bero2 = $this->input->post('bero-2');
+		$bero3 = $this->input->post('bero-3');
+		
+
+		$this->form_validation->set_rules('year', 'Tahun', 'trim|required|xss_clean');
+
+		if($this->form_validation->run() == FALSE)
+		{
+		    //Field validation failed.  User redirected to login page
+			$data = array();
+
+			$this->template['content'] = $this->load->view('frontend/pages/plant-entri', $data, true);
+			$this->load->view('frontend/master', $this->template);
+		}
+		else
+		{
+			$data = array(
+				'year' => $year,
+				'rice_1' => $rice1,
+				'rice_2' => $rice2,
+				'rice_3' => $rice3,
+				'palawija_1' => $palawija1,
+				'palawija_2' => $palawija2,
+				'palawija_3' => $palawija3,
+				'sugar_1' => $sugar1,
+				'sugar_2' => $sugar2,
+				'sugar_3' => $sugar3,
+				'bero_1' => $bero1,
+				'bero_2' => $bero2,
+				'bero_3' => $bero3,
+				);
+
+			$this->db->_error_message(); redirect('plant-view');
+			$this->db->_error_number(); redirect('plant-view');
+			
+			$result = $this->plant_model->insert($data);
+
+			if ($result['status']) {
+				$message = array('status' => 1, 'data' => $result['id'], 'msg' => 'Data berhasil dimasukan');
+			} else {
+				$message = array('status' => 0, 'data' => '', 'msg' => 'Terdapat kesalahan');
+			}
+        	
+        	$this->session->set_flashdata('message', $message);
+
+			redirect('plant-view');
+		}
 	}
 }

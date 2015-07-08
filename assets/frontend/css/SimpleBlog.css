@@ -410,3 +410,16 @@
    .table-detail td {
       text-align: left;
    }
+   
+   .form-plant th {
+      border: 0;
+   }
+   .form-plant input {
+      width: 140px;
+   }
+
+   .error {
+      color: red;
+      text-align: center;
+      font-weight: bold;
+   }

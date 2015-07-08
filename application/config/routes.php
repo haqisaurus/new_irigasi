@@ -86,6 +86,13 @@ $route['action-edit-water'] = 'frontend/page_controller/doEditWater';
 $route['user-login'] = 'frontend/page_controller/showLogin';
 $route['account-detail'] = 'frontend/page_controller/accountDetail';
 
+// pula tanam usulan
+$route['plant-view'] = 'frontend/page_controller/plantView';
+$route['plant-entry'] = 'frontend/page_controller/plant';
+$route['plant-edit/(:num)'] = 'frontend/page_controller/plantEdit/$1';
+$route['action-plant-entry'] = 'frontend/page_controller/plantEntry';
+$route['action-plant-edit'] = 'frontend/page_controller/plantUpdate';
+
 
 $route['404_override'] = '';
 
