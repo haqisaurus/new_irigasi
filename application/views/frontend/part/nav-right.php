@@ -32,6 +32,8 @@
         <h1>Sidebar Menu</h1>
         <ul class="sidemenu">
             <li><a href="<?php echo site_url() ?>">Home</a></li>
+            <li><a href="<?php echo site_url('water-view') ?>">Data debit perdaerah</a></li>
+
             <?php 
             foreach ($region as $key => $item) {
                 ?>
@@ -48,18 +50,18 @@
         <h1>User dashboard</h1>
         <p><a href="<?php echo site_url('dashboard') ?>">Go to dashboard side</a></p>
         <p>&quot;Anda bisa menambahkan, memodifikasi, data dalam dasboard mode admin silahkan masuk kedalam mode admin.&quot; </p>
-        <p class="align-right">- HQs</p>
+        <p class="align-right">--</p>
     <?php elseif($currentUser && $currentUser['role_id'] == 2): ?>
         <h1>Keterangan</h1>
         <p>Anda login sebagai juru silahkan pilih menu yang telah disediakan</p>
-        <p class="align-right">- HQs</p>
+        <p class="align-right">--</p>
     <?php elseif($currentUser && $currentUser['role_id'] == 3): ?>
         <h1>Keterangan</h1>
         <p>Anda login sebagai pengamat silahkan pilih menu yang telah disediakan</p>
-        <p class="align-right">- HQs</p>
+        <p class="align-right">--</p>
     <?php else: ?>
         <h1>Keterangan</h1>
         <p>Silahkan login melalui menu login yang telah di sediakan.</p>
-        <p class="align-right">- HQs</p>
+        <p class="align-right">--</p>
     <?php endif ?>
 </div>
