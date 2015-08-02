@@ -19,7 +19,7 @@ class User extends CI_Controller {
 
 	public function index($offset = null)
 	{
-		checkUser(1);
+		checkUser(array(1));
 
 		$data = array();
 		$offset = $offset ?  $this->uri->segment(2) : 0;
@@ -33,7 +33,7 @@ class User extends CI_Controller {
 
 	public function create()
 	{
-		checkUser(1);
+		checkUser(array(1));
 
 		$data = array();
 
@@ -43,7 +43,7 @@ class User extends CI_Controller {
 
 	public function doCreate()
 	{
-		checkUser(1);
+		checkUser(array(1));
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
 		$firstName = $this->input->post('first_name');
@@ -89,7 +89,7 @@ class User extends CI_Controller {
 
 	public function update($id)
 	{
-		checkUser(1);
+		checkUser(array(1));
 
 		$data = array();
 		$data['update'] = $this->user_model->find(array('user.id' => $id))->row();
@@ -198,7 +198,7 @@ class User extends CI_Controller {
 	/*================== showing page =========================*/
 	public function role()
 	{
-		checkUser(1);
+		checkUser(array(1));
 
 		$data = array();
 		$data['table'] = $this->role_model->find()->result();

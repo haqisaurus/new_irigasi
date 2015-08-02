@@ -19,7 +19,7 @@ class Wide extends CI_Controller {
 
 	public function index($offset = null)
 	{
-		checkUser(1);
+		checkUser(array(1));
 
 		$data = array();
 		$offset = $offset ?  $this->uri->segment(2) : 0;
@@ -33,7 +33,7 @@ class Wide extends CI_Controller {
 
 	public function create()
 	{
-		checkUser(1);
+		checkUser(array(1));
 
 		$data = array();
 		$data['region'] = $this->region_model->find()->result();
@@ -43,7 +43,7 @@ class Wide extends CI_Controller {
 
 	public function doCreate()
 	{
-		checkUser(1);
+		checkUser(array(1));
 		$regionID = $this->input->post('region-id');
 		$location = $this->input->post('wide-location');
 		$wide = $this->input->post('wide');
@@ -86,7 +86,7 @@ class Wide extends CI_Controller {
 
 	public function update($id)
 	{
-		checkUser(1);
+		checkUser(array(1));
 
 		$data = array();
 		$data['region'] = $this->region_model->find()->result();

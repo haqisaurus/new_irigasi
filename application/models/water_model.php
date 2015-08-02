@@ -100,4 +100,30 @@ Class Water_model extends CI_Model
         return $query;
     }
 
+    public function everyHalfMonth($condition = array(), $limit = null, $offset = null)
+    {
+        $query = $this->db->query("select *,
+                            CONCAT( DATE_FORMAT(`date`, '%b %Y Day ' ),
+                                    case when dayofmonth( `date` ) < 16
+                                        then '01-15'
+                                        else 
+                                            CONCAT( '16-', right( last_day( `date` ), 2)  )
+                                        end ) as CharMonth,
+                            avg(`left`) as kiri,
+                            avg(`right`) as kanan,
+                            avg(`limpas`) as limpass
+                        from 
+                            water
+                        where
+                            " . $condition . "
+                        group by
+                            CharMonth
+                        order by
+                            year( `date` ),
+                            month( `date` ),
+                            min( dayofmonth( `date` ))");
+
+        return $query;
+    }
+
 }

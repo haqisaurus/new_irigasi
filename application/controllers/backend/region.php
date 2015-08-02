@@ -18,7 +18,7 @@ class Region extends CI_Controller {
 
 	public function index($offset = null)
 	{
-		checkUser(1);
+		checkUser(array(1));
 
 		$data = array();
 		$offset = $offset ?  $this->uri->segment(2) : 0;
@@ -32,7 +32,7 @@ class Region extends CI_Controller {
 
 	public function create()
 	{
-		checkUser(1);
+		checkUser(array(1));
 
 		$data = array();
 
@@ -42,7 +42,7 @@ class Region extends CI_Controller {
 
 	public function doCreate()
 	{
-		checkUser(1);
+		checkUser(array(1));
 		$regionName = $this->input->post('region-name');
 		
 
@@ -78,7 +78,7 @@ class Region extends CI_Controller {
 
 	public function update($id)
 	{
-		checkUser(1);
+		checkUser(array(1));
 
 		$data = array();
 		$data['update'] = $this->region_model->find(array('region.id' => $id))->row();

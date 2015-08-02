@@ -93,6 +93,7 @@ $route['plant-edit/(:num)'] = 'frontend/page_controller/plantEdit/$1';
 $route['action-plant-entry'] = 'frontend/page_controller/plantEntry';
 $route['action-plant-edit'] = 'frontend/page_controller/plantUpdate';
 
+$route['water-view'] = 'frontend/page_controller/dataViewCommon';
 
 $route['404_override'] = '';
 

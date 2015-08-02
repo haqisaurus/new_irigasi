@@ -40,138 +40,149 @@ class Page_controller extends CI_Controller {
 		$this->load->view('frontend/master', $this->template);
 	}
 
+	/***********************************************/
+	/** haqisaurus 8/2/2015 11:57:31 AM: end disabled **/
+	/***********************************************/
 	// NEW DATA TABLE 
-	public function dataWater($id='')
-	{
-		$data['regions'] = $this->region_model->find()->result();
-
-		$qMonth = $this->input->post('month')?: '01';
-		$qRegion = $this->input->post('region')?: $data['regions'][0]->id;
-
-		$data['qMonth'] = $qMonth ? : '';
-		$data['qRegion'] = $qRegion ? : '';
-		$data['table'] = $this->generateTable($data['qMonth'], $data['qRegion']);
-
-		$this->template['content'] = $this->load->view('frontend/pages/data-water', $data, true);
-		$this->load->view('frontend/master', $this->template);
-	}
-
-	public function generateTable($month, $region)
-	{
-		$dayCount = cal_days_in_month(CAL_GREGORIAN, $month, 2000);
-
-		$years = $this->water_model->findYear(array('region_id' => $region))->result();
-		$table = '<table style="width: 5000px">';
-
-		// header table`
-		$time = strtotime(2000 . '-' . $month . '-01');
-		$fMonth = date("F", $time);
-		$table .= '<tr>
-						<th rowspan="2"style="width: 70px;text-align: center"> Tahun </th>
-						<th colspan="15">' .$fMonth. ' pertama </th>
-						<th colspan="' .($dayCount-15). '"> ' .$fMonth. ' kedua </th>
-					</tr>';
-		$table .= '<tr>';
-		for ($i=1; $i <= $dayCount; $i++) { 
-				$table .= '<th style="text-align: center">Hari ' . $i . '</th>';
-		}
-		$table .= '</tr>';
-		
-		// data table 
-		foreach ($years as $key => $year) {
-			$table .= '<tr>';
-			$table .= $this->generateTD($month, $year->tahun, $region);
-			$table .= '</tr>';
-		}
-
-		$table .= '</table>';
-		return $table;
-	}
-
-	public function generateTD($month, $year, $region)
-	{
-		$dayCount = cal_days_in_month(CAL_GREGORIAN, $month, 2000);
-
-		
-		$startDate = $year . '-' . $month . '-01';
-		$endDate = $year . '-' . $month . '-' . $dayCount;
-		$nextDate = $startDate;
-
-		$td = '<td>' . $year . '</td>';
-		while(strtotime($nextDate) <= strtotime($endDate))
-		{
-			if ($year > 1000) {
-				$query = $this->water_model->find(array('date'=> $nextDate, 'region_id' => $region));
-				$dataWater = $query->row();
-				if ($query->num_rows() && (date("m",  strtotime($nextDate)) == $month)) {
-					$td .= "<td><a href='" . base_url('data-detail/' . $dataWater->id) . "'>" . "Kanan : " .  $dataWater->right . " | Kiri : " . $dataWater->left . " | Limpas : " . $dataWater->limpas . "</a></td>";
-				} else {
-					$td .= "<td> none </td>";
-
-				}
-			}
-
-			$nextDate = date("Y-m-d", strtotime("+1 day", strtotime($nextDate)));
-		}
-
-		return $td;
-	}
-
-	// data table 7-6-2015
 	// public function dataWater($id='')
 	// {
-
-	// 	date_default_timezone_set('UTC');
-
-
 	// 	$data['regions'] = $this->region_model->find()->result();
-	// 	$queryYear = $data['regions'] ? array('region_id' => $data['regions'][0]->id) : array();
-	// 	$data['years'] = $this->water_model->findYear($queryYear)->result();
 
 	// 	$qMonth = $this->input->post('month')?: '01';
-	// 	$qYear = $this->input->post('year')?: $data['years'][0]->tahun;
 	// 	$qRegion = $this->input->post('region')?: $data['regions'][0]->id;
 
 	// 	$data['qMonth'] = $qMonth ? : '';
-	// 	$data['qYear'] = $qYear ? : '';
 	// 	$data['qRegion'] = $qRegion ? : '';
-
-	// 	$query = array(
-	// 		'YEAR(date)' => $data['qYear'],
-	// 		'MONTH(date)' => $data['qMonth'],
-	// 		'region_id' => $data['qRegion'],
-	// 		);
-
-	// 	$data['table'] = $this->water_model->findASCDate($query)->result();
+	// 	$data['table'] = $this->generateTable($data['qMonth'], $data['qRegion']);
 
 	// 	$this->template['content'] = $this->load->view('frontend/pages/data-water', $data, true);
 	// 	$this->load->view('frontend/master', $this->template);
 	// }
 
-	// private function dataTD($countDate, $month, $year, $id)
+	// public function generateTable($month, $region)
 	// {
-	// 	$dataTD = '';
+	// 	$dayCount = cal_days_in_month(CAL_GREGORIAN, $month, 2000);
 
-	// 	for ($i=1; $i <= $countDate; $i++) { 
+	// 	$years = $this->water_model->findYear(array('region_id' => $region))->result();
+	// 	$table = '<table style="width: 5000px">';
 
+	// 	// header table`
+	// 	$time = strtotime(2000 . '-' . $month . '-01');
+	// 	$fMonth = date("F", $time);
+	// 	$table .= '<tr>
+	// 					<th rowspan="2"style="width: 70px;text-align: center"> Tahun </th>
+	// 					<th colspan="15">' .$fMonth. ' pertama </th>
+	// 					<th colspan="' .($dayCount-15). '"> ' .$fMonth. ' kedua </th>
+	// 				</tr>';
+	// 	$table .= '<tr>';
+	// 	for ($i=1; $i <= $dayCount; $i++) { 
+	// 			$table .= '<th style="text-align: center">Hari ' . $i . '</th>';
+	// 	}
+	// 	$table .= '</tr>';
+		
+	// 	// data table 
+	// 	foreach ($years as $key => $year) {
+	// 		$table .= '<tr>';
+	// 		$table .= $this->generateTD($month, $year->tahun, $region);
+	// 		$table .= '</tr>';
+	// 	}
+
+	// 	$table .= '</table>';
+	// 	return $table;
+	// }
+
+	// public function generateTD($month, $year, $region)
+	// {
+	// 	$dayCount = cal_days_in_month(CAL_GREGORIAN, $month, 2000);
+
+		
+	// 	$startDate = $year . '-' . $month . '-01';
+	// 	$endDate = $year . '-' . $month . '-' . $dayCount;
+	// 	$nextDate = $startDate;
+
+	// 	$td = '<td>' . $year . '</td>';
+	// 	while(strtotime($nextDate) <= strtotime($endDate))
+	// 	{
 	// 		if ($year > 1000) {
-	// 			$day = $year . '-' . $month . '-' . $i;
-	// 			$data = $this->water_model->find(array('date'=> $day, 'region_id' => $id), 1, 0);
-	// 			$dataWater = $data->row();
-	// 			if ($data->num_rows()) {
-	// 				$dataTD .= "<td><a href='" . base_url('data-detail/' . $dataWater->id) . "'>" . "Kanan : " .  $dataWater->right . " <br> Kiri : " . $dataWater->left . " <br> Limpas : " . $dataWater->limpas . "</a></td>";
+	// 			$query = $this->water_model->find(array('date'=> $nextDate, 'region_id' => $region));
+	// 			$dataWater = $query->row();
+	// 			if ($query->num_rows() && (date("m",  strtotime($nextDate)) == $month)) {
+	// 				$td .= "<td><a href='" . base_url('data-detail/' . $dataWater->id) . "'>" . "Kanan : " .  $dataWater->right . " | Kiri : " . $dataWater->left . " | Limpas : " . $dataWater->limpas . "</a></td>";
 	// 			} else {
-	// 				$dataTD .= "<td class='none'> none </td>";
+	// 				$td .= "<td> none </td>";
 
 	// 			}
 	// 		}
+
+	// 		$nextDate = date("Y-m-d", strtotime("+1 day", strtotime($nextDate)));
 	// 	}
 
-	// 	return $dataTD;
+	// 	return $td;
 	// }
+	/***********************************************/
+	/** haqisaurus 8/2/2015 11:57:31 AM: end disabled **/
+	/***********************************************/
+
+
+	// data table 7-6-2015
+	public function dataWater($id='')
+	{
+		checkUser(array(1, 2));
+
+		date_default_timezone_set('UTC');
+
+
+		$data['regions'] = $this->region_model->find()->result();
+		$queryYear = $data['regions'] ? array('region_id' => $data['regions'][0]->id) : array();
+		$data['years'] = $this->water_model->findYear($queryYear)->result();
+
+		$qMonth = $this->input->post('month')?: '01';
+		$qYear = $this->input->post('year')?: $data['years'][0]->tahun;
+		$qRegion = $this->input->post('region')?: $data['regions'][0]->id;
+
+		$data['qMonth'] = $qMonth ? : '';
+		$data['qYear'] = $qYear ? : '';
+		$data['qRegion'] = $qRegion ? : '';
+
+		$query = array(
+			'YEAR(date)' => $data['qYear'],
+			'MONTH(date)' => $data['qMonth'],
+			'region_id' => $data['qRegion'],
+			);
+
+		$table['table'] = $this->water_model->findASCDate($query)->result();
+
+		$data['table'] = $this->load->view('frontend/part/table', $table, true);
+		$this->template['content'] = $this->load->view('frontend/pages/data-water', $data, true);
+		$this->load->view('frontend/master', $this->template);
+	}
+
+	private function dataTD($countDate, $month, $year, $id)
+	{
+		$dataTD = '';
+
+		for ($i=1; $i <= $countDate; $i++) { 
+
+			if ($year > 1000) {
+				$day = $year . '-' . $month . '-' . $i;
+				$data = $this->water_model->find(array('date'=> $day, 'region_id' => $id), 1, 0);
+				$dataWater = $data->row();
+				if ($data->num_rows()) {
+					$dataTD .= "<td><a href='" . base_url('data-detail/' . $dataWater->id) . "'>" . "Kanan : " .  $dataWater->right . " <br> Kiri : " . $dataWater->left . " <br> Limpas : " . $dataWater->limpas . "</a></td>";
+				} else {
+					$dataTD .= "<td class='none'> none </td>";
+
+				}
+			}
+		}
+
+		return $dataTD;
+	}
 	// END: data table 7-6-2015
 	public function inputWater()
 	{
+		checkUser(array(1, 2));
+
 		$data = array();
 		$data['regions'] = $this->region_model->find()->result();
 
@@ -181,6 +192,8 @@ class Page_controller extends CI_Controller {
 
 	public function doInputWater()
 	{
+		checkUser(array(1, 2));
+
 		$regionID = $this->input->post('region-id');
 		$date = $this->input->post('date');
 		$left = $this->input->post('left');
@@ -229,6 +242,8 @@ class Page_controller extends CI_Controller {
 
 	public function editWater($id='')
 	{
+		checkUser(array(1, 2));
+
 		$data = array();
 		$data['regions'] = $this->region_model->find()->result();
 		$data['update'] = $this->water_model->findWithRegion(array('water.id' => $id), 1, 0)->row();
@@ -238,6 +253,8 @@ class Page_controller extends CI_Controller {
 
 	public function doEditWater()
 	{
+		checkUser(array(1, 2));
+
 		$id = $this->input->post('id');
 		$regionID = $this->input->post('region-id');
 		$date = $this->input->post('date');
@@ -309,6 +326,8 @@ class Page_controller extends CI_Controller {
 
 	public function accountDetail()
 	{
+		checkUser(array(1, 2));
+
 		$data = array();
 
 		$this->template['content'] = $this->load->view('frontend/pages/account-detail', $data, true);
@@ -319,6 +338,8 @@ class Page_controller extends CI_Controller {
 
 	public function plantView()
 	{
+		checkUser(array(1, 2));
+
 		$year = $this->input->post('year')?:date('Y', strtotime('today'));
 
 		$data = array();
@@ -332,6 +353,7 @@ class Page_controller extends CI_Controller {
 
 	public function plantEdit($id = 0)
 	{
+		checkUser(array(1, 2));
 
 		$data = array();
 		$condition = array('id' => $id);
@@ -343,6 +365,8 @@ class Page_controller extends CI_Controller {
 
 	public function plantUpdate()
 	{
+		checkUser(array(1, 2));
+
 		$id = $this->input->post('id');
 		$year = $this->input->post('year');
 		$rice1 = $this->input->post('rice-1');
@@ -415,6 +439,8 @@ class Page_controller extends CI_Controller {
 
 	public function plantEntry()
 	{
+		checkUser(array(1, 2));
+		
 		$year = $this->input->post('year');
 		$rice1 = $this->input->post('rice-1');
 		$rice2 = $this->input->post('rice-2');
@@ -473,5 +499,31 @@ class Page_controller extends CI_Controller {
 
 			redirect('plant-view');
 		}
+	}
+
+	public function dataViewCommon()
+	{
+		
+		$data = array();
+		$data['regions'] = $this->region_model->find()->result();
+		$queryYear = $data['regions'] ? array('region_id' => $data['regions'][0]->id) : array();
+		$data['years'] = $this->water_model->findYear($queryYear)->result();
+
+		$qYear = $this->input->post('year')?: $data['years'][0]->tahun;
+		$qRegion = $this->input->post('region')?: $data['regions'][0]->id;
+
+		$data['qYear'] = $qYear ? : '';
+		$data['qRegion'] = $qRegion ? : '';
+
+		$condition = 'year(date)=' . $qYear . ' and region_id=' . $qRegion;
+
+		$table['year'] = $data['qYear'];
+		$table['table'] = $this->water_model->everyHalfMonth($condition)->result();
+		
+		$data['table'] = $this->load->view('frontend/part/table-common', $table, true);	
+
+		$this->template['content'] = $this->load->view('frontend/pages/data-water-common', $data, true);
+		$this->load->view('frontend/master', $this->template);
+
 	}
 }
