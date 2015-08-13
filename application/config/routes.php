@@ -94,6 +94,7 @@ $route['action-plant-entry'] = 'frontend/page_controller/plantEntry';
 $route['action-plant-edit'] = 'frontend/page_controller/plantUpdate';
 
 $route['water-view'] = 'frontend/page_controller/dataViewCommon';
+$route['ajax-by-region-id'] = 'frontend/page_controller/ajaxGetYearsByRegion';
 
 $route['404_override'] = '';
 

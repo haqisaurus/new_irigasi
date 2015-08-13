@@ -526,4 +526,12 @@ class Page_controller extends CI_Controller {
 		$this->load->view('frontend/master', $this->template);
 
 	}
+
+	public function ajaxGetYearsByRegion()
+	{
+		$id = $this->input->post('region-id');
+		$response = $this->water_model->findYear(array('region_id' => $id))->result();
+
+		echo json_encode($response);
+	}
 }

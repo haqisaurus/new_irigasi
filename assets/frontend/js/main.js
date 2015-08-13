@@ -1,13 +1,14 @@
 var APP = function(app, $) {
 // this is global variables
 app = {
-	BASE_URL: $('#BASE_URL').val(),
-	SITE_URL: $('#SITE_URL').val(),
+	BASE_URL: $('#base_url').val(),
+	SITE_URL: $('#site_url').val(),
 
 };
 
 app.init = function() {
 	app.bootstrap();
+	app.onChange();
 }
 app.bootstrap = function() {
 	$('#confirm-delete').on('shown.bs.modal', function(e) {
@@ -23,6 +24,37 @@ app.bootstrap = function() {
 		'dateFormat' : 'yy-mm-dd',
 	});
 }
+
+app.onChange = function() {
+
+	$('form')
+	.off('change', 'select[name=region]')
+	.on('change', 'select[name=region]', function(e) {
+
+		$.ajax({
+			url: app.SITE_URL + '/ajax-by-region-id',
+			type: 'POST',
+			dataType: 'json',
+			data: {'region-id': $(this).val()},
+		})
+		.done(function(response) {
+			$('select[name=year]').find('option').remove();
+			console.log($('select[name=year]').find('option'))
+			$.each(response, function(index, el) {
+				var tmp = $('<option/>', { 'value' : el.tahun }).text(el.tahun);
+				$('select[name=year]').append(tmp);
+			});
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+		
+	});
+}
+
 return app;
 }(APP || {}, jQuery);
 
