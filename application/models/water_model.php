@@ -106,12 +106,12 @@ Class Water_model extends CI_Model
                             CONCAT( DATE_FORMAT(`date`, '%b %Y Day ' ),
                                     case when dayofmonth( `date` ) < 16
                                         then '01-15'
-                                        else 
-                                            CONCAT( '16-', right( last_day( `date` ), 2)  )
-                                        end ) as CharMonth,
+                                    else 
+                                        CONCAT( '16-', right( last_day( `date` ), 2)  )
+                                    end ) as CharMonth,
                             avg(`left`) as kiri,
                             avg(`right`) as kanan,
-                            avg(`limpas`) as limpass
+                            avg(`limpas`) as limpas
                         from 
                             water
                         where
@@ -122,6 +122,20 @@ Class Water_model extends CI_Model
                             year( `date` ),
                             month( `date` ),
                             min( dayofmonth( `date` ))");
+
+        return $query;
+    }
+
+    public function debitIntake($condition = array(), $limit = null, $offset = null)
+    {
+        $query = $this->db->query("select *,  '" . $condition[0] . " - " . $condition[1] . "' as rentang,
+                                        (0.8 * (avg(`left`) + avg(`right`)) + 1) as intake 
+                                    FROM water 
+                                    WHERE 
+                                        date BETWEEN '" . $condition[0] . "' 
+                                        AND '" . $condition[1] . "' 
+                                        AND region_id = " . $condition[2] ."  
+                                    GROUP BY region_id");
 
         return $query;
     }

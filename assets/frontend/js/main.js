@@ -23,6 +23,8 @@ app.bootstrap = function() {
 	$("#date" ).datepicker({
 		'dateFormat' : 'yy-mm-dd',
 	});
+
+	$('table').alignColumn([2, 3, 4], { center: '.'});
 }
 
 app.onChange = function() {

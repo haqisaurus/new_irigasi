@@ -3,9 +3,9 @@
 	<tr>
 		<th>No</th>
 		<th>Tanggal</th>
-		<th>Rata-rata Kanan</th>
-		<th>Rata-rata Kiri</th>
-		<th>Rata-rata Limpas</th>
+		<th>Rata-rata Kanan <b>(liter/det)</b></th>
+		<th>Rata-rata Kiri <b>(liter/det)</b></th>
+		<th>Rata-rata Limpas <b>(liter/det)</b></th>
 	</tr>
 	<?php foreach ($table as $key => $data): ?>
 		<?php 
@@ -18,10 +18,10 @@
 		?>
 		<tr>
 			<td><?php echo $key + 1 ?></td>
-			<td><a href="<?php echo site_url('data-detail/' . $data->id) ?>"><?php echo $string ?></a></td>
-			<td><?php echo $data->kanan ?> dm<sup>3</sup></td>
-			<td><?php echo $data->kiri ?> dm<sup>3</sup></td>
-			<td><?php echo $data->limpass ?> dm<sup>3</sup></td>
+			<td style="width: 100px;"><a href="<?php echo site_url('data-detail/' . $data->id) ?>"><?php echo $string ?></a></td>
+			<td class="right"><?php echo round($data->kanan, 4) ?></td>
+			<td class="right"><?php echo round($data->kiri, 4) ?></td>
+			<td class="right"><?php echo round($data->limpas, 4) ?></td>
 		</tr>
 	<?php endforeach ?>
 </table>

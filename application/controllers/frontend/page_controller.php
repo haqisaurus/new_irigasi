@@ -534,4 +534,67 @@ class Page_controller extends CI_Controller {
 
 		echo json_encode($response);
 	}
+
+	public function dataDebitAndalan()
+	{
+		$data = array();
+		$table = array();
+		$data['regions'] = $this->region_model->find()->result();
+		$qRegion = $this->input->post('region')?: $data['regions'][0]->id;
+
+		$queryYear = $data['regions'] ? array('region_id' => $qRegion) : array();
+		$allYears = $this->water_model->findYear($queryYear)->result();
+
+		$data['years'] = $allYears;
+		$qYear = $this->input->post('year')?: $data['years'][0]->tahun;
+		$qRegion = $this->input->post('region')?: $data['regions'][0]->id;
+		
+		$data['qYear'] = $qYear ? : '';
+		$data['qRegion'] = $qRegion ? : '0';
+		
+		$dataCollection = array();
+		for ($i=1; $i < 13; $i++) {
+
+			
+			$coloumn1 = array();
+			foreach ($allYears as $key => $value) {
+				$half1 = array(	
+									$value->tahun . '-' . str_pad($i, 2, "0", STR_PAD_LEFT) . '-01', 
+									$value->tahun .'-' . str_pad($i, 2, "0", STR_PAD_LEFT) . '-15', 
+									$data['qRegion']
+								);
+				
+				array_push($coloumn1, $this->water_model->debitIntake($half1)->row());
+			}
+			array_push($dataCollection, $coloumn1);
+
+			
+			$coloumn2 = array();
+			foreach ($allYears as $key => $value) {
+				$half2 = array(
+									$value->tahun . '-' . str_pad($i, 2, "0", STR_PAD_LEFT) . '-16', 
+									date("Y-m-t", strtotime($value->tahun . '-' . str_pad($i, 2, "0", STR_PAD_LEFT) . '-16')),
+									$data['qRegion']
+								);
+				
+				array_push($coloumn2, $this->water_model->debitIntake($half2)->row());
+			}
+			array_push($dataCollection, $coloumn2);
+		}
+		$table['years'] = $allYears;
+		$table['table'] = $dataCollection;
+		$data['table'] = $this->load->view('frontend/part/table-andalan', $table, true);	
+
+		$this->template['content'] = $this->load->view('frontend/pages/data-andalan', $data, true);
+		$this->load->view('frontend/master', $this->template);
+
+		// foreach ($dataCollection as $key => $value) {
+		// 	foreach ($allYears as $key => $year) {
+		// 		if (isset($value[$key]->rentang)) {
+		// 			echo $value[$key]->rentang . " # ";
+		// 		}
+		// 	}
+		// 	echo "<pre>" . print_r(	'==============================================================================', 1) . "</pre>";
+		// }
+	}
 }
