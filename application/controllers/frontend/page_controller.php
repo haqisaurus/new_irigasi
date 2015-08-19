@@ -503,7 +503,8 @@ class Page_controller extends CI_Controller {
 
 	public function dataViewCommon()
 	{
-		
+		checkUser(array(1, 2));
+
 		$data = array();
 		$data['regions'] = $this->region_model->find()->result();
 		$queryYear = $data['regions'] ? array('region_id' => $data['regions'][0]->id) : array();
@@ -537,6 +538,8 @@ class Page_controller extends CI_Controller {
 
 	public function dataDebitAndalan()
 	{
+		checkUser(array(1, 2));
+		
 		$data = array();
 		$table = array();
 		$data['regions'] = $this->region_model->find()->result();

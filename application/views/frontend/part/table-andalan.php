@@ -18,7 +18,7 @@
                     if (isset($value[$key]->rentang)) {
                         echo '<td>' . round($value[$key]->intake, 4) . '</td>';
                     } else {
-                        echo '<td>#</td>';
+                        echo '<td>-</td>';
                     }
                 }
             echo '</tr>';
