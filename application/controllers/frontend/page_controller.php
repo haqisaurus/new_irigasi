@@ -340,12 +340,9 @@ class Page_controller extends CI_Controller {
 	{
 		checkUser(array(1, 2));
 
-		$year = $this->input->post('year')?:date('Y', strtotime('today'));
-
 		$data = array();
-		$condition = array('year' => $year);
-		$data['year'] = $year;
-		$data['table'] = $this->plant_model->find($condition)->row();
+		$condition = array();
+		$data['table'] = $this->plant_model->find($condition)->result();
 
 		$this->template['content'] = $this->load->view('frontend/pages/plant-view', $data, true);
 		$this->load->view('frontend/master', $this->template);	
@@ -369,20 +366,15 @@ class Page_controller extends CI_Controller {
 
 		$id = $this->input->post('id');
 		$year = $this->input->post('year');
-		$rice1 = $this->input->post('rice-1');
-		$rice2 = $this->input->post('rice-2');
-		$rice3 = $this->input->post('rice-3');
-		$palawija1 = $this->input->post('palawija-1');
-		$palawija2 = $this->input->post('palawija-2');
-		$palawija3 = $this->input->post('palawija-3');
-		$sugar1 = $this->input->post('sugar-1');
-		$sugar2 = $this->input->post('sugar-2');
-		$sugar3 = $this->input->post('sugar-3');
-		$bero1 = $this->input->post('bero-1');
-		$bero2 = $this->input->post('bero-2');
-		$bero3 = $this->input->post('bero-3');
+		$month = $this->input->post('month');
+		$period = $this->input->post('period');
+
+		$rice = $this->input->post('rice');
+		$palawija = $this->input->post('palawija');
+		$sugar = $this->input->post('sugar');
 
 		$this->form_validation->set_rules('year', 'Tahun', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('period', 'Pediode', 'trim|required|xss_clean');
 
 		if($this->form_validation->run() == FALSE)
 		{
@@ -398,19 +390,10 @@ class Page_controller extends CI_Controller {
 		else
 		{
 			$data = array(
-				'year' => $year,
-				'rice_1' => $rice1,
-				'rice_2' => $rice2,
-				'rice_3' => $rice3,
-				'palawija_1' => $palawija1,
-				'palawija_2' => $palawija2,
-				'palawija_3' => $palawija3,
-				'sugar_1' => $sugar1,
-				'sugar_2' => $sugar2,
-				'sugar_3' => $sugar3,
-				'bero_1' => $bero1,
-				'bero_2' => $bero2,
-				'bero_3' => $bero3,
+				'year' => $year . ' ' . $month . ' ' . $period,
+				'rice' => $rice,
+				'palawija' => $palawija,
+				'sugar' => $sugar,
 				);
 
 			$condition = array('id' => $id);
@@ -442,21 +425,15 @@ class Page_controller extends CI_Controller {
 		checkUser(array(1, 2));
 		
 		$year = $this->input->post('year');
-		$rice1 = $this->input->post('rice-1');
-		$rice2 = $this->input->post('rice-2');
-		$rice3 = $this->input->post('rice-3');
-		$palawija1 = $this->input->post('palawija-1');
-		$palawija2 = $this->input->post('palawija-2');
-		$palawija3 = $this->input->post('palawija-3');
-		$sugar1 = $this->input->post('sugar-1');
-		$sugar2 = $this->input->post('sugar-2');
-		$sugar3 = $this->input->post('sugar-3');
-		$bero1 = $this->input->post('bero-1');
-		$bero2 = $this->input->post('bero-2');
-		$bero3 = $this->input->post('bero-3');
-		
+		$month = $this->input->post('month');
+		$period = $this->input->post('period');
+
+		$rice = $this->input->post('rice');
+		$palawija = $this->input->post('palawija');
+		$sugar = $this->input->post('sugar');
 
 		$this->form_validation->set_rules('year', 'Tahun', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('period', 'Pediode', 'trim|required|xss_clean');
 
 		if($this->form_validation->run() == FALSE)
 		{
@@ -469,25 +446,16 @@ class Page_controller extends CI_Controller {
 		else
 		{
 			$data = array(
-				'year' => $year,
-				'rice_1' => $rice1,
-				'rice_2' => $rice2,
-				'rice_3' => $rice3,
-				'palawija_1' => $palawija1,
-				'palawija_2' => $palawija2,
-				'palawija_3' => $palawija3,
-				'sugar_1' => $sugar1,
-				'sugar_2' => $sugar2,
-				'sugar_3' => $sugar3,
-				'bero_1' => $bero1,
-				'bero_2' => $bero2,
-				'bero_3' => $bero3,
+				'year' => $year . ' ' . $month . ' ' . $period,
+				'rice' => $rice,
+				'palawija' => $palawija,
+				'sugar' => $sugar,
 				);
 
 			$this->db->_error_message(); redirect('plant-view');
 			$this->db->_error_number(); redirect('plant-view');
 			
-			$result = $this->plant_model->insert($data);
+			$result = $this->plant_model->save($data);
 
 			if ($result['status']) {
 				$message = array('status' => 1, 'data' => $result['id'], 'msg' => 'Data berhasil dimasukan');
@@ -503,7 +471,6 @@ class Page_controller extends CI_Controller {
 
 	public function dataViewCommon()
 	{
-		checkUser(array(1, 2));
 
 		$data = array();
 		$data['regions'] = $this->region_model->find()->result();
@@ -558,7 +525,7 @@ class Page_controller extends CI_Controller {
 		$dataCollection = array();
 		for ($i=1; $i < 13; $i++) {
 
-			
+			// collecting first half of month
 			$coloumn1 = array();
 			foreach ($allYears as $key => $value) {
 				$half1 = array(	
@@ -571,7 +538,7 @@ class Page_controller extends CI_Controller {
 			}
 			array_push($dataCollection, $coloumn1);
 
-			
+			// collecting second half of month
 			$coloumn2 = array();
 			foreach ($allYears as $key => $value) {
 				$half2 = array(
@@ -584,10 +551,10 @@ class Page_controller extends CI_Controller {
 			}
 			array_push($dataCollection, $coloumn2);
 		}
+
 		$table['years'] = $allYears;
 		$table['table'] = $dataCollection;
 		$data['table'] = $this->load->view('frontend/part/table-andalan', $table, true);	
-
 		$this->template['content'] = $this->load->view('frontend/pages/data-andalan', $data, true);
 		$this->load->view('frontend/master', $this->template);
 

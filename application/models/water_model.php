@@ -129,8 +129,10 @@ Class Water_model extends CI_Model
     public function debitIntake($condition = array(), $limit = null, $offset = null)
     {
         $query = $this->db->query("select *,  '" . $condition[0] . " - " . $condition[1] . "' as rentang,
-                                        (0.8 * (avg(`left`) + avg(`right`)) + 1) as intake 
-                                    FROM water 
+                                         sum(`left`), 
+                                         sum(`right`), 
+                                         (sum(`left`) + sum(`right`)) / 15 as intake
+                                    FROM (SELECT DISTINCT * from `WATER`GROUP BY date) shortedTable 
                                     WHERE 
                                         date BETWEEN '" . $condition[0] . "' 
                                         AND '" . $condition[1] . "' 

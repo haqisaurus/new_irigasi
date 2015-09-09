@@ -4,6 +4,28 @@ Class Plant_model extends CI_Model
 {
     var $table = 'plan_plant';
 
+    public function save($data = array())
+    {
+        $this->db->trans_start();
+
+        $old = $this->find(array('year' => $date['year']));
+
+        if ($old->num_rows()) {
+            $this->update(array('id' => $old->row()->id));
+        } else {
+            $this->db->insert($this->table, $data); 
+        }
+
+
+        if ($this->db->trans_status()) {
+            $this->db->trans_commit();
+            return array('status' => 1);
+        } else {
+            $this->db->trans_rollback();
+            return array('status' => 0);
+        }
+    }
+
     public function insert($data = array())
     {
         $this->db->trans_start();

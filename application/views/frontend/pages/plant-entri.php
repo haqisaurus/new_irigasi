@@ -18,40 +18,46 @@
 	echo form_label('Tahun usulan', 'year', array('style' => 'display:inline'));
 	echo '&nbsp;&nbsp;&nbsp;';
     echo form_dropdown('year', $years, $default, 'class="form-control" style="display:inline"');
+
+    $monthOption = array(
+        '11' => 'November',
+        '12' => 'Desember',
+        '01' => 'January',
+        '02' => 'February',
+        '03' => 'Maret',
+        '04' => 'April',
+        '05' => 'Mei',
+        '06' => 'Juni',
+        '07' => 'Juli',
+        '08' => 'Agustus',
+        '09' => 'September',
+        '10' => 'Oktober',
+        );
+	$default = set_value('month', '');
+
+    echo "&nbsp;";
+    echo form_dropdown('month', $monthOption, $default, 'class="form-control" style="display:inline"');
 	?>
+	<div style="display:inline">
+		<input type="radio" id="first" name="period" value="1" style="display:inline">
+		<label for="first" style="display:inline">Pertama</label>
+		<input type="radio" id="second" name="period" value="2" style="display:inline">
+		<label for="second" style="display:inline">Kedua</label>
+	</div>
 	<br>
 	<br>
 	<table class="table-form form-plant" style="">
 		<tr>
-			<th>&nbsp;</th>
-			<th> MT 1 </th>
-			<th> MT 2 </th>
-			<th> MT 3 </th>
+			<th> Padi </th>
+			<th> Palawija </th>
+			<th> Tebu </th>
 		</tr>
 		<tr>
-			<td>Padi</td>
-			<td><input type="text" id="rice-1" name="rice-1" value="<?php echo set_value('rice-1', '') ?>"> <?php echo form_error('rice-1'); ?></td>
-			<td><input type="text" id="rice-2" name="rice-2" value="<?php echo set_value('rice-2', '') ?>"> <?php echo form_error('rice-2'); ?></td>
-			<td><input type="text" id="rice-3" name="rice-3" value="<?php echo set_value('rice-3', '') ?>"> <?php echo form_error('rice-3'); ?></td>
+			<td><input type="text" id="rice" name="rice" value="<?php echo set_value('rice', '') ?>"> <?php echo form_error('rice'); ?></td>
+			<td><input type="text" id="palawija" name="palawija" value="<?php echo set_value('palawija', '') ?>"> <?php echo form_error('palawija'); ?></td>
+			<td><input type="text" id="sugar" name="sugar" value="<?php echo set_value('sugar', '') ?>"> <?php echo form_error('sugar'); ?></td>
 		</tr>
-		<tr>
-			<td>Palawija</td>
-			<td><input type="text" id="palawija-1" name="palawija-1" value="<?php echo set_value('palawija-1', '') ?>"><?php echo form_error('palawija-1'); ?></td>
-			<td><input type="text" id="palawija-2" name="palawija-2" value="<?php echo set_value('palawija-2', '') ?>"><?php echo form_error('palawija-2'); ?></td>
-			<td><input type="text" id="palawija-3" name="palawija-3" value="<?php echo set_value('palawija-3', '') ?>"><?php echo form_error('palawija-3'); ?></td>
-		</tr>
-		<tr>
-			<td>Tebu</td>
-			<td><input type="text" id="sugar-1" name="sugar-1" value="<?php echo set_value('sugar-1', '') ?>"><?php echo form_error('sugar-1'); ?></td>
-			<td><input type="text" id="sugar-2" name="sugar-2" value="<?php echo set_value('sugar-2', '') ?>"><?php echo form_error('sugar-2'); ?></td>
-			<td><input type="text" id="sugar-3" name="sugar-3" value="<?php echo set_value('sugar-3', '') ?>"><?php echo form_error('sugar-3'); ?></td>
-		</tr>
-		<tr>
-			<td>Bero</td>
-			<td><input type="text" id="bero-1" name="bero-1" value="<?php echo set_value('bero-1', '') ?>"><?php echo form_error('bero-1'); ?></td>
-			<td><input type="text" id="bero-2" name="bero-2" value="<?php echo set_value('bero-2', '') ?>"><?php echo form_error('bero-2'); ?></td>
-			<td><input type="text" id="bero-2" name="bero-2" value="<?php echo set_value('bero-2', '') ?>"><?php echo form_error('bero-2'); ?></td>
-		</tr>
+		
 		<tr>
 			<td colspan="4"><br><button type="submit">Submit</button><br></td>
 		</tr>

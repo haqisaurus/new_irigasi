@@ -1,26 +1,44 @@
+<div>
+    <span>debit andalan</span>
+    <strong>
+        <?php 
+        $m = count($years);
+        $andalan = 0.8 * ($m + 1);
+        echo $andalan;
+        ?>
+    </strong>
+</div>
+<br>
 <table>
     <tr>
         <th>No</th>
         <th>Tanggal</th>
-        <?php 
-        foreach ($years as $key => $value) {
-            echo '<th>' . $value->tahun . '</th>';
-        }
-        ?>
+        <th>Debit andalan</th>
     </tr>
     <?php $n = 1 ?>
     <?php 
         foreach ($table as $key => $value) {
-            echo '<tr>';
+            $date = $value[0] ? $value[0]->date : '';
+            $month = date('d-F-Y', strtotime($date));
+            $match = explode('-', $month);
+            $string = '';
+            if (is_array($match)) {
+                $string = $match[1] . ' ' . ($match[0] == '01' ? '1' : '2') ;
+            }
+
+            echo  ($n == (int) $andalan) ? '<tr style="background-color: red; color: red" >' : '</tr>';
                 echo '<td>' . ($n ++) . '</td>';
-                echo '<td>' . (isset($value[0]->rentang)? $value[0]->rentang: (isset($value[1]->rentang) ? $value[1]->rentang : '-')) . '</td>';
+                echo '<td>' . $string . '</td>';
+                $intakeCollection = array();
+                echo '<td>';
                 foreach ($years as $key => $year) {
                     if (isset($value[$key]->rentang)) {
-                        echo '<td>' . round($value[$key]->intake, 4) . '</td>';
-                    } else {
-                        echo '<td>-</td>';
+                            $round = round($value[$key]->intake, 4);
+                            array_push($intakeCollection, $round);
                     }
                 }
+                echo min($intakeCollection);
+                echo '</td>';
             echo '</tr>';
         } 
     ?>

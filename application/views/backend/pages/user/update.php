@@ -64,8 +64,8 @@
                     $options = array(
                                       '1' => 'Admin',
                                       '2' => 'Juru',
-                                      '3' => 'Pemimpin',
-                                      '4' => 'Pengamat',
+                                      '3' => 'Pengamat',
+                                      '4' => 'Boss',
                                     );
 
                     echo form_dropdown('role_id', $options, $update->role_id, 'class="form-control"');
