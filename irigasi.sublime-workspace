@@ -4,6 +4,142 @@
 		"selected_items":
 		[
 			[
+				"hal",
+				"$half2〔variable〕"
+			],
+			[
+				"dataco",
+				"$dataCollection〔variable〕"
+			],
+			[
+				"anda",
+				"andalanVal"
+			],
+			[
+				"min",
+				"min($intakeCollection"
+			],
+			[
+				"andalan",
+				"$andalanVal〔variable〕"
+			],
+			[
+				"colo",
+				"$coloumnAndalan〔variable〕"
+			],
+			[
+				"colom",
+				"$coloumnAndalan〔variable〕"
+			],
+			[
+				"all",
+				"allYears"
+			],
+			[
+				"set",
+				"$setBulan〔variable〕"
+			],
+			[
+				"intake",
+				"$intakeCollection〔variable〕"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			],
+			[
+				"ha",
+				"half2"
+			],
+			[
+				"this",
+				"$thisMonth〔variable〕"
+			],
+			[
+				"q",
+				"$qMonth〔variable〕"
+			],
+			[
+				"mo",
+				"$month〔variable〕"
+			],
+			[
+				"year",
+				"$yearOption〔variable〕"
+			],
+			[
+				"curr",
+				"$currentYear〔variable〕"
+			],
+			[
+				"years",
+				"$yearsAgo〔variable〕"
+			],
+			[
+				"deman",
+				"demandOnIrigasi〔variable〕"
+			],
+			[
+				"val",
+				"value〔argument〕"
+			],
+			[
+				"inlin",
+				"inline-block〔value〕"
+			],
+			[
+				"back",
+				"background-color: 〔property〕"
+			],
+			[
+				"strto",
+				"strtotime〔function〕"
+			],
+			[
+				"dataset",
+				"datasets"
+			],
+			[
+				"my",
+				"myLineChart"
+			],
+			[
+				"start",
+				"startmonth"
+			],
+			[
+				"colle",
+				"collection"
+			],
+			[
+				"coll",
+				"$collection〔variable〕"
+			],
+			[
+				"datac",
+				"$dataCollection〔variable〕"
+			],
+			[
+				"json",
+				"json_encode"
+			],
+			[
+				"if",
+				"if?	$… = ( … ) ? … : …"
+			],
+			[
+				"spl",
+				"$splited〔variable〕"
+			],
+			[
+				"exp",
+				"explode〔function〕"
+			],
+			[
+				"arra",
+				"array"
+			],
+			[
 				"yea",
 				"years"
 			],
@@ -12,28 +148,12 @@
 				"isset"
 			],
 			[
-				"val",
-				"value"
-			],
-			[
-				"for",
-				"foreach	foreach …"
-			],
-			[
 				"half",
 				"half1"
 			],
 			[
-				"arra",
-				"array_push"
-			],
-			[
 				"tex",
 				"text-align"
-			],
-			[
-				"all",
-				"allYears"
 			],
 			[
 				"ar",
@@ -68,10 +188,6 @@
 				"text"
 			],
 			[
-				"back",
-				"background-color"
-			],
-			[
 				"time",
 				"timestamp"
 			],
@@ -87,15 +203,31 @@
 			"file": "assets/frontend/js/main.js",
 			"settings":
 			{
-				"buffer_size": 1446,
+				"buffer_size": 2430,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "application/models/water_model.php",
+			"file": "assets/frontend/css/SimpleBlog.css",
 			"settings":
 			{
-				"buffer_size": 4824,
+				"buffer_size": 9426,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/frontend/master.php",
+			"settings":
+			{
+				"buffer_size": 2130,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/frontend/pages/data-water-common.php",
+			"settings":
+			{
+				"buffer_size": 1278,
 				"line_ending": "Windows"
 			}
 		},
@@ -103,15 +235,7 @@
 			"file": "application/controllers/frontend/page_controller.php",
 			"settings":
 			{
-				"buffer_size": 18896,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "application/views/frontend/part/table-common.php",
-			"settings":
-			{
-				"buffer_size": 881,
+				"buffer_size": 25534,
 				"line_ending": "Windows"
 			}
 		},
@@ -119,7 +243,72 @@
 			"file": "application/views/frontend/part/table-andalan.php",
 			"settings":
 			{
-				"buffer_size": 1366,
+				"buffer_size": 1565,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/models/water_model.php",
+			"settings":
+			{
+				"buffer_size": 4841,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "select *,  '1998-09-01 - 1998-09-15' as rentang,\n                                         sum(`left`), \n                                         sum(`right`), \n                                         (sum(`left`) + sum(`right`) + sum(`limpas`))  / 15 as intake\n                                    FROM (SELECT DISTINCT * from `WATER`GROUP BY date) shortedTable \n                                    WHERE \n                                        date BETWEEN '1998-09-01' \n                                        AND '1998-09-15' \n                                        AND region_id = 1  \n\n                                    GROUP BY region_id",
+			"settings":
+			{
+				"buffer_size": 646,
+				"line_ending": "Windows",
+				"name": "select *,  '1998-09-01 - 1998-09-15' as rentang,"
+			}
+		},
+		{
+			"file": "/D/www/php.php",
+			"settings":
+			{
+				"buffer_size": 104,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/frontend/pages/plant-view.php",
+			"settings":
+			{
+				"buffer_size": 11082,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/models/plant_model.php",
+			"settings":
+			{
+				"buffer_size": 2401,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/frontend/pages/plant-entri.php",
+			"settings":
+			{
+				"buffer_size": 2299,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/config/routes.php",
+			"settings":
+			{
+				"buffer_size": 4375,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/views/frontend/pages/data-andalan.php",
+			"settings":
+			{
+				"buffer_size": 6778,
 				"line_ending": "Windows"
 			}
 		}
@@ -163,13 +352,10 @@
 	[
 		"/D/www/new_irigasi",
 		"/D/www/new_irigasi/application",
-		"/D/www/new_irigasi/application/config",
 		"/D/www/new_irigasi/application/controllers",
-		"/D/www/new_irigasi/application/controllers/backend",
 		"/D/www/new_irigasi/application/controllers/frontend",
 		"/D/www/new_irigasi/application/models",
 		"/D/www/new_irigasi/application/views",
-		"/D/www/new_irigasi/application/views/backend/pages",
 		"/D/www/new_irigasi/application/views/frontend",
 		"/D/www/new_irigasi/application/views/frontend/pages",
 		"/D/www/new_irigasi/application/views/frontend/part",
@@ -181,14 +367,22 @@
 	],
 	"file_history":
 	[
+		"/D/www/kh_paperlust/uploads/design/18/Box-Save-The-Date-Type-1.svg",
+		"/D/www/new_irigasi/application/views/frontend/pages/plant-edit.php",
+		"/D/www/new_irigasi/application/views/frontend/pages/plant-entri.php",
+		"/D/www/new_irigasi/application/models/plant_model.php",
+		"/D/www/new_irigasi/application/views/frontend/pages/plant-view.php",
+		"/D/www/new_irigasi/application/views/index.html",
+		"/C/Users/haqi/Documents/test.html",
+		"/D/www/new_irigasi/application/views/frontend/master.php",
+		"/D/www/new_irigasi/application/models/water_model.php",
+		"/D/www/new_irigasi/application/views/frontend/part/table-andalan.php",
 		"/D/www/new_irigasi/application/views/backend/pages/user/update.php",
 		"/D/www/new_irigasi/application/views/backend/pages/user/create.php",
 		"/D/www/new_irigasi/application/config/routes.php",
 		"/D/www/new_irigasi/application/views/frontend/pages/home.php",
-		"/D/www/new_irigasi/application/views/frontend/pages/plant-view.php",
 		"/D/www/new_irigasi/application/views/frontend/part/table.php",
 		"/D/www/new_irigasi/application/views/frontend/part/table-common.php",
-		"/D/www/new_irigasi/application/views/frontend/part/table-andalan.php",
 		"/D/www/new_irigasi/application/views/frontend/pages/data-andalan.php",
 		"/D/www/new_irigasi/application/views/frontend/part/nav-right.php",
 		"/D/www/new_irigasi/application/controllers/frontend/page_controller.php",
@@ -222,6 +416,40 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"value",
+			"month",
+			"mm",
+			"year",
+			"startMonth",
+			"Month",
+			"},\n",
+			"01",
+			"trim",
+			"required",
+			"+ $value->bero * 0",
+			"data",
+			"display: n",
+			"text",
+			"startmonth",
+			"old",
+			"sugar",
+			"td",
+			"startmonth",
+			"th",
+			"220",
+			"205",
+			"151",
+			"1\"",
+			"id",
+			"rice-3",
+			"rice-2",
+			"rice-1",
+			"rice-3",
+			"rice-2",
+			"rice-1",
+			"121",
+			"td",
+			"data",
 			"span",
 			"lowest",
 			"distinct",
@@ -268,44 +496,75 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1446,
+						"buffer_size": 2430,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								664,
-								664
+								838,
+								838
 							]
 						],
 						"settings":
 						{
+							"auto_complete": false,
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 390.0,
+						"translation.y": 252.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "application/models/water_model.php",
+					"file": "assets/frontend/css/SimpleBlog.css",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4824,
+						"buffer_size": 9426,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4362,
-								4362
+								9420,
+								9420
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5733.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "application/views/frontend/master.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2130,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1210,
+								1210
 							]
 						],
 						"settings":
@@ -316,27 +575,75 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1295.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "application/controllers/frontend/page_controller.php",
+					"buffer": 3,
+					"file": "application/views/frontend/pages/data-water-common.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 18896,
+						"buffer_size": 1278,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								15575,
-								15575
+								1084,
+								838
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "application/controllers/frontend/page_controller.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 25534,
+						"regions":
+						{
+							"bookmarks":
+							{
+								"flags": 144,
+								"icon": "bookmark",
+								"regions":
+								[
+									[
+										14583,
+										14656
+									],
+									[
+										21328,
+										21328
+									]
+								],
+								"scope": "bookmarks"
+							}
+						},
+						"selection":
+						[
+							[
+								22721,
+								22721
 							]
 						],
 						"settings":
@@ -346,33 +653,94 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 6251.0,
+						"translation.y": 9278.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "application/views/frontend/part/table-common.php",
-					"semi_transient": true,
+					"buffer": 5,
+					"file": "application/views/frontend/part/table-andalan.php",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 881,
+						"buffer_size": 1565,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								279,
-								485
+								191,
+								191
 							]
 						],
 						"settings":
 						{
+							"auto_complete": false,
 							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "application/models/water_model.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4841,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4096,
+								4804
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1438.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 646,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								646,
+								646
+							]
+						],
+						"settings":
+						{
+							"auto_name": "select *,  '1998-09-01 - 1998-09-15' as rentang,",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -382,20 +750,66 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "application/views/frontend/part/table-andalan.php",
+					"buffer": 8,
+					"file": "/D/www/php.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1366,
+						"buffer_size": 104,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								744,
-								744
+								41,
+								41
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "application/views/frontend/pages/plant-view.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11082,
+						"regions":
+						{
+							"bookmarks":
+							{
+								"flags": 144,
+								"icon": "bookmark",
+								"regions":
+								[
+									[
+										800,
+										800
+									],
+									[
+										3598,
+										3598
+									]
+								],
+								"scope": "bookmarks"
+							}
+						},
+						"selection":
+						[
+							[
+								8844,
+								8844
 							]
 						],
 						"settings":
@@ -406,10 +820,131 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
+						"translation.y": 2598.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "application/models/plant_model.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2401,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2355,
+								2355
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 66.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "application/views/frontend/pages/plant-entri.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2299,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								986,
+								986
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "application/config/routes.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4375,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4263,
+								4263
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1084.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "application/views/frontend/pages/data-andalan.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6778,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6240,
+								6240
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1998.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -417,7 +952,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 34.0
+		"height": 21.0
 	},
 	"input":
 	{
@@ -454,7 +989,7 @@
 	"project": "",
 	"replace":
 	{
-		"height": 42.0
+		"height": 38.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -463,6 +998,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"mas",
+				"application\\views\\frontend\\master.php"
+			]
 		],
 		"width": 0.0
 	},

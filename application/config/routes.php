@@ -97,6 +97,9 @@ $route['water-view'] = 'frontend/page_controller/dataViewCommon';
 $route['ajax-by-region-id'] = 'frontend/page_controller/ajaxGetYearsByRegion';
 
 $route['debit-andalan'] = 'frontend/page_controller/dataDebitAndalan';
+$route['get-andalan'] = 'frontend/page_controller/ajaxGetDataDebitAndalan';
+$route['get-water-demand'] = 'frontend/page_controller/ajaxGetWaterDemand';
+
 
 $route['404_override'] = '';
 

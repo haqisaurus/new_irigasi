@@ -434,3 +434,9 @@
       text-align: center;
       font-weight: bold;
    }
+   .ui-datepicker-calendar {
+    display: none;
+    }
+    .hidden {
+      display: none;
+    }

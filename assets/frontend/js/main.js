@@ -24,7 +24,31 @@ app.bootstrap = function() {
 		'dateFormat' : 'yy-mm-dd',
 	});
 
-	$('table').alignColumn([2, 3, 4], { center: '.'});
+	if ($('table.table-decimal').length) {
+		$('table.table-decimal').alignColumn([2, 3, 4], { center: '.'});
+	}
+
+	$('#startmonth, #endmonth').datepicker( {
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: 'MM yy',
+        onClose: function(dateText, inst) { 
+        	console.log(dateText, inst)
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).datepicker('setDate', new Date(year, month, 1));
+            var startDate = $('#startmonth').val() || 0;
+            var endDate = $('#endmonth').val() || 0;
+            dt1 = Date.parse(startDate);
+            dt2 = Date.parse(endDate);
+            console.log(dt1, dt2)
+            if ((startDate == 0 && endDate == 0) && dt1 > dt2 || dt1 == dt2) {
+            	alert('Bulan akhir tidak boleh lebih kecil atau sama');
+            	$('#endmonth').blur().focus();
+            };
+        },
+    });
 }
 
 app.onChange = function() {
@@ -62,5 +86,4 @@ return app;
 
 jQuery(function($){
 	APP.init();
-	
 });

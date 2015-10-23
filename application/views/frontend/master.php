@@ -8,6 +8,13 @@
     <link href="<?php echo base_url('assets/frontend/css/plugins/jquery-ui.min.css') ?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/frontend/css/plugins/jquery-ui.structure.min.css') ?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/frontend/css/plugins/jquery-ui.theme.min.css') ?>" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="<?php echo base_url('assets/frontend/js/jquery.js') ?>"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo base_url('assets/frontend/js/plugins/jquery.maskedinput.min.js') ?>" type="text/javascript"></script>
+    <script src="<?php echo base_url('assets/frontend/js/plugins/jquery-ui.min.js') ?>"></script>
+    <script src="<?php echo base_url('assets/frontend/js/plugins/Chart.min.js') ?>"></script>
 </head>
 <body>
     <input type="hidden" id="base_url" value="<?php echo base_url() ?>">
@@ -32,12 +39,6 @@
         </div>
     </div>
 
-    <!-- jQuery -->
-    <script src="<?php echo base_url('assets/frontend/js/jquery.js') ?>"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="<?php echo base_url('assets/frontend/js/plugins/jquery.maskedinput.min.js') ?>" type="text/javascript"></script>
-    <script src="<?php echo base_url('assets/frontend/js/plugins/jquery-ui.min.js') ?>"></script>
     <script src="<?php echo base_url('assets/frontend/js/main.js') ?>"></script>
 </body>
 </html>

@@ -415,6 +415,8 @@ class Page_controller extends CI_Controller {
 	public function plant()
 	{
 		$data = array();
+		$data['regions'] = $this->region_model->find()->result();
+		$data['wide'] = $this->region_model->find()->result();
 
 		$this->template['content'] = $this->load->view('frontend/pages/plant-entri', $data, true);
 		$this->load->view('frontend/master', $this->template);	
@@ -424,17 +426,25 @@ class Page_controller extends CI_Controller {
 	{
 		checkUser(array(1, 2));
 		
-		$year = $this->input->post('year');
-		$month = $this->input->post('month');
-		$period = $this->input->post('period');
+		$regionID = $this->input->post('region-id');
+		$startMonth = $this->input->post('startmonth');
+		$endMonth = $this->input->post('endmonth');
+		$half = $this->input->post('half');
+		
 
 		$rice = $this->input->post('rice');
 		$palawija = $this->input->post('palawija');
 		$sugar = $this->input->post('sugar');
+		$bero = $this->input->post('bero');
 
-		$this->form_validation->set_rules('year', 'Tahun', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('period', 'Pediode', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('startmonth', 'Bulan Awal', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('endmonth', 'Bulan Akhir', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('rice', 'Padi', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('palawija', 'Palawija', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('sugar', 'Tebu', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('bero', 'Bero', 'trim|required|xss_clean');
 
+		
 		if($this->form_validation->run() == FALSE)
 		{
 		    //Field validation failed.  User redirected to login page
@@ -445,30 +455,105 @@ class Page_controller extends CI_Controller {
 		}
 		else
 		{
-			$data = array(
-				'year' => $year . ' ' . $month . ' ' . $period,
-				'rice' => $rice,
-				'palawija' => $palawija,
-				'sugar' => $sugar,
-				);
 
-			$this->db->_error_message(); redirect('plant-view');
-			$this->db->_error_number(); redirect('plant-view');
+			// $this->db->_error_message(); redirect('plant-view');
+			// $this->db->_error_number(); redirect('plant-view');
+
+			$start = $month = strtotime($startMonth);
+			$end = strtotime($endMonth);
+			$collection = array();
+			$insertTime = date('Y-m-d h:i:s');
+
+			while($month <= $end)
+			{
+				$data = array(
+					'start' => date('Y-m-d', $month),
+					'end' => date('Y-m-d', $month),
+					'rice' => $rice,
+					'palawija' => $palawija,
+					'sugar' => $sugar,
+					'region_id' => $regionID,
+					'half' => $half,
+					'insert_date' => $insertTime,
+					);
+
+			    array_push($collection, $data);
+
+			    $data = array(
+					'start' => date('Y-m-d', $month),
+					'end' => date('Y-m-d', $month),
+					'rice' => $rice,
+					'palawija' => $palawija,
+					'sugar' => $sugar,
+					'region_id' => $regionID,
+					'half' => 2,
+					'insert_date' => $insertTime,
+					);
+
+			    array_push($collection, $data);
+
+			    $month = strtotime("+1 month", $month);
+
+			}
 			
-			$result = $this->plant_model->save($data);
+			$result = $this->plant_model->save($collection);
 
 			if ($result['status']) {
-				$message = array('status' => 1, 'data' => $result['id'], 'msg' => 'Data berhasil dimasukan');
+				$message = array('status' => 1, 'data' => $result['data'], 'msg' => 'Data berhasil dimasukan');
 			} else {
 				$message = array('status' => 0, 'data' => '', 'msg' => 'Terdapat kesalahan');
 			}
         	
         	$this->session->set_flashdata('message', $message);
-
+        	// echo "<pre>" . print_r($message, 1) . "</pre>";
 			redirect('plant-view');
 		}
 	}
 
+	// by plant
+	public function ajaxGetWaterDemand()
+	{
+		setlocale(LC_ALL, 'IND');
+		$year = $this->input->post('year') ? : date('Y');
+
+		$startMonth = '1-11-' . $year;
+		$start = $month = strtotime($startMonth);
+		$end = strtotime("+11 month", $start);
+
+		$condition = array(
+			'start >=' => date('Y-m-d', $start),
+			'start <=' => date('Y-m-d', $end),
+			// 'region_id' => 1
+			);
+
+		$data = $this->plant_model->find($condition)->result();
+
+
+		$result = array_map(function($item) {
+			
+			$month = strtotime($item->start);
+
+			$newData = array(
+				// 'start' => $item->start,
+				// 'end' => $item->end,
+				// 'rice' => $item->rice * 0.75,
+				// 'palawija' => $item->palawija * 0.3,
+				// 'sugar' => $item->sugar * 0.85,
+				// 'bero' => $item->bero,
+				'month' => date('F', $month),
+				'demand' => (($item->rice * 0.75) + ($item->palawija * 0.3) + ($item->sugar * 0.85) + ($item->bero * 0)) * 0.01,
+				'irigasi' => ((($item->rice * 0.75) + ($item->palawija * 0.3) + ($item->sugar * 0.85) + ($item->bero * 0)) * 0.01) * 1.2,
+				);
+
+			return $newData;
+		}, $data);
+
+		header('Content-Type: application/json');
+		echo json_encode($result);
+
+	}
+
+	// END : PLANT PLAN
 	public function dataViewCommon()
 	{
 
@@ -566,5 +651,163 @@ class Page_controller extends CI_Controller {
 		// 	}
 		// 	echo "<pre>" . print_r(	'==============================================================================', 1) . "</pre>";
 		// }
+	}
+
+	/** haqisaurus 10/14/2015 8:24:19 PM: get data debit andalan.**/
+	public function ajaxGetDataDebitAndalan()
+	{
+		checkUser(array(1, 2));
+		
+		$data = array();
+		$table = array();
+		$data['regions'] = $this->region_model->find()->result();
+		$qRegion = $this->input->post('region')?: $data['regions'][0]->id;
+
+		$queryYear = $data['regions'] ? array('region_id' => $qRegion) : array();
+		$allYears = $this->water_model->findYear($queryYear)->result();
+
+		$data['years'] = $allYears;
+		$qYear = $data['years'][0]->tahun;
+		$qRegion = $this->input->post('region')?: $data['regions'][0]->id;
+		
+		$data['qYear'] = $qYear ? : '';
+		$data['qRegion'] = $qRegion ? : '0';
+
+		$qMonth = $this->input->post('month') ? : '1';
+		$startDay =  $qMonth ? '1-' . $qMonth . '-' . $qYear : '1-1-2015';
+		$dataCollection = array();
+
+
+		$start = $month = strtotime($startDay);
+		$end = strtotime('+11 month', $start);
+
+		while($month <= $end) {
+			$dataCollection[date('F', $month)] = array();
+
+			// collecting first half of month
+			$coloumn1 = array();
+			// collecting second half of month
+			$coloumn2 = array();
+
+			// ============= FROM FIRST MONTH UNTIL HALF MONTH ===========
+			foreach ($allYears as $key => $value1) {
+
+				$startFirst = strtotime($value1->tahun . '-' .  date('F', $month) . '-1' );
+				$endFirst = strtotime('+14 day',  $startFirst);
+			
+				// define half 
+				$half1 = array(	
+								date('Y-m-d', $startFirst), 
+								date('Y-m-d', $endFirst), 
+								$data['qRegion']
+							);
+
+				array_push($coloumn1, $this->water_model->debitIntake($half1)->row());
+			}
+
+			// =========== HALF UNTIL LAST =================
+			foreach ($allYears as $key => $value2) {
+
+				$startSecond = strtotime('+1 day',  strtotime($value2->tahun . '-' . date('m-d', $endFirst)));
+				$endSecond = strtotime('last day of',  strtotime($value2->tahun . '-' . date('m-d', $endFirst)));
+
+				$half2 = array(
+								date('Y-m-d', $startSecond), 
+								date('Y-m-d', $endSecond), 
+								$data['qRegion']
+							);
+
+				array_push($coloumn2, $this->water_model->debitIntake($half2)->row());
+			}
+
+
+			array_push($dataCollection[date('F', $month)], $coloumn1);
+			array_push($dataCollection[date('F', $month)], $coloumn2);
+
+			$month = strtotime("+1 month", $month);
+		}
+		// echo "<pre>" . print_r($dataCollection, 1) . "</pre>";
+		// ======================================================================================================
+		$result = array();
+		$coloumnAndalan = round(0.8 * (count($allYears) + 1)) - 1; //because coloumn start with 0 in computer
+       	
+       	// echo $coloumnAndalan;
+       	foreach ($dataCollection as $key => $bulan) {
+
+            $intakeCollection = array();
+
+        	foreach ($bulan as $key => $setBulan) {
+
+        		$intakeCollection = array_map(function($obj) { 
+
+        			$intake = empty($obj) ? 1110 : $obj->intake;
+        			return round($intake, 4);
+
+        		}, $setBulan);
+
+        		rsort($intakeCollection);
+        		$andalanVal = isset($intakeCollection[$coloumnAndalan]) ? $intakeCollection[$coloumnAndalan] : min($intakeCollection);
+            	
+            	array_push($result, $andalanVal);
+        	}
+        }
+
+		
+		// for ($i=1; $i < 13; $i++) {
+
+		// 	// collecting first half of month
+		// 	$coloumn1 = array();
+		// 	foreach ($allYears as $key => $value) {
+		// 		$half1 = array(	
+		// 							$value->tahun . '-' . str_pad($i, 2, "0", STR_PAD_LEFT) . '-01', 
+		// 							$value->tahun .'-' . str_pad($i, 2, "0", STR_PAD_LEFT) . '-15', 
+		// 							$data['qRegion']
+		// 						);
+				
+		// 		array_push($coloumn1, $this->water_model->debitIntake($half1)->row());
+		// 	}
+		// 	array_push($dataCollection, $coloumn1);
+
+		// 	// collecting second half of month
+		// 	$coloumn2 = array();
+		// 	foreach ($allYears as $key => $value) {
+		// 		$half2 = array(
+		// 							$value->tahun . '-' . str_pad($i, 2, "0", STR_PAD_LEFT) . '-16', 
+		// 							date("Y-m-t", strtotime($value->tahun . '-' . str_pad($i, 2, "0", STR_PAD_LEFT) . '-16')),
+		// 							$data['qRegion']
+		// 						);
+				
+		// 		array_push($coloumn2, $this->water_model->debitIntake($half2)->row());
+		// 	}
+		// 	array_push($dataCollection, $coloumn2);
+		// }
+		// 
+		// $result = array();
+        // foreach ($dataCollection as $key => $value) {
+        //     $date = $value[0] ? $value[0]->date : '';
+        //     $month = date('d-F-Y', strtotime($date));
+        //     $match = explode('-', $month);
+        //     $string = '';
+        //     if (is_array($match)) {
+        //         $string = $match[1] . ' ' . ($match[0] == '01' ? '1' : '2') ;
+        //     }
+
+            
+        //     $intakeCollection = array();
+        //     foreach ($allYears as $key => $year) {
+        //         if (isset($value[$key]->rentang)) {
+        //                 $round = round($value[$key]->intake, 4);
+        //                 array_push($intakeCollection, $round);
+        //         }
+        //     }
+        //     array_push($result, min($intakeCollection));
+        // }
+
+
+		
+
+		header('Content-Type: application/json');
+		echo json_encode($result);
+		// echo json_encode($dataCollection);
 	}
 }

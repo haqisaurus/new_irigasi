@@ -5,6 +5,7 @@
         $m = count($years);
         $andalan = 0.8 * ($m + 1);
         echo $andalan;
+        // echo "<pre>" . print_r($table, 1) . "</pre>";
         ?>
     </strong>
 </div>
@@ -26,18 +27,25 @@
                 $string = $match[1] . ' ' . ($match[0] == '01' ? '1' : '2') ;
             }
 
-            echo  ($n == (int) $andalan) ? '<tr style="background-color: red; color: red" >' : '</tr>';
+            echo '</tr>';
                 echo '<td>' . ($n ++) . '</td>';
                 echo '<td>' . $string . '</td>';
                 $intakeCollection = array();
                 echo '<td>';
+
                 foreach ($years as $key => $year) {
                     if (isset($value[$key]->rentang)) {
                             $round = round($value[$key]->intake, 4);
                             array_push($intakeCollection, $round);
                     }
                 }
-                echo min($intakeCollection);
+
+                rsort($intakeCollection);
+
+                $andalanVal = isset($intakeCollection[$andalan]) ? $intakeCollection[$andalan] : min($intakeCollection);
+                
+                echo $andalanVal;
+                // echo min($intakeCollection);
                 echo '</td>';
             echo '</tr>';
         } 

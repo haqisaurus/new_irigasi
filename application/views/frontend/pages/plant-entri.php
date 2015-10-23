@@ -7,57 +7,48 @@
 	<br>
 	<?php echo form_open('action-plant-entry', '' ); ?>
 	<?php 
-
-	$years = array();
-	$thisYear = date('Y', strtotime('today')) + 1;
-	for ($i = $thisYear; $i > 1990 ; $i--) { 
-		$years[$i] = $i;
-	}
-	
-	$default = set_value('year', '');
-	echo form_label('Tahun usulan', 'year', array('style' => 'display:inline'));
-	echo '&nbsp;&nbsp;&nbsp;';
-    echo form_dropdown('year', $years, $default, 'class="form-control" style="display:inline"');
-
-    $monthOption = array(
-        '11' => 'November',
-        '12' => 'Desember',
-        '01' => 'January',
-        '02' => 'February',
-        '03' => 'Maret',
-        '04' => 'April',
-        '05' => 'Mei',
-        '06' => 'Juni',
-        '07' => 'Juli',
-        '08' => 'Agustus',
-        '09' => 'September',
-        '10' => 'Oktober',
-        );
-	$default = set_value('month', '');
-
-    echo "&nbsp;";
-    echo form_dropdown('month', $monthOption, $default, 'class="form-control" style="display:inline"');
+	$regionOption = array();
+    foreach ($regions as $key => $region) {
+        $regionOption[$region->id] = $region->region_name;
+    }
 	?>
-	<div style="display:inline">
-		<input type="radio" id="first" name="period" value="1" style="display:inline">
-		<label for="first" style="display:inline">Pertama</label>
-		<input type="radio" id="second" name="period" value="2" style="display:inline">
-		<label for="second" style="display:inline">Kedua</label>
-	</div>
-	<br>
-	<br>
 	<table class="table-form form-plant" style="">
 		<tr>
-			<th> Padi </th>
-			<th> Palawija </th>
-			<th> Tebu </th>
+			<th colspan="4">Entry pola tanam usulan</th>
 		</tr>
 		<tr>
-			<td><input type="text" id="rice" name="rice" value="<?php echo set_value('rice', '') ?>"> <?php echo form_error('rice'); ?></td>
-			<td><input type="text" id="palawija" name="palawija" value="<?php echo set_value('palawija', '') ?>"> <?php echo form_error('palawija'); ?></td>
-			<td><input type="text" id="sugar" name="sugar" value="<?php echo set_value('sugar', '') ?>"> <?php echo form_error('sugar'); ?></td>
+			<td> <label for="region-id">Region</label> </td>
+			<td colspan="3"><?php echo form_dropdown('region-id', $regionOption, $region, 'class="form-control"'); ?></td>
 		</tr>
-		
+		<tr>
+			<td> <label for="startmonth">Dari</label> </td>
+			<td><input type="text" id="startmonth" name="startmonth" style="display: inline;"></td>
+			<td> <label for="endmonth">Sampai</label> </td>
+			<td><input type="text" id="endmonth" name="endmonth" style="display: inline;"></td>
+		</tr>
+		<tr  class="hidden">
+			<td> <label for="half">Pertengahan bulan</label> </td>
+			<td colspan="3">
+				<input type="radio" id="half1" name="half" value="1" style="display: inline; width: 20px" checked="checked"> Pertama
+				<input type="radio" id="half2" name="half" value="2" style="display: inline; width: 20px"> Kedua
+			</td>
+		</tr>
+		<tr>
+			<td> <label for="rice">Padi</label> </td>
+			<td colspan="3"><input type="text" id="rice" name="rice" value="<?php echo set_value('rice', '') ?>"> <?php echo form_error('rice'); ?>Ha</td>
+		</tr>
+		<tr>
+			<td> <label for="palawija">Palawija</label> </td>
+			<td colspan="3"><input type="text" id="palawija" name="palawija" value="<?php echo set_value('palawija', '') ?>"> <?php echo form_error('palawija'); ?>Ha</td>
+		</tr>
+		<tr>
+			<td> <label for="sugar">Tebu</label> </td>
+			<td colspan="3"><input type="text" id="sugar" name="sugar" value="<?php echo set_value('sugar', '') ?>"> <?php echo form_error('sugar'); ?>Ha</td>
+		</tr>
+		<tr>
+			<td> <label for="sugar">Bero</label> </td>
+			<td colspan="3"><input type="text" id="bero" name="bero" value="<?php echo set_value('bero', '') ?>"> <?php echo form_error('bero'); ?>Ha</td>
+		</tr>
 		<tr>
 			<td colspan="4"><br><button type="submit">Submit</button><br></td>
 		</tr>

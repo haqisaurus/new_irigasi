@@ -8,18 +8,22 @@ Class Plant_model extends CI_Model
     {
         $this->db->trans_start();
 
-        $old = $this->find(array('year' => $date['year']));
-
-        if ($old->num_rows()) {
-            $this->update(array('id' => $old->row()->id));
-        } else {
-            $this->db->insert($this->table, $data); 
+        foreach ($data as $key => $item) {
+            
+            $old = $this->find(array('start' => $item['start'], 'region_id' => $item['region_id'], 'half' => $item['half']));
+            if ($old->num_rows()) {
+                $this->update(array('id' => $old->row()->id), $item);
+                $id = $old->row()->id;
+            } else {
+                $this->db->insert($this->table, $item);
+                $id = $this->db->insert_id();
+            }
         }
 
 
         if ($this->db->trans_status()) {
             $this->db->trans_commit();
-            return array('status' => 1);
+            return array('status' => 1, 'data' => $id );
         } else {
             $this->db->trans_rollback();
             return array('status' => 0);
@@ -78,9 +82,14 @@ Class Plant_model extends CI_Model
 
     public function find($condition = array(), $limit = null, $offset = null)
     {
-        $query = $this->db->get_where($this->table, $condition, $limit, $offset);
+        $query = $this->db->order_by('start', 'ASC')->get_where($this->table, $condition, $limit, $offset);
 
         return $query;
+    }
+
+    public function findRange($value='')
+    {
+        # code...
     }
 
 
