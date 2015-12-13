@@ -8,11 +8,11 @@ class Auth extends CI_Controller {
 	{
 		parent::__construct();
 		//Do your magic here
-		$this->template['nav'] = $this->load->view('backend/part/nav-admin', 0, true);
-		$this->template['popup'] = $this->load->view('backend/pages/user/popup', 0, true);
+		$this->template['popup'] = $this->load->view('integrated/pages/auth/popup', 0, true);
 
-		// using model
-		$this->load->model('user_model');
+		// using library
+		$this->load->library('irigasi/user');
+		$this->load->library('form_validation');
 	}
 
 	
@@ -20,48 +20,69 @@ class Auth extends CI_Controller {
 	public function login()
 	{
 
+		if ($this->session->userdata('logged_in')) {
+			$this->redirectUser();
+		} else {
+			$data = array();
 
+			$this->load->view('integrated/pages/auth/login');
+		}
 	}
+
 	public function doLogin()
 	{
-		//This method will have the credentials validation
-		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|callback_checkDatabase');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
+		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 		if($this->form_validation->run() == FALSE)
 		{
 		    //Field validation failed.  User redirected to login page
 			$this->session->set_flashdata('error', validation_errors());
-			redirect('user-login');
+			$this->load->view('integrated/pages/auth/login');
 		}
 		else
 		{
+			$username = $this->input->post('username');
+			$password = $this->input->post('password');
+			$remember = $this->input->post('rememeber');
+
+			$loginResult = $this->user->authentication($username, $password, $remember);
+			if ($loginResult) {
+				// redirect user 
+				$this->redirectUser();
+			} else {
+				redirect('login');
+			}
 	     	//Go to private area
-			redirect('account-detail');
+			
 		}
 	}
 
-	function checkDatabase($password)
+	private function redirectUser()
 	{
-		//Field validation succeeded.  Validate against database
-		$username = $this->input->post('username');
-
-		//query the database
-		$result = $this->user_model->login($username, $password);
-
-		if($result)
-		{
-			$this->session->set_userdata('logged_in', $result);
-			return TRUE;
-		}
-		else
-		{
-			$this->form_validation->set_message('check_database', 'Invalid username or password');
-			return false;
+		$userData = $this->session->userdata('logged_in');
+		switch ($userData['role_id']) {
+			case 1:
+				redirect('/admin');
+				break;
+			case 2:
+				# code...
+				break;
+			case 3:
+				# code...
+				break;
+			case 4:
+				# code...
+				break;
+			
+			default:
+				# code...
+				break;
 		}
 	}
+	
 
 	public function register()
 	{

@@ -145,7 +145,7 @@ class User extends CI_Controller {
 	}
 
 	public function delete($id)
-	{exit();
+	{
 		$result = $this->user_model->delete(array('user.id' => $id));
 
 		if ($result['status']) {

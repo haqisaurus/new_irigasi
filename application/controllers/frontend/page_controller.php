@@ -810,4 +810,10 @@ class Page_controller extends CI_Controller {
 		echo json_encode($result);
 		// echo json_encode($dataCollection);
 	}
+
+	public function test()
+	{
+		$this->load->view('integrated/master');
+		
+	}
 }

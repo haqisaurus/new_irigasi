@@ -37,8 +37,9 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-
+/*
 $route['default_controller'] = "frontend/page_controller";
+
 $route['login'] = 'auth/login';
 $route['login-action'] = 'auth/doLogin';
 $route['logout'] = 'auth/doLogout';
@@ -99,6 +100,27 @@ $route['ajax-by-region-id'] = 'frontend/page_controller/ajaxGetYearsByRegion';
 $route['debit-andalan'] = 'frontend/page_controller/dataDebitAndalan';
 $route['get-andalan'] = 'frontend/page_controller/ajaxGetDataDebitAndalan';
 $route['get-water-demand'] = 'frontend/page_controller/ajaxGetWaterDemand';
+*/
+
+// new integrated system
+$route['default_controller'] = "welcome";
+
+$route['login'] 			= 'auth/login';
+$route['login-action'] 		= 'auth/doLogin';
+$route['logout'] 			= 'auth/doLogout';
+
+
+/* ADMIN */
+$route['admin'] 				= 'integrated/admin_page';
+
+// users
+$route['user'] 					= 'integrated/admin_page/viewUser';
+$route['user-add'] 				= 'integrated/admin_page/createUser';
+$route['user-add-action']		= 'integrated/admin_page/createUserAction';
+$route['user-edit/(:num)'] 		= 'integrated/admin_page/editUser/$1';
+$route['user-edit-action'] 		= 'integrated/admin_page/editUserAction';
+$route['user-delete/(:num)'] 	= 'integrated/admin_page/deleteUser/$1';
+/* END : ADMIN */
 
 
 $route['404_override'] = '';

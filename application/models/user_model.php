@@ -61,6 +61,17 @@ Class User_model extends CI_Model
         return $query;
     }
 
+    public function findWithRole($condition = array(), $limit = null, $offset = null)
+    {
+        $this->db->select('role.*, user.*');
+        $this->db->join('role', 'role.id = user.role_id');
+        $this->db->order_by('user.id', 'DESC');
+        $this->db->group_by('user.id');
+        $query = $this->db->get_where($this->table, $condition, $limit, $offset);
+
+        return $query;
+    }
+
     public function login($username, $password)
     {
         $this->db->select('id, username, first_name, last_name, role_id');

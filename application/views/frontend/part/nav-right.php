@@ -4,6 +4,12 @@
     <?php if($currentUser && $currentUser['role_id'] == 1) : ?>
         <h1>Sidebar Menu</h1>
         <ul class="sidemenu">
+            <li>
+                <a href="<?php echo site_url('data-water') ?>">Data Master</a>
+                <ul>                    
+                    <li><a href="<?php echo site_url('data-water') ?>">Data Master</a></li>
+                </ul>
+            </li>
             <li><a href="<?php echo site_url('data-water') ?>">Data debit perdaerah</a></li>
             <li><a href="<?php echo site_url('entri-water') ?>">Entery data debit air</a></li>
             <li><a href="<?php echo site_url('plant-view') ?>">Pola tanam usulan</a></li>
