@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Daftar Hak Akses</h1>
+                <h1 class="page-header">Daftar Daerah Irigasi</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -14,9 +14,12 @@
         <!-- /.row -->
         <div class="row">
             <div class="col-lg-12">
+                <a href="<?php echo site_url('region-add'); ?>" class="btn btn-primary"><span class="fa fa-plus-square"></span> Tambah</a>
+                <br>
+                <br>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Data Daftar User
+                        Data Daftar Daerah Irigasi
                     </div>
                     <?php if ( $table ): ?>
                         
@@ -29,9 +32,8 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        
-                                        <th>Hak akses</th>
-                                        
+                                        <th>Nama Daerah</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -39,13 +41,20 @@
                                         <?php if ( $key % 2 == 0 ): ?>
                                             <tr class="odd" data-id="<?php echo $item->id ?>">
                                                 <td><?php echo $key + 1 ?></td>
-                                                <td class="center"><b><?php echo $item->role ?></b></td>
-                                                
+                                                <td class="center"><?php echo $item->region_name ?></td>
+                                                <td>
+                                                    <a href="<?php echo site_url('region-edit/' . $item->id) ?>" class="btn btn-info btn-xs"><span class="fa fa-edit"></span> Edit</a> | 
+                                                    <button class="btn btn-danger btn-xs" data-url="<?php echo site_url('region-delete/' . $item->id) ?>" data-toggle="modal" data-target="#confirm-delete"><span class="fa fa-trash-o"></span> Edit</button>
+                                                </td>
                                             </tr>
                                         <?php else: ?>
                                             <tr class="even">
                                                 <td><?php echo $key + 1 ?></td>
-                                                <td class="center"><b><?php echo $item->role ?></b></td>
+                                                <td class="center"><?php echo $item->region_name ?></td>
+                                                <td>
+                                                    <a href="<?php echo site_url('region-edit/' . $item->id) ?>" class="btn btn-info btn-xs"><span class="fa fa-edit"></span> Edit</a> | 
+                                                    <button class="btn btn-danger btn-xs" data-url="<?php echo site_url('region-delete/' . $item->id) ?>" data-toggle="modal" data-target="#confirm-delete"><span class="fa fa-trash-o"></span> Edit</button>
+                                                </td>
                                             </tr>
                                         <?php endif ?>
                                     <?php endforeach ?>

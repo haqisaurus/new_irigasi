@@ -37,7 +37,7 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-/*
+
 $route['default_controller'] = "frontend/page_controller";
 
 $route['login'] = 'auth/login';
@@ -100,7 +100,7 @@ $route['ajax-by-region-id'] = 'frontend/page_controller/ajaxGetYearsByRegion';
 $route['debit-andalan'] = 'frontend/page_controller/dataDebitAndalan';
 $route['get-andalan'] = 'frontend/page_controller/ajaxGetDataDebitAndalan';
 $route['get-water-demand'] = 'frontend/page_controller/ajaxGetWaterDemand';
-*/
+
 
 // new integrated system
 $route['default_controller'] = "welcome";
@@ -120,6 +120,31 @@ $route['user-add-action']		= 'integrated/admin_page/createUserAction';
 $route['user-edit/(:num)'] 		= 'integrated/admin_page/editUser/$1';
 $route['user-edit-action'] 		= 'integrated/admin_page/editUserAction';
 $route['user-delete/(:num)'] 	= 'integrated/admin_page/deleteUser/$1';
+
+// role
+$route['role'] 					= 'integrated/admin_page/viewRole';
+
+// juru access
+$route['juru-access'] 					= 'integrated/admin_page/viewJuru';
+$route['juru-access-edit/(:num)'] 		= 'integrated/admin_page/editJuru/$1';
+$route['juru-access-edit-action'] 		= 'integrated/admin_page/editJuruAction';
+
+//data master/
+// region
+$route['region'] 					= 'integrated/admin_page/viewRegion';
+$route['region-add'] 				= 'integrated/admin_page/createRegion';
+$route['region-add-action']			= 'integrated/admin_page/createRegionAction';
+$route['region-edit/(:num)'] 		= 'integrated/admin_page/editRegion/$1';
+$route['region-edit-action'] 		= 'integrated/admin_page/editRegionAction';
+$route['region-delete/(:num)'] 		= 'integrated/admin_page/deleteRegion/$1';
+
+// wide
+$route['wide'] 						= 'integrated/admin_page/viewWide';
+$route['wide-add'] 					= 'integrated/admin_page/createWide';
+$route['wide-add-action']			= 'integrated/admin_page/createWideAction';
+$route['wide-edit/(:num)'] 			= 'integrated/admin_page/editWide/$1';
+$route['wide-edit-action'] 			= 'integrated/admin_page/editWideAction';
+$route['wide-delete/(:num)'] 		= 'integrated/admin_page/deleteWide/$1';
 /* END : ADMIN */
 
 

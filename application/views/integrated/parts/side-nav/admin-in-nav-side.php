@@ -21,6 +21,9 @@
                         <a href="<?php echo site_url('user') ?>">Users</a>
                     </li>
                     <li>
+                        <a href="<?php echo site_url('juru-access') ?>">Hak Akses Juru</a>
+                    </li>
+                    <li>
                         <a href="<?php echo site_url('role') ?>">Roles</a>
                     </li>
                 </ul>
@@ -30,10 +33,13 @@
                 <a href="#"><i class="fa fa-database fa-fw"></i> Master Data<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a href="flot.html">Flot Charts</a>
+                        <a href="<?php echo site_url('region') ?>">Daerah irigasi</a>
                     </li>
                     <li>
-                        <a href="morris.html">Morris.js Charts</a>
+                        <a href="<?php echo site_url('wide') ?>">Luas daerah</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo site_url('water') ?>">Debit air</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->

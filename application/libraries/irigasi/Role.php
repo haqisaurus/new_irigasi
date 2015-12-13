@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 
-class User {
+class Role {
 
 	var $CI = null;
 
@@ -9,48 +9,28 @@ class User {
         // Do something with $params
     	$this->CI =& get_instance();
         // using model
-		$this->CI->load->model('user_model');
 		$this->CI->load->model('role_model');
     }
 
-    
+    // ADMIN SIDE
+    public function getAllRole($condition = array(), $limit = null, $offset = null)
+    {
+		return $this->CI->role_model->find($condition, $limit, $offset)->result();
+    }
 
-    public function authentication($username, $password, $remember)
-	{
-		//query the database
-		$result = $this->CI->user_model->login($username, $password);
+    public function getSpesificRole($condition = array(), $limit = null, $offset = null)
+    {
+    	return $this->CI->role_model->find($condition, $limit, $offset)->row();
+    }
 
-		if($result)
-		{
-			$this->CI->session->set_userdata('logged_in', $result, $remember);
-			return TRUE;
-		}
-		else
-		{
-			$this->CI->session->set_flashdata('invalid', '<div class="alert alert-danger"> Invalid <b>username</b> or <b>password</b>. </div>');
-			return false;
-		}
-	}
-
-	// ADMIN SIDE
-	public function getAllUser($condition = array(), $limit = null, $offset = null)
-	{
-		return $this->CI->user_model->findWithRole($condition, $limit, $offset)->result();
-	}
-
-	public function getSpecificUser($condition = array(), $limit = null, $offset = null)
-	{
-		return $this->CI->user_model->findWithRole($condition, $limit, $offset)->row();
-	}
-
-	public function updateUser($data = array())
+    public function updateRole($data = array())
 	{
 		if (isset($data['id'])) {
 
-			$result = $this->CI->user_model->update(array('user.id' => $data['id']), $data);
+			$result = $this->CI->role_model->update(array('role.id' => $data['id']), $data);
 
 			if ($result['status']) {
-				$text 		= 'Data user baru berhasil diupdate';
+				$text 		= 'Data role baru berhasil diupdate';
 				$message 	= array(
 					'status' 		=> 1, 
 					'data' 			=> '', 
@@ -63,7 +43,7 @@ class User {
 				                            </div>
 				                        </div>');
 			} else {
-				$text 		= 'Terjadi kesalahan pada saat mengupdate data user.';
+				$text 		= 'Terjadi kesalahan pada saat mengupdate data role.';
 				$message 	= array(
 					'status' 		=> 0, 
 					'data' 			=> '', 
@@ -77,9 +57,9 @@ class User {
 								        </div>');
 			}
 		} else {
-			$result = $this->CI->user_model->insert($data);
+			$result = $this->CI->role_model->insert($data);
 			if ($result['status']) {
-				$text 		= 'Data user baru berhasil dimasukan';
+				$text 		= 'Data role baru berhasil dimasukan';
 				$message 	= array(
 					'status' 		=> 1, 
 					'data' 			=> '', 
@@ -92,7 +72,7 @@ class User {
 				                            </div>
 				                        </div>');
 			} else {
-				$text 		= 'Terjadi kesalahan pada saat memasukan data user.';
+				$text 		= 'Terjadi kesalahan pada saat memasukan data role.';
 				$message 	= array(
 					'status' 		=> 0, 
 					'data' 			=> '', 
@@ -115,15 +95,15 @@ class User {
     	return $result['status'];
 	}
 
-	public function deleteUser($userID = 0)
+	public function deleteRole($roleID = 0)
 	{
-		$result = $this->CI->user_model->delete(array('user.id' => $userID));
+		$result = $this->CI->role_model->delete(array('role.id' => $roleID));
 		
 		if ($result['status']) {
-			$text 		= 'Data user berhasil dihapus';
+			$text 		= 'Data role berhasil dihapus';
 			$message 	= array(
 				'status' 		=> 1, 
-				'data' 			=> $userID, 
+				'data' 			=> $roleID, 
 				'text'			=> $text,
 				'notification' 	=> '<div class="row">
 							            <div class="col-lg-12">
@@ -133,7 +113,7 @@ class User {
 			                            </div>
 			                        </div>');
 		} else {
-			$text 		= 'Terjadi kesalahan pada penghapusan data user.';
+			$text 		= 'Terjadi kesalahan pada penghapusan data role.';
 			$message 	= array(
 				'status' 		=> 0, 
 				'data' 			=> '', 
@@ -153,5 +133,3 @@ class User {
 	}
 	// END : ADMIN SIDE
 }
-
-/* End of file User.php */

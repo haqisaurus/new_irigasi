@@ -11,7 +11,7 @@ class Admin_page extends CI_Controller {
 		$this->load->view('integrated/master', $template);
 	}
 
-	// user section 
+	// user section =====================================================================================
 	public function viewUser($value='')
 	{
 		$this->load->library('irigasi/user');
@@ -20,7 +20,6 @@ class Admin_page extends CI_Controller {
 		$template['content'] 	= $this->load->view('integrated/pages/admin/user/view', $data, true); 
 		$template['popup'] 	= $this->load->view('integrated/pages/admin/user/popup', $data, true); 
 		$this->load->view('integrated/master', $template);
-	
 	}
 
 	public function createUser()
@@ -92,7 +91,9 @@ class Admin_page extends CI_Controller {
 		{
 		    //Field validation failed.  User redirected to create page
 			$this->session->set_flashdata('error', validation_errors());
-			$template['content'] 	= $this->load->view('integrated/pages/admin/user/update', '', true); 
+			$condition 				= array('user.id' => $this->input->post('id'));
+			$data['user'] 			= $this->user->getSpecificUser($condition);
+			$template['content'] 	= $this->load->view('integrated/pages/admin/user/update', $data, true); 
 			$this->load->view('integrated/master', $template);
 		}
 		else
@@ -140,5 +141,285 @@ class Admin_page extends CI_Controller {
 
  		redirect('user');
 	}
-	// END : user section
+	// END : user section =====================================================================================
+
+
+	// role section =====================================================================================
+	public function viewRole($value='')
+	{
+		$this->load->library('irigasi/role');
+		$data['table'] = $this->role->getAllRole();
+
+		$template['content'] 	= $this->load->view('integrated/pages/admin/role/view', $data, true); 
+		$this->load->view('integrated/master', $template);
+	}
+	// END : role section =====================================================================================
+
+	// juru access section =====================================================================================
+	public function viewJuru()
+	{
+		$this->load->library('irigasi/user');
+		$condition = array('role_id' => 2);
+		$data['table'] = $this->user->getAllUser($condition);
+
+		$template['content'] 	= $this->load->view('integrated/pages/admin/juru-access/view', $data, true); 
+		$this->load->view('integrated/master', $template);
+	}
+
+	public function editJuru($juruID = 0)
+	{
+		$this->load->library('irigasi/user');
+		$this->load->library('irigasi/region');
+		$condition 				= array('user.id' => $juruID);
+		$data['user'] 			= $this->user->getSpecificUser($condition);
+		$data['regions'] 		= $this->region->getAllRegion();
+		
+		$template['content'] 	= $this->load->view('integrated/pages/admin/juru-access/update', $data, true); 
+		$this->load->view('integrated/master', $template);
+	}
+
+	public function editJuruAction()
+	{
+		
+	}
+	// END : juru access section =====================================================================================
+
+
+	// region section =====================================================================================
+	public function viewRegion()
+	{
+		$this->load->library('irigasi/region');
+		$data['table'] = $this->region->getAllRegion();
+
+		$template['content'] 	= $this->load->view('integrated/pages/admin/region/view', $data, true); 
+		$template['popup'] 	= $this->load->view('integrated/pages/admin/region/popup', $data, true); 
+		$this->load->view('integrated/master', $template);
+	}
+
+	public function createRegion()
+	{
+		$template['content'] 	= $this->load->view('integrated/pages/admin/region/create', '', true); 
+		$this->load->view('integrated/master', $template);
+	}
+
+	public function createRegionAction()
+	{
+		$this->load->library('irigasi/region');
+
+		$this->form_validation->set_rules('region-name', 'Username', 'trim|required|xss_clean');
+		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+
+		if($this->form_validation->run() == FALSE)
+		{
+		    //Field validation failed.  User redirected to create page
+			$this->session->set_flashdata('error', validation_errors());
+			$template['content'] 	= $this->load->view('integrated/pages/admin/region/create', '', true); 
+			$this->load->view('integrated/master', $template);
+		}
+		else
+		{
+			$dataInsert = array(
+				'region_name' 		=> $this->input->post('region-name'),
+				);
+
+			$insertResult = $this->region->updateRegion($dataInsert);
+
+			if ($insertResult) {
+				// redirect user 
+				redirect('region');
+			} else {
+				redirect('login');
+			}
+	     	//Go to private area
+			
+		}
+	}
+
+	public function editRegion($regionID = 0)
+	{
+		$this->load->library('irigasi/region');
+		$condition 				= array('region.id' => $regionID);
+		$data['region'] 			= $this->region->getSpecificRegion($condition);
+		
+		$template['content'] 	= $this->load->view('integrated/pages/admin/region/update', $data, true); 
+		$this->load->view('integrated/master', $template);
+	}
+
+	public function editRegionAction()
+	{
+		$this->load->library('irigasi/region');
+
+		$this->form_validation->set_rules('region-name', 'Nama Daerah', 'trim|required|xss_clean');
+		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+
+		if($this->form_validation->run() == FALSE)
+		{
+		    //Field validation failed.  User redirected to create page
+			$this->session->set_flashdata('error', validation_errors());
+			$condition 				= array('region.id' => $this->input->post('id'));
+			$data['region'] 			= $this->region->getSpecificRegion($condition);
+			$template['content'] 	= $this->load->view('integrated/pages/admin/region/update', $data, true); 
+			$this->load->view('integrated/master', $template);
+		}
+		else
+		{
+			$password = $this->input->post('password');
+			// avoid change password if password is empty
+
+			$dataInsert = array(
+					'id'			=> $this->input->post('id'),
+					'region_name' 	=> $this->input->post('region_name'),
+				);
+
+			$insertResult = $this->region->updateRegion($dataInsert);
+
+			if ($insertResult) {
+				// redirect Region 
+				redirect('region');
+			} else {
+				redirect('login');
+			}
+	     	//Go to private area
+			
+		}
+
+	}
+
+	public function deleteRegion($regionID = 0)
+	{
+		$this->load->library('irigasi/region');
+
+		$result = $this->region->deleteRegion($regionID);
+
+ 		redirect('region');
+	}
+	// END : region section =====================================================================================
+
+	// wide section =====================================================================================
+	public function viewWide()
+	{
+		$this->load->library('irigasi/wide');
+		$data['table'] = $this->wide->getAllWide();
+
+		$template['content'] 	= $this->load->view('integrated/pages/admin/wide/view', $data, true); 
+		$template['popup'] 	= $this->load->view('integrated/pages/admin/wide/popup', $data, true); 
+		$this->load->view('integrated/master', $template);
+	}
+
+	public function createWide()
+	{
+		$this->load->library('irigasi/region');
+		$data['regions'] 		= $this->region->getAllRegion();
+
+		$template['content'] 	= $this->load->view('integrated/pages/admin/wide/create', $data, true); 
+		$this->load->view('integrated/master', $template);
+	}
+
+	public function createWideAction()
+	{
+		$this->load->library('irigasi/region');
+		$this->load->library('irigasi/wide');
+
+		$this->form_validation->set_rules('region-id', 'Region', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('area-name', 'Nama Area', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('wide', 'Luas', 'trim|required|xss_clean');
+		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+
+		if($this->form_validation->run() == FALSE)
+		{
+		    //Field validation failed.  User redirected to create page
+			$this->session->set_flashdata('error', validation_errors());
+			$data['regions'] 		= $this->region->getAllRegion();
+			$template['content'] 	= $this->load->view('integrated/pages/admin/wide/create', $data, true); 
+			$this->load->view('integrated/master', $template);
+		}
+		else
+		{
+			$dataInsert = array(
+				'area_name' 		=> $this->input->post('area-name'),
+				'region_id' 		=> $this->input->post('region-id'),
+				'wide' 				=> $this->input->post('wide'),
+				);
+
+			$insertResult = $this->wide->updateWide($dataInsert);
+
+			if ($insertResult) {
+				// redirect user 
+				redirect('wide');
+			} else {
+				redirect('login');
+			}
+	     	//Go to private area
+			
+		}
+	}
+
+	public function editWide($wideID = 0)
+	{
+		$this->load->library('irigasi/region');
+		$this->load->library('irigasi/wide');
+
+		$condition 				= array('wide.id' => $wideID);
+		$data['regions'] 		= $this->region->getAllRegion();
+		$data['wide'] 			= $this->wide->getSpecificWide($condition);
+		
+		$template['content'] 	= $this->load->view('integrated/pages/admin/wide/update', $data, true); 
+		$this->load->view('integrated/master', $template);
+	}
+
+	public function editWideAction()
+	{
+		$this->load->library('irigasi/wide');
+		$this->load->library('irigasi/region');
+
+		$this->form_validation->set_rules('region-id', 'Region', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('area-name', 'Nama Area', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('wide', 'Luas', 'trim|required|xss_clean');
+		$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+
+		if($this->form_validation->run() == FALSE)
+		{
+		    //Field validation failed.  User redirected to create page
+			$this->session->set_flashdata('error', validation_errors());
+			$condition 				= array('region.id' => $this->input->post('id'));
+			$data['wide'] 			= $this->wide->getSpecificWide($condition);
+			$data['regions'] 		= $this->region->getAllRegion();
+			
+			$template['content'] 	= $this->load->view('integrated/pages/admin/wide/update', $data, true); 
+			$this->load->view('integrated/master', $template);
+		}
+		else
+		{
+			$password = $this->input->post('password');
+			// avoid change password if password is empty
+
+			$dataInsert = array(
+					'id'			=> $this->input->post('id'),
+					'area_name' 		=> $this->input->post('area-name'),
+					'region_id' 		=> $this->input->post('region-id'),
+					'wide' 				=> $this->input->post('wide'),
+				);
+
+			$insertResult = $this->wide->updateWide($dataInsert);
+
+			if ($insertResult) {
+				// redirect Region 
+				redirect('wide');
+			} else {
+				redirect('login');
+			}
+	     	//Go to private area
+			
+		}
+	}
+
+	public function deleteWide($wideID = 0)
+	{
+		$this->load->library('irigasi/wide');
+
+		$result = $this->wide->deleteWide($wideID);
+
+ 		redirect('wide');
+	}
+	// END : wide section =====================================================================================
 }

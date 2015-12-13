@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Daftar Hak Akses</h1>
+                <h1 class="page-header">Hak Akses Juru</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -14,6 +14,9 @@
         <!-- /.row -->
         <div class="row">
             <div class="col-lg-12">
+                <a href="<?php echo site_url('user-add'); ?>" class="btn btn-primary"><span class="fa fa-plus-square"></span> Tambah</a>
+                <br>
+                <br>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Data Daftar User
@@ -29,9 +32,11 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        
+                                        <th>Username</th>
+                                        <th>Nama Depan</th>
+                                        <th>Nama Belakang</th>
                                         <th>Hak akses</th>
-                                        
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -39,13 +44,24 @@
                                         <?php if ( $key % 2 == 0 ): ?>
                                             <tr class="odd" data-id="<?php echo $item->id ?>">
                                                 <td><?php echo $key + 1 ?></td>
+                                                <td class="center"><?php echo $item->username ?></td>
+                                                <td><?php echo $item->first_name ?></td>
+                                                <td><?php echo $item->last_name ?></td>
                                                 <td class="center"><b><?php echo $item->role ?></b></td>
-                                                
+                                                <td>
+                                                    <a href="<?php echo site_url('juru-access-edit/' . $item->id) ?>" class="btn btn-info btn-xs"><span class="fa fa-edit"></span> Edit</a>
+                                                </td>
                                             </tr>
                                         <?php else: ?>
                                             <tr class="even">
                                                 <td><?php echo $key + 1 ?></td>
+                                                <td class="center"><?php echo $item->username ?></td>
+                                                <td><?php echo $item->first_name ?></td>
+                                                <td><?php echo $item->last_name ?></td>
                                                 <td class="center"><b><?php echo $item->role ?></b></td>
+                                                <td>
+                                                    <a href="<?php echo site_url('juru-access-edit/' . $item->id) ?>" class="btn btn-info btn-xs"><span class="fa fa-edit"></span> Edit</a>
+                                                </td>
                                             </tr>
                                         <?php endif ?>
                                     <?php endforeach ?>
