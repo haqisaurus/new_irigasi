@@ -74,8 +74,19 @@ Class Water_model extends CI_Model
 
     public function findWithRegion($condition = array(), $limit = null, $offset = null)
     {
+        $this->db->select('distinct region.*, water.*');
+        $this->db->join('region', 'region.id = water.region_id');
+        $query = $this->find($condition, $limit, $offset);
+
+        return $query;
+    }
+
+    public function findLikeWithRegion($condition = array(), $conditionLike = array(), $limit = null, $offset = null)
+    {
         $this->db->select('region.*, water.*');
         $this->db->join('region', 'region.id = water.region_id');
+        $this->db->like($conditionLike);
+        $this->db->group_by('date');
         $query = $this->find($condition, $limit, $offset);
 
         return $query;

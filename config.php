@@ -16,7 +16,7 @@
 | environments.
 |
 */
-$config['base_url'] = 'http://localhost/new_irigasi/';
+$config['base_url'] = 'http://op-irigasi.com';
 
 /*
 |--------------------------------------------------------------------------

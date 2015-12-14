@@ -14,7 +14,27 @@
         <!-- /.row -->
         <div class="row">
             <div class="col-lg-12">
-                <a href="<?php echo site_url('wide-add'); ?>" class="btn btn-primary"><span class="fa fa-plus-square"></span> Tambah</a>
+                <div class="form-group">
+                    <div class="col-sm-3">
+                        <a href="<?php echo site_url('water-add'); ?>" class="btn btn-primary"><span class="fa fa-plus-square"></span> Tambah</a>
+                    </div>
+                    
+                    <div class="col-sm-5 col-sm-offset-4">
+                        <?php echo form_open('') ?>
+                        <div class="input-group col-xs-7" style="float: left;">
+                            <input type="text" class="form-control" id="year" name="date" placeholder="Tahun Bulan" value="<?php echo isset($_POST['date']) ? $_POST['date'] : ''; ?>">
+                            <label for="date-picker-2" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span>
+
+                            </label>
+                        </div>
+                        <div class="col-xs-3">
+                            <button type="submit" class="btn btn-info"><span class="fa fa-search"></span> Cari</button>
+                        </div>
+                        <?php echo form_close(); ?>
+                    </div>
+                    
+                </div>
+                
                 <br>
                 <br>
                 <div class="panel panel-default">
@@ -32,9 +52,11 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama Daerah</th>
-                                        <th>Luas Daerah</th>
-                                        <th>Area</th>
+                                        <th>Nama daerah</th>
+                                        <th>Tanggal</th>
+                                        <th>Kanan</th>
+                                        <th>Kiri</th>
+                                        <th>Limpas</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -43,9 +65,11 @@
                                         <?php if ( $key % 2 == 0 ): ?>
                                             <tr class="odd" data-id="<?php echo $item->id ?>">
                                                 <td><?php echo $key + 1 ?></td>
-                                                <td class="center"><?php echo $item->region_name ?></td>
-                                                <td class="center"><?php echo $item->area_name ?></td>
-                                                <td class="text-right"><?php echo $item->wide ?> <b>ha</b></td>
+                                                <td><?php echo $item->region_name ?></td>
+                                                <td><?php echo $item->date ?></td>
+                                                <td><?php echo $item->right ?> dm<sup>3</sup></td>
+                                                <td><?php echo $item->left ?> dm<sup>3</sup></td>
+                                                <td><?php echo $item->limpas ?> dm<sup>3</sup></td>
                                                 <td>
                                                     <a href="<?php echo site_url('wide-edit/' . $item->id) ?>" class="btn btn-info btn-xs"><span class="fa fa-edit"></span> Edit</a> | 
                                                     <button class="btn btn-danger btn-xs" data-url="<?php echo site_url('wide-delete/' . $item->id) ?>" data-toggle="modal" data-target="#confirm-delete"><span class="fa fa-trash-o"></span> Edit</button>
@@ -54,9 +78,11 @@
                                         <?php else: ?>
                                             <tr class="even">
                                                 <td><?php echo $key + 1 ?></td>
-                                                <td class="center"><?php echo $item->region_name ?></td>
-                                                <td class="center"><?php echo $item->area_name ?></td>
-                                                <td class="text-right"><?php echo $item->wide ?> <b>ha</b></td>
+                                                <td><?php echo $item->region_name ?></td>
+                                                <td><?php echo $item->date ?></td>
+                                                <td><?php echo $item->right ?> dm<sup>3</sup></td>
+                                                <td><?php echo $item->left ?> dm<sup>3</sup></td>
+                                                <td><?php echo $item->limpas ?> dm<sup>3</sup></td>
                                                 <td>
                                                     <a href="<?php echo site_url('wide-edit/' . $item->id) ?>" class="btn btn-info btn-xs"><span class="fa fa-edit"></span> Edit</a> | 
                                                     <button class="btn btn-danger btn-xs" data-url="<?php echo site_url('wide-delete/' . $item->id) ?>" data-toggle="modal" data-target="#confirm-delete"><span class="fa fa-trash-o"></span> Edit</button>
@@ -98,3 +124,8 @@ $(document).ready(function() {
         })
 });
 </script>
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>

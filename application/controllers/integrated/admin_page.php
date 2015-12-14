@@ -426,11 +426,20 @@ class Admin_page extends CI_Controller {
 	// water section =====================================================================================
 		public function viewWater()
 		{
-			$this->load->library('irigasi/water');
-			$data['table'] = $this->water->getAllWater();
-
-			$template['content'] 	= $this->load->view('integrated/pages/admin/water/view', $data, true); 
-			$template['popup'] 	= $this->load->view('integrated/pages/admin/water/popup', $data, true); 
+			
+			$date 		= $this->input->post('date');
+			$regionID 	= $this->input->post('region-id');
+			$data['table'] = array();
+			if ($date) {
+				$this->load->library('irigasi/water');
+				$condition 		= array();
+				$conditionLike  = array('date' => $date);
+				$data['table'] 	= $this->water->getAllWater($condition, $conditionLike);
+				
+			}
+			
+			$template['content'] 	= $this->load->view('integrated/pages/admin/water/view', $data, true);
+			$template['popup'] 		= $this->load->view('integrated/pages/admin/water/popup', '', true); 
 			$this->load->view('integrated/master', $template);
 		}
 
