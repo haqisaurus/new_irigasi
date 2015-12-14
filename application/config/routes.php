@@ -103,11 +103,14 @@ $route['get-water-demand'] = 'frontend/page_controller/ajaxGetWaterDemand';
 
 
 // new integrated system
-$route['default_controller'] = "welcome";
+$route['default_controller'] 	= "integrated/guest_page";
 
-$route['login'] 			= 'auth/login';
-$route['login-action'] 		= 'auth/doLogin';
-$route['logout'] 			= 'auth/doLogout';
+$route['/'] 					= 'integrated/guest_page';
+
+
+$route['login'] 				= 'auth/login';
+$route['login-action'] 			= 'auth/doLogin';
+$route['logout'] 				= 'auth/doLogout';
 
 
 /* ADMIN */
@@ -145,6 +148,14 @@ $route['wide-add-action']			= 'integrated/admin_page/createWideAction';
 $route['wide-edit/(:num)'] 			= 'integrated/admin_page/editWide/$1';
 $route['wide-edit-action'] 			= 'integrated/admin_page/editWideAction';
 $route['wide-delete/(:num)'] 		= 'integrated/admin_page/deleteWide/$1';
+
+// water debit
+$route['water'] 					= 'integrated/admin_page/viewWater';
+$route['water-add'] 				= 'integrated/admin_page/createWater';
+$route['water-add-action']			= 'integrated/admin_page/createWaterAction';
+$route['water-edit/(:num)'] 		= 'integrated/admin_page/editWater/$1';
+$route['water-edit-action'] 		= 'integrated/admin_page/editWaterAction';
+$route['water-delete/(:num)'] 		= 'integrated/admin_page/deleteWater/$1';
 /* END : ADMIN */
 
 

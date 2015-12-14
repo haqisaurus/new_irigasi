@@ -60,8 +60,27 @@
                 <?php $this->load->view('integrated/parts/top-nav/unlogged-in-nav-top') ?>
             <?php endif ?>
             <!-- /.navbar-top-links -->
-
-            <?php $this->load->view('integrated/parts/side-nav/admin-in-nav-side') ?>
+            
+            <?php 
+            $userData = $this->session->userdata('logged_in');
+            switch ($userData['role_id']) {
+                case 1:
+                    $this->load->view('integrated/parts/side-nav/admin-in-nav-side');
+                    break;
+                case 2:
+                    $this->load->view('integrated/parts/side-nav/juru-in-nav-side');
+                    break;
+                case 3:
+                    $this->load->view('integrated/parts/side-nav/pengamat-in-nav-side');
+                    break;
+                case 4:
+                    $this->load->view('integrated/parts/side-nav/pimpinan-in-nav-side');
+                    break;
+                default:
+                    $this->load->view('integrated/parts/side-nav/unlogged-in-nav-side');
+                    break;
+            }
+            ?>
             <!-- /.navbar-static-side -->
         </nav>
 
@@ -72,7 +91,7 @@
     </div>
     <!-- /#wrapper -->
 
-    <?php if ($popup): ?>
+    <?php if (isset($popup)): ?>
         <?php echo $popup; ?>
     <?php endif ?>
         

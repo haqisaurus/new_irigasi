@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>OP Irigasi - Halaman Login</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo base_url('assets/integrated/bower_components/bootstrap/dist/css/bootstrap.min.css'); ?>" rel="stylesheet">
@@ -39,7 +39,7 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Please Sign In</h3>
+                        <h3 class="panel-title text-center">Silahkan Login Terlebih dulu</h3>
                     </div>
                     <div class="panel-body">
                         <?php echo form_open('login-action'); ?>
@@ -56,11 +56,13 @@
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                        <input name="remember" type="checkbox" value="Remember Me">Ingat saya
                                     </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
+                                <br>                                
+                                <a href="<?php echo site_url('/'); ?>">← Kembali ke halaman utama</a>
                             </fieldset>
                         <?php echo form_close(); ?>
                     </div>

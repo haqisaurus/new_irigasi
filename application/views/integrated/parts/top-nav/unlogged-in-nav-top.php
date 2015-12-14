@@ -2,7 +2,7 @@
     
     <!-- /.dropdown -->
     <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo site_url('login'); ?>">
+        <a class="dropdown-toggle"  href="<?php echo site_url('login'); ?>">
             <i class="fa fa-user fa-fw"></i>  Login</i>
         </a>
         <!-- /.dropdown-user -->
