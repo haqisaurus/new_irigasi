@@ -99,7 +99,6 @@
         <?php echo $popup; ?>
     <?php endif ?>
 
-    <script src="<?php echo base_url('assets/integrated/js/jquery.maskedinput.min.js') ?>" type="text/javascript"></script>
 
     <script src="<?php echo base_url('assets/integrated/js/jquery-ui.min.js') ?>"></script>
         

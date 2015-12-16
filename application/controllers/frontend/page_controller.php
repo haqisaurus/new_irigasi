@@ -527,7 +527,7 @@ class Page_controller extends CI_Controller {
 			);
 
 		$data = $this->plant_model->find($condition)->result();
-
+		
 
 		$result = array_map(function($item) {
 			

@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Daftar Luas Daerah Irigasi</h1>
+                <h1 class="page-header">Daftar Debit Air</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -19,15 +19,57 @@
                         <a href="<?php echo site_url('water-add'); ?>" class="btn btn-primary"><span class="fa fa-plus-square"></span> Tambah</a>
                     </div>
                     
-                    <div class="col-sm-5 col-sm-offset-4">
-                        <?php echo form_open('') ?>
-                        <div class="input-group col-xs-7" style="float: left;">
-                            <input type="text" class="form-control" id="year" name="date" placeholder="Tahun Bulan" value="<?php echo isset($_POST['date']) ? $_POST['date'] : ''; ?>">
-                            <label for="date-picker-2" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span>
-
-                            </label>
-                        </div>
+                    <div class="col-sm-7 col-sm-offset-2">
+                        <?php 
+                        $attributes = array('class' => 'form-horizontal', 'id' => 'search-table');
+                        
+                        echo form_open('', $attributes);
+                        ?>
                         <div class="col-xs-3">
+                            <label for="access" class="col-sm-12 control-label">Thn - Bln</label>
+                        </div>
+                        <div class="col-xs-4 form-group">
+                            <div class="col-sm-12">
+                                <?php 
+                                
+                                $options = array();
+
+                                foreach ($years as $key => $item) {
+                                    $options[$item->tahun] = $item->tahun;
+                                }
+
+                                echo form_dropdown('year', $options, set_value('year'), 'class="form-control"');
+                                ?>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 form-group">
+                            <!-- <label for="access" class="col-sm-5 control-label">Bulan</label> -->
+                            <div class="col-sm-12">
+                                <?php 
+                                
+                                $options = array(
+                                    '01'    => 'Januari',
+                                    '02'    => 'Februari',
+                                    '03'    => 'Maret',
+                                    '04'    => 'April',
+                                    '05'    => 'Mei',
+                                    '06'    => 'Juni',
+                                    '07'    => 'Juli',
+                                    '08'    => 'Agustus',
+                                    '09'    => 'September',
+                                    '10'    => 'Oktober',
+                                    '11'    => 'November',
+                                    '12'    => 'Desember',
+                                    );
+
+                                
+
+                                echo form_dropdown('month', $options, set_value('month'), 'class="form-control"');
+                                ?>
+                            </div>
+                        </div>
+                        
+                        <div class="col-xs-1">
                             <button type="submit" class="btn btn-info"><span class="fa fa-search"></span> Cari</button>
                         </div>
                         <?php echo form_close(); ?>
@@ -71,8 +113,8 @@
                                                 <td><?php echo $item->left ?> dm<sup>3</sup></td>
                                                 <td><?php echo $item->limpas ?> dm<sup>3</sup></td>
                                                 <td>
-                                                    <a href="<?php echo site_url('wide-edit/' . $item->id) ?>" class="btn btn-info btn-xs"><span class="fa fa-edit"></span> Edit</a> | 
-                                                    <button class="btn btn-danger btn-xs" data-url="<?php echo site_url('wide-delete/' . $item->id) ?>" data-toggle="modal" data-target="#confirm-delete"><span class="fa fa-trash-o"></span> Edit</button>
+                                                    <a href="<?php echo site_url('water-edit/' . $item->id) ?>" class="btn btn-info btn-xs"><span class="fa fa-edit"></span> Edit</a> | 
+                                                    <button class="btn btn-danger btn-xs" data-url="<?php echo site_url('water-delete/' . $item->id) ?>" data-toggle="modal" data-target="#confirm-delete"><span class="fa fa-trash-o"></span> Edit</button>
                                                 </td>
                                             </tr>
                                         <?php else: ?>
@@ -84,8 +126,8 @@
                                                 <td><?php echo $item->left ?> dm<sup>3</sup></td>
                                                 <td><?php echo $item->limpas ?> dm<sup>3</sup></td>
                                                 <td>
-                                                    <a href="<?php echo site_url('wide-edit/' . $item->id) ?>" class="btn btn-info btn-xs"><span class="fa fa-edit"></span> Edit</a> | 
-                                                    <button class="btn btn-danger btn-xs" data-url="<?php echo site_url('wide-delete/' . $item->id) ?>" data-toggle="modal" data-target="#confirm-delete"><span class="fa fa-trash-o"></span> Edit</button>
+                                                    <a href="<?php echo site_url('water-edit/' . $item->id) ?>" class="btn btn-info btn-xs"><span class="fa fa-edit"></span> Edit</a> | 
+                                                    <button class="btn btn-danger btn-xs" data-url="<?php echo site_url('water-delete/' . $item->id) ?>" data-toggle="modal" data-target="#confirm-delete"><span class="fa fa-trash-o"></span> Edit</button>
                                                 </td>
                                             </tr>
                                         <?php endif ?>

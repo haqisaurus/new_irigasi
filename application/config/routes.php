@@ -156,6 +156,13 @@ $route['water-add-action']			= 'integrated/admin_page/createWaterAction';
 $route['water-edit/(:num)'] 		= 'integrated/admin_page/editWater/$1';
 $route['water-edit-action'] 		= 'integrated/admin_page/editWaterAction';
 $route['water-delete/(:num)'] 		= 'integrated/admin_page/deleteWater/$1';
+
+// data analys
+$route['view-debit-andalan']		= 'integrated/admin_page/getDebitAndalan';
+$route['ajax-debit-andalan'] 		= 'integrated/admin_page/getDebitAndalanData';
+
+$route['view-water-demand']			= 'integrated/admin_page/getWaterDemand';
+
 /* END : ADMIN */
 
 
