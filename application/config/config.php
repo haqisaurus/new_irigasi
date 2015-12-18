@@ -16,7 +16,14 @@
 | environments.
 |
 */
-$config['base_url'] = 'http://localhost/new_irigasi/';
+if ($_SERVER['HTTP_HOST'] == 'op.irigasi.pe.hu') {
+	$config['base_url'] = 'http://op.irigasi.pe.hu/';
+	
+} else {
+	$config['base_url'] = 'http://localhost/new_irigasi/';
+	
+}
+
 
 /*
 |--------------------------------------------------------------------------

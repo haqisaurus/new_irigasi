@@ -21,6 +21,13 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
+
+	public function mobile()
+	{
+		var_dump($_SERVER);
+		exit();
+		$this->load->view('mobile/login', '');
+	}
 }
 
 /* End of file welcome.php */

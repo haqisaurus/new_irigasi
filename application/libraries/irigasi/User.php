@@ -20,9 +20,26 @@ class User {
 		//query the database
 		$result = $this->CI->user_model->login($username, $password);
 
-		if($result)
+		if($result->num_rows())
 		{
-			$this->CI->session->set_userdata('logged_in', $result, $remember);
+			$this->CI->session->set_userdata('logged_in', $result->row(), $remember);
+			return TRUE;
+		}
+		else
+		{
+			$this->CI->session->set_flashdata('invalid', '<div class="alert alert-danger"> Invalid <b>username</b> or <b>password</b>. </div>');
+			return false;
+		}
+	}
+
+	public function authenticationJuru($username, $password, $remember)
+	{
+		//query the database
+		$result = $this->CI->user_model->login($username, $password);
+
+		if($result->num_rows() && $result->row()->role_id == 2)
+		{
+			$this->CI->session->set_userdata('logged_in', $result->row(), $remember);
 			return TRUE;
 		}
 		else
