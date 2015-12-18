@@ -16,7 +16,7 @@
 | environments.
 |
 */
-if ($_SERVER['HTTP_HOST'] == 'op.irigasi.pe.hu') {
+if ($_SERVER['HTTP_HOST'] == 'op-irigasi.pe.hu') {
 	$config['base_url'] = 'http://op.irigasi.pe.hu/';
 	
 } else {
