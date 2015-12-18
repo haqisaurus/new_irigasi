@@ -53,7 +53,7 @@ if ($_SERVER['HTTP_HOST'] == 'op.irigasi.pe.hu') {
 	$db['default']['username'] = 'u926778773_haqis';
 	$db['default']['password'] = 'gorila28A';
 	$db['default']['database'] = 'mysql.idhostinger.com';	
-else {
+} else {
 	$db['default']['hostname'] = 'localhost';
 	$db['default']['username'] = 'root';
 	$db['default']['password'] = 'root';
