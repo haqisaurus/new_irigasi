@@ -49,10 +49,10 @@ $active_group = 'default';
 $active_record = TRUE;
 
 if ($_SERVER['HTTP_HOST'] == 'op-irigasi.pe.hu') {
-	$db['default']['hostname'] = 'u926778773_iriga';
+	$db['default']['hostname'] = 'mysql.idhostinger.com';
 	$db['default']['username'] = 'u926778773_haqis';
 	$db['default']['password'] = 'gorila28A';
-	$db['default']['database'] = 'mysql.idhostinger.com';	
+	$db['default']['database'] = 'u926778773_iriga';	
 } else {
 	$db['default']['hostname'] = 'localhost';
 	$db['default']['username'] = 'root';
