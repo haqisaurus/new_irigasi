@@ -574,7 +574,7 @@ class Admin_page extends CI_Controller {
 		}
 	// END : water section =====================================================================================
 
-	// adebit ndalan section =====================================================================================
+	// debit andalan section =====================================================================================
 		public function getDebitAndalan()
 		{
 			$this->load->library('irigasi/water');
@@ -604,36 +604,47 @@ class Admin_page extends CI_Controller {
 	// END : debit andalan section =====================================================================================
 
 	// data water demand ==========================================================================================
-	public function getWaterDemand()
-	{
-		$this->load->library('irigasi/water');
-		$waterDemand = $this->water->getDataWaterDemand();
-		$dataAndalan = $this->water->getDataAndalan(null, null, 11);
-		$year = date('Y');
-		$resultAndalan = array();
-		$negative = 12;
-		// exit();
-		foreach ($dataAndalan as $key => $value) {
-			// if ($key >= 12) {
-			// 	$month = $key - ($negative - 1);
-			// 	// $negative --;
-			// } else {
-			// 	$month = $key + 1;
-			// }
-			$neraca = $value - $waterDemand[$key]['irigasi'];
-			array_push($resultAndalan, array(
-					'month' => $year . '-' . $key,
-					'debit' => $value,
-					'demand' => $waterDemand[$key]['irigasi'],
-					'neraca' => $neraca,
-				));
+		public function getWaterDemand()
+		{
+			$this->load->library('irigasi/water');
+			$waterDemand = $this->water->getDataWaterDemand();
+			$dataAndalan = $this->water->getDataAndalan(null, null, 11);
+			$year = date('Y');
+			$resultAndalan = array();
+			$negative = 12;
+			// exit();
+			foreach ($dataAndalan as $key => $value) {
+				// if ($key >= 12) {
+				// 	$month = $key - ($negative - 1);
+				// 	// $negative --;
+				// } else {
+				// 	$month = $key + 1;
+				// }
+				$neraca = $value - $waterDemand[$key]['irigasi'];
+				array_push($resultAndalan, array(
+						'month' => $year . '-' . $key,
+						'debit' => $value,
+						'demand' => $waterDemand[$key]['irigasi'],
+						'neraca' => $neraca,
+					));
+			}
+			
+			
+			$data['andalan'] 		= $resultAndalan;
+			
+			$template['content'] 	= $this->load->view('integrated/pages/admin/plant-plan/view-plant', $data, true); 
+			$this->load->view('integrated/master', $template);
 		}
-		
-		
-		$data['andalan'] 		= $resultAndalan;
-		
-		$template['content'] 	= $this->load->view('integrated/pages/admin/plant-plan/view-plant', $data, true); 
-		$this->load->view('integrated/master', $template);
-	}
 	// END : data water demand ==========================================================================================
+
+	// masa tanam ==================================================================================================
+		public function plan()
+		{
+			$this->load->library('irigasi/region');
+			$data['regions'] 		= $this->region->getAllRegion();
+
+			$template['content'] 	= $this->load->view('integrated/pages/admin/plant-plan/form-plan', $data, true); 
+			$this->load->view('integrated/master', $template);
+		}
+	// END : masa tanam ==================================================================================================
 }

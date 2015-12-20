@@ -1,40 +1,81 @@
 
-	$(document).bind("mobileinit", function () {
-	    $.mobile.ajaxEnabled = false;
-	    $.mobile.linkBindingEnabled = false;
-	    $.mobile.hashListeningEnabled = false;
-	    $.mobile.pushStateEnabled = false;
 
-	    // Remove page from DOM when it's being replaced
-	    $('div[data-role="page"]').live('pagehide', function (event, ui) {
-	        $(event.currentTarget).remove();
-	    });
-	});
+	var base_url = $('#site-url').val();
 
-	window.User = Backbone.Model.extend({
+	var Auth = Backbone.Model.extend({
 		defaults: {
 			username: '',
 			password: '',
-			first_name: '',
-			last_name: '',
-			level: ''
+			remember: 'off',
 		},
 		initialize: function() {
 
-		}
-    });
+		},
+		login: function(username, password, remember) {
+			$.ajax({
+				url: base_url + '/login-action-ajax',
+				type: 'POSt',
+				dataType: 'json',
+				data: {
+					username: username,
+					password: password,
+					remember: remember,
+				},
+				beforeSend: function() {
 
-    window.UserCollection = Backbone.Collection.extend({
-    	model: Window.user,
-    	url: ''
+					$.mobile.loading( "show" );
+				},
+				statusCode: {
+					401: function() {
+						$('#popupDialog').find('.ui-title').text('Akun yang anda masukan tidak terdaftar!!!');
+						$.mobile.changePage('#popupDialog', {
+				            transition: 'fade ',
+				            changeHash: true,
+				            role: 'dialog'
+				        });
+						$('#popupDialog').on('pageshow', function(event, ui) {
+				        	$('#close-dialog').focus();
+				        });
+					}
+				},
+			})
+			.done(function(response) {
+				console.log(response);
+				if (response.status) {
+					window.location.href = base_url + '/juru';
+				} else	{
+					$('#popupDialog').find('.ui-title').html(response.error.username + '<br>' + response.error.password);
+					$.mobile.changePage('#popupDialog', {
+			            transition: 'fade ',
+			            changeHash: true,
+			            role: 'dialog'
+			        });
+					$('#popupDialog').on('pageshow', function(event, ui) {
+			        	$('#close-dialog').focus();
+			        });
+				};
+			})
+			.fail(function(error, a, b) {
+
+				
+			})
+			.always(function() {
+				console.log("complete");
+				$.mobile.loading( "hide" );
+			});
+			
+		},
     });
 	
 
-	window.LoginView = Backbone.View.extend({
+	var LoginView = Backbone.View.extend({
 
-	    template:_.template($('#login').html()),
-
+	    initialize: function() {
+	    	
+	        this.template = _.template($('#login').html());
+	    },
 	    render:function (eventName) {
+	    	
 	        $(this.el).html(this.template());
 	        return this;
 	    },
@@ -43,6 +84,13 @@
 	    },
 	    loginAction: function(event) {
 
+	    	var username = this.$el.find('#username').val();
+	    	var password = this.$el.find('#password').val();
+	    	var remember = this.$el.find('#remember').is(":checked");
+
+	    	var auth = new Auth() 
+
+	    	auth.login(username, password, remember);
 	    }
 
 	});
@@ -54,38 +102,32 @@
 	    },
 
 	    initialize:function () {
-	        // // Handle back button throughout the application
-	        // $('.back').live('click', function(event) {
-	        //     window.history.back();
-	        //     return false;
-	        // });
-	        this.firstPage = true;
+	    
+	        this.loginPage = new LoginView({ el: $("#login") });
+	        this.loginPage.render();
 	    },
 
 	    login:function () {
-	        console.log('#home');
-	        this.changePage(new LoginView());
+	        
+	        $.mobile.changePage( "#login" , { reverse: false, changeHash: false } );
 	    },
 
 	    
-
-	    changePage:function (page) {
-	        $(page.el).attr('data-role', 'page');
-	        page.render();
-	        $('body').append($(page.el));
-	        var transition = $.mobile.defaultPageTransition;
-	        // We don't want to slide the first page
-	        if (this.firstPage) {
-	            transition = 'none';
-	            this.firstPage = false;
-	        }
-	        $.mobile.changePage($(page.el), {changeHash:false, transition: transition});
-	    }
-
 	});
 
 	$(document).ready(function () {
-	    console.log('document ready');
+
+	    $( document ).on( "mobileinit",
+			// Set up the "mobileinit" handler before requiring jQuery Mobile's module
+			function() {
+				// Prevents all anchor click handling including the addition of active button state and alternate link bluring.
+				$.mobile.linkBindingEnabled = false;
+
+				// Disabling this will prevent jQuery Mobile from handling hash changes
+				$.mobile.hashListeningEnabled = false;
+			}
+		);
+
 	    app = new AppRouter();
 	    Backbone.history.start();
 	});

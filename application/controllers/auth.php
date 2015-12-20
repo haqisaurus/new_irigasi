@@ -19,13 +19,18 @@ class Auth extends CI_Controller {
 	/*================== logging ==============================*/
 	public function login()
 	{
+		$this->load->library('user_agent');
 
-		if ($this->session->userdata('logged_in')) {
-			$this->redirectUser();
+		if ($this->agent->is_mobile()) {
+			$this->load->view('mobile/login', '');
 		} else {
-			$data = array();
+			if ($this->session->userdata('logged_in')) {
+				$this->redirectUser();
+			} else {
+				$data = array();
 
-			$this->load->view('integrated/pages/auth/login');
+				$this->load->view('integrated/pages/auth/login');
+			}
 		}
 	}
 
@@ -56,24 +61,25 @@ class Auth extends CI_Controller {
 				redirect('login');
 			}
 	     	//Go to private area
-			
 		}
 	}
 
 	private function redirectUser()
 	{
+		
 		$userData = $this->session->userdata('logged_in');
-		switch ($userData['role_id']) {
-			case 1:
+		
+		switch ($userData->role_id) {
+			case '1':
 				redirect('/admin');
 				break;
-			case 2:
+			case '2':
+				redirect('/juru');
+				break;
+			case '3':
 				# code...
 				break;
-			case 3:
-				# code...
-				break;
-			case 4:
+			case '4':
 				# code...
 				break;
 			
@@ -130,7 +136,7 @@ class Auth extends CI_Controller {
 			$password = $this->input->post('password');
 			$remember = $this->input->post('rememeber');
 
-			$loginResult = $this->user->authenticationJuru($username, $password, $remember);
+			$loginResult = $this->user->authentication($username, $password, $remember);
 			
 			if ($loginResult) {
 				$result = array(

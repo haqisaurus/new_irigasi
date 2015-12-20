@@ -24,8 +24,6 @@ class Welcome extends CI_Controller {
 
 	public function mobile()
 	{
-		var_dump($_SERVER['HTTP_HOST']);
-		exit();
 		$this->load->view('mobile/login', '');
 	}
 }

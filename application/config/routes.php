@@ -162,12 +162,23 @@ $route['view-debit-andalan']		= 'integrated/admin_page/getDebitAndalan';
 $route['ajax-debit-andalan'] 		= 'integrated/admin_page/getDebitAndalanData';
 
 $route['view-water-demand']			= 'integrated/admin_page/getWaterDemand';
+$route['add-data-plan']				= 'integrated/admin_page/plan';
 
+
+// mobile access
 $route['login-mobile'] 				= 'welcome/mobile';
-$route['login-ajax'] 				= 'auth/ajaxLogin';
+$route['login-action-ajax'] 		= 'auth/ajaxLogin';
 
+$route['get-water-ajax'] 			= 'integrated/juru_page/getAjaxWaterData';
+$route['get-region-ajax'] 			= 'integrated/juru_page/getAjaxRegionData';
+$route['get-year-ajax'] 			= 'integrated/juru_page/getAjaxYearsData';
+$route['add-water-ajax']			= 'integrated/juru_page/addAjaxWaterData';
 /* END : ADMIN */
 
+
+// JURU
+$route['juru'] 					= 'integrated/juru_page';
+// END : JURU
 
 $route['404_override'] = '';
 

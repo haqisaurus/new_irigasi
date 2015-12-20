@@ -23,9 +23,9 @@ class Water {
 		return $this->CI->water_model->findWithRegion($condition, $limit, $offset)->row();
 	}
 
-	public function getAllYear()
+	public function getAllYear($condition = array())
 	{
-		return $this->CI->water_model->findYear()->result();
+		return $this->CI->water_model->findYear($condition)->result();
 	}
 
 	public function updateWater($data = array())

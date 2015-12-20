@@ -10,4 +10,6 @@ class Guest_page extends CI_Controller {
 		$template['content'] 	= $this->load->view('integrated/pages/admin/dashboard', '', true); 
 		$this->load->view('integrated/master', $template);
 	}
+
+	
 }

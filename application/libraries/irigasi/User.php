@@ -20,7 +20,7 @@ class User {
 		//query the database
 		$result = $this->CI->user_model->login($username, $password);
 
-		if($result->num_rows())
+		if($result)
 		{
 			$this->CI->session->set_userdata('logged_in', $result->row(), $remember);
 			return TRUE;
@@ -37,7 +37,7 @@ class User {
 		//query the database
 		$result = $this->CI->user_model->login($username, $password);
 
-		if($result->num_rows() && $result->row()->role_id == 2)
+		if($result && $result->row()->role_id == 2)
 		{
 			$this->CI->session->set_userdata('logged_in', $result->row(), $remember);
 			return TRUE;

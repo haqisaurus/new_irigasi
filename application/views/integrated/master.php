@@ -66,8 +66,10 @@
             <!-- /.navbar-top-links -->
             
             <?php 
-            $userData = $this->session->userdata('logged_in');
-            switch ($userData['role_id']) {
+            $userData   = $this->session->userdata('logged_in');
+            $roleID     = isset($userData->role_id) ? $userData->role_id : 0;
+            
+            switch ($roleID) {
                 case 1:
                     $this->load->view('integrated/parts/side-nav/admin-in-nav-side');
                     break;
