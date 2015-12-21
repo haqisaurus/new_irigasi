@@ -48,10 +48,18 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root';
-$db['default']['password'] = 'root';
-$db['default']['database'] = 'new_irigasi';
+if ($_SERVER['HTTP_HOST'] == 'op-irigasi.pe.hu') {
+	$db['default']['hostname'] = 'mysql.idhostinger.com';
+	$db['default']['username'] = 'u926778773_haqis';
+	$db['default']['password'] = 'gorila28A';
+	$db['default']['database'] = 'u926778773_iriga';	
+} else {
+	$db['default']['hostname'] = 'localhost';
+	$db['default']['username'] = 'root';
+	$db['default']['password'] = 'root';
+	$db['default']['database'] = 'new_irigasi';	
+}
+
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

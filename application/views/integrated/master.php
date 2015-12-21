@@ -23,6 +23,10 @@
     <!-- Custom Fonts -->
     <link href="<?php echo base_url('assets/integrated/bower_components/font-awesome/css/font-awesome.min.css'); ?>" rel="stylesheet" type="text/css">
 
+    <!-- jquery ui -->
+    <link href="<?php echo base_url('assets/integrated/style/jquery-ui.min.css') ?>" rel="stylesheet">
+    <link href="<?php echo base_url('assets/integrated/style/jquery-ui.structure.min.css') ?>" rel="stylesheet">
+    <link href="<?php echo base_url('assets/integrated/style/jquery-ui.theme.min.css') ?>" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -62,8 +66,10 @@
             <!-- /.navbar-top-links -->
             
             <?php 
-            $userData = $this->session->userdata('logged_in');
-            switch ($userData['role_id']) {
+            $userData   = $this->session->userdata('logged_in');
+            $roleID     = isset($userData->role_id) ? $userData->role_id : 0;
+            
+            switch ($roleID) {
                 case 1:
                     $this->load->view('integrated/parts/side-nav/admin-in-nav-side');
                     break;
@@ -94,6 +100,9 @@
     <?php if (isset($popup)): ?>
         <?php echo $popup; ?>
     <?php endif ?>
+
+
+    <script src="<?php echo base_url('assets/integrated/js/jquery-ui.min.js') ?>"></script>
         
     <!-- Bootstrap Core JavaScript -->
     <script src="<?php echo base_url('assets/integrated/bower_components/bootstrap/dist/js/bootstrap.min.js'); ?>"></script>
@@ -103,6 +112,9 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="<?php echo base_url('assets/integrated/js/sb-admin-2.js'); ?>"></script>
+
+    <!-- My custom engine -->
+    <script src="<?php echo base_url('assets/integrated/js/engine.js'); ?>"></script>
 
 </body>
 

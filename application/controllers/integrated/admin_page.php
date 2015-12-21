@@ -143,7 +143,6 @@ class Admin_page extends CI_Controller {
 		}
 	// END : user section =====================================================================================
 
-
 	// role section =====================================================================================
 		public function viewRole($value='')
 		{
@@ -183,7 +182,6 @@ class Admin_page extends CI_Controller {
 			
 		}
 	// END : juru access section =====================================================================================
-
 
 	// region section =====================================================================================
 		public function viewRegion()
@@ -426,11 +424,28 @@ class Admin_page extends CI_Controller {
 	// water section =====================================================================================
 		public function viewWater()
 		{
-			$this->load->library('irigasi/water');
-			$data['table'] = $this->water->getAllWater();
+			
+			$year 		= $this->input->post('year');
+			$month 		= $this->input->post('month');
+			$regionID 	= $this->input->post('region-id');
 
-			$template['content'] 	= $this->load->view('integrated/pages/admin/water/view', $data, true); 
-			$template['popup'] 	= $this->load->view('integrated/pages/admin/water/popup', $data, true); 
+			$this->form_validation->set_rules('year', 'Tahun', 'trim|xss_clean');
+			$this->form_validation->set_rules('month', 'Bulan', 'trim|xss_clean');
+			$this->form_validation->run();
+
+			$this->load->library('irigasi/water');
+
+			$data['table'] = array();
+			$data['years'] = $this->water->getAllYear();
+			if ($_POST) {
+				$condition 		= array();
+				$conditionLike  = array('date' => $year . '-' . $month);
+				$data['table'] 	= $this->water->getAllWater($condition, $conditionLike);
+				
+			}
+			
+			$template['content'] 	= $this->load->view('integrated/pages/admin/water/view', $data, true);
+			$template['popup'] 		= $this->load->view('integrated/pages/admin/water/popup', '', true); 
 			$this->load->view('integrated/master', $template);
 		}
 
@@ -449,8 +464,10 @@ class Admin_page extends CI_Controller {
 			$this->load->library('irigasi/water');
 
 			$this->form_validation->set_rules('region-id', 'Region', 'trim|required|xss_clean');
-			$this->form_validation->set_rules('area-name', 'Nama Area', 'trim|required|xss_clean');
-			$this->form_validation->set_rules('water', 'Luas', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('date', 'Tanggal', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('right', 'Debit kanan', 'trim|decimal|required|xss_clean');
+			$this->form_validation->set_rules('left', 'Debit kiri', 'trim|decimal|required|xss_clean');
+			$this->form_validation->set_rules('limpas', 'Debit limpas', 'trim|decimal|required|xss_clean');
 			$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 			if($this->form_validation->run() == FALSE)
@@ -464,9 +481,11 @@ class Admin_page extends CI_Controller {
 			else
 			{
 				$dataInsert = array(
-					'area_name' 		=> $this->input->post('area-name'),
-					'region_id' 		=> $this->input->post('region-id'),
-					'water' 				=> $this->input->post('water'),
+					'region_id' 	=> $this->input->post('region-id'),
+					'date' 			=> $this->input->post('date'),
+					'right' 		=> $this->input->post('right'),
+					'left' 			=> $this->input->post('left'),
+					'limpas' 		=> $this->input->post('limpas'),
 					);
 
 				$insertResult = $this->water->updateWater($dataInsert);
@@ -501,15 +520,17 @@ class Admin_page extends CI_Controller {
 			$this->load->library('irigasi/region');
 
 			$this->form_validation->set_rules('region-id', 'Region', 'trim|required|xss_clean');
-			$this->form_validation->set_rules('area-name', 'Nama Area', 'trim|required|xss_clean');
-			$this->form_validation->set_rules('water', 'Luas', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('date', 'Tanggal', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('right', 'Debit kanan', 'trim|decimal|required|xss_clean');
+			$this->form_validation->set_rules('left', 'Debit kiri', 'trim|decimal|required|xss_clean');
+			$this->form_validation->set_rules('limpas', 'Debit limpas', 'trim|decimal|required|xss_clean');
 			$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
 
 			if($this->form_validation->run() == FALSE)
 			{
 			    //Field validation failed.  User redirected to create page
 				$this->session->set_flashdata('error', validation_errors());
-				$condition 				= array('region.id' => $this->input->post('id'));
+				$condition 				= array('water.id' => $this->input->post('id'));
 				$data['water'] 			= $this->water->getSpecificWater($condition);
 				$data['regions'] 		= $this->region->getAllRegion();
 				
@@ -523,9 +544,11 @@ class Admin_page extends CI_Controller {
 
 				$dataInsert = array(
 						'id'			=> $this->input->post('id'),
-						'area_name' 		=> $this->input->post('area-name'),
-						'region_id' 		=> $this->input->post('region-id'),
-						'water' 				=> $this->input->post('water'),
+						'region_id' 	=> $this->input->post('region-id'),
+						'date' 			=> $this->input->post('date'),
+						'right' 		=> $this->input->post('right'),
+						'left' 			=> $this->input->post('left'),
+						'limpas' 		=> $this->input->post('limpas'),
 					);
 
 				$insertResult = $this->water->updateWater($dataInsert);
@@ -550,4 +573,78 @@ class Admin_page extends CI_Controller {
 	 		redirect('water');
 		}
 	// END : water section =====================================================================================
+
+	// debit andalan section =====================================================================================
+		public function getDebitAndalan()
+		{
+			$this->load->library('irigasi/water');
+			$dataAndalan = $this->water->getDataAndalan();
+			$year = date('Y');
+			$resultAndalan = array();
+			$negative = 12;
+
+			foreach ($dataAndalan as $key => $value) {
+				if ($key >= 12) {
+					$month = $key - ($negative - 1);
+					// $negative --;
+				} else {
+					$month = $key + 1;
+				}
+				
+				array_push($resultAndalan, array(
+						'month' => $year . '-' . $month,
+						'debit' => $value
+					));
+			}
+			
+			$data['andalan'] 		= $resultAndalan;
+			$template['content'] 	= $this->load->view('integrated/pages/admin/debit-andalan/view-andalan', $data, true); 
+			$this->load->view('integrated/master', $template);
+		}
+	// END : debit andalan section =====================================================================================
+
+	// data water demand ==========================================================================================
+		public function getWaterDemand()
+		{
+			$this->load->library('irigasi/water');
+			$waterDemand = $this->water->getDataWaterDemand();
+			$dataAndalan = $this->water->getDataAndalan(null, null, 11);
+			$year = date('Y');
+			$resultAndalan = array();
+			$negative = 12;
+			// exit();
+			foreach ($dataAndalan as $key => $value) {
+				// if ($key >= 12) {
+				// 	$month = $key - ($negative - 1);
+				// 	// $negative --;
+				// } else {
+				// 	$month = $key + 1;
+				// }
+				$neraca = $value - $waterDemand[$key]['irigasi'];
+				array_push($resultAndalan, array(
+						'month' => $year . '-' . $key,
+						'debit' => $value,
+						'demand' => $waterDemand[$key]['irigasi'],
+						'neraca' => $neraca,
+					));
+			}
+			
+			
+			$data['andalan'] 		= $resultAndalan;
+			
+			$template['content'] 	= $this->load->view('integrated/pages/admin/plant-plan/view-plant', $data, true); 
+			$this->load->view('integrated/master', $template);
+		}
+	// END : data water demand ==========================================================================================
+
+	// masa tanam ==================================================================================================
+		public function plan()
+		{
+			$this->load->library('irigasi/region');
+			$data['regions'] 		= $this->region->getAllRegion();
+
+			$template['content'] 	= $this->load->view('integrated/pages/admin/plant-plan/form-plan', $data, true); 
+			$this->load->view('integrated/master', $template);
+		}
+	// END : masa tanam ==================================================================================================
 }

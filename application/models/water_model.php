@@ -76,6 +76,19 @@ Class Water_model extends CI_Model
     {
         $this->db->select('region.*, water.*');
         $this->db->join('region', 'region.id = water.region_id');
+        $this->db->order_by('water.date', 'DESC');
+        $query = $this->find($condition, $limit, $offset);
+
+        return $query;
+    }
+
+    public function findLikeWithRegion($condition = array(), $conditionLike = array(), $limit = null, $offset = null)
+    {
+        $this->db->select('region.*, water.*');
+        $this->db->join('region', 'region.id = water.region_id');
+        $this->db->like($conditionLike);
+        $this->db->group_by('date');
+        $this->db->order_by('water.date', 'DESC');
         $query = $this->find($condition, $limit, $offset);
 
         return $query;
@@ -86,7 +99,7 @@ Class Water_model extends CI_Model
     {
         $this->db->select('YEAR(date) AS tahun');
         $this->db->where($condition);
-        $this->db->order_by('date', 'DESC');
+        $this->db->order_by('tahun', 'DESC');
         $this->db->group_by('YEAR(date)');
         $query = $this->find($condition, $limit, $offset);
         return $query;

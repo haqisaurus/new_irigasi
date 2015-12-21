@@ -18,7 +18,11 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
+if ($_SERVER['HTTP_HOST'] == 'op-irigasi.pe.hu') {
+	define('ENVIRONMENT', 'production');	
+} else {
 	define('ENVIRONMENT', 'development');
+}
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING

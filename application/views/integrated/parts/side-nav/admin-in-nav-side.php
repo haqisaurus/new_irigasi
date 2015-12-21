@@ -45,27 +45,12 @@
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Debit Andalan<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="flot.html">Flot Charts</a>
-                    </li>
-                    <li>
-                        <a href="morris.html">Morris.js Charts</a>
-                    </li>
-                </ul>
-                <!-- /.nav-second-level -->
+                <a href="<?php echo site_url('view-debit-andalan'); ?>"><i class="fa fa-bar-chart-o fa-fw"></i> Debit Andalan</span></a>
+               
             </li>
             <li>
-                <a href="#"><i class="fa fa-thumb-tack fa-fw"></i> Rencana Tanam<span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a href="flot.html">Flot Charts</a>
-                    </li>
-                    <li>
-                        <a href="morris.html">Morris.js Charts</a>
-                    </li>
-                </ul>
+                <a href="<?php echo site_url('view-water-demand'); ?>"><i class="fa fa-thumb-tack fa-fw"></i> Rencana Tanam</a>
+                
                 <!-- /.nav-second-level -->
             </li>
             <li>

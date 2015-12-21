@@ -4,7 +4,7 @@
     <li class="dropdown">
         <?php $user = $this->session->userdata('logged_in'); ?>
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <i class="fa fa-user fa-fw"></i> <?php echo $user['first_name'] . ' ' . $user['last_name']; ?> <i class="fa fa-caret-down"></i>
+            <i class="fa fa-user fa-fw"></i> <?php echo $user->first_name . ' ' . $user->last_name; ?> <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-user">
             <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
