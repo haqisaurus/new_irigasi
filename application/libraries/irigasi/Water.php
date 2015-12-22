@@ -257,8 +257,6 @@ class Water {
 
 		$data = $this->CI->plant_model->find($condition)->result();
 
-
-
 		$result = array_map(function($item) {
 			
 			$month = strtotime($item->start);
@@ -280,6 +278,79 @@ class Water {
 		
 		return $result;
 
+	}
+
+	public function planData() 
+	{
+
+		$regionID 	= 1;
+		$year 		= 2015;
+		$startMonth = 11;
+
+		$padi 		= array(400, 300, 200);
+		$palawija 	= array(200, 400, 100);
+		$tebu 		= array(100, 500, 200);
+		$bero 		= array(0, 0, 0);
+
+		$WaterNeed = 0.01;
+		$irigasiNeed = 1.2;
+
+		$rsltMT1 = 0;
+		$rsltMT2 = 0;
+		$rsltMT3 = 0;
+
+		$rsltMT1 = ((($padi[0] * 0.75) + ($palawija[0] * 0.3) + ($tebu[0] + 0.85) + ($bero[0] * 0)) * 0.01);
+		$rsltMT2 = ((($padi[1] * 0.75) + ($palawija[1] * 0.3) + ($tebu[1] + 0.85) + ($bero[1] * 0)) * 0.01);
+		$rsltMT3 = ((($padi[2] * 0.75) + ($palawija[2] * 0.3) + ($tebu[2] + 0.85) + ($bero[2] * 0)) * 0.01);
+
+
+		// return array(
+		// 		array(
+		// 			'water-demand' => $rsltMT1,
+		// 			'water-irigasi' => $rsltMT1 * $irigasiNeed,
+		// 			),
+		// 		array(
+		// 			'water-demand' => $rsltMT2,
+		// 			'water-irigasi' => $rsltMT2 * $irigasiNeed,
+		// 			),
+		// 		array(
+		// 			'water-demand' => $rsltMT3,
+		// 			'water-irigasi' => $rsltMT3 * $irigasiNeed,
+		// 			),
+		// 	);
+		
+		$startDay =  '1-' . $startMonth . '-' . $year;
+		$start = $month = strtotime($startDay);
+		$end = strtotime('+11 month', $start);
+
+		while($month <= $end) {
+			echo date('F', $month);
+			$month = strtotime("+1 month", $month);
+		}
+	}
+
+	private function array_shift_circular(array $array, $steps = 1)
+	{
+	    if (!is_int($steps)) {
+	        throw new InvalidArgumentException(
+	                'steps has to be an (int)');
+	    }
+	 
+	    if ($steps === 0) {
+	        return $array;
+	    }
+	 
+	    $l = count($array);
+	 
+	    if ($l === 0) {
+	        return $array;
+	    }
+	 
+	    $steps = $steps % $l;
+	    $steps *= -1;
+	 
+	    return array_merge(array_slice($array, $steps),
+	                       array_slice($array, 0, $steps));
 	}
 	// END : ADMIN SIDE
 }

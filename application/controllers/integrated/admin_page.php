@@ -646,5 +646,12 @@ class Admin_page extends CI_Controller {
 			$template['content'] 	= $this->load->view('integrated/pages/admin/plant-plan/form-plan', $data, true); 
 			$this->load->view('integrated/master', $template);
 		}
+
+		public function planData()
+		{
+			$this->load->library('irigasi/water');
+			$waterDemand = $this->water->planData();
+			echo json_encode($waterDemand);
+		}
 	// END : masa tanam ==================================================================================================
 }

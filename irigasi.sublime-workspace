@@ -203,7 +203,15 @@
 			"file": "application/config/routes.php",
 			"settings":
 			{
-				"buffer_size": 6702,
+				"buffer_size": 7471,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "application/config/config.php",
+			"settings":
+			{
+				"buffer_size": 13105,
 				"line_ending": "Windows"
 			}
 		},
@@ -211,7 +219,18 @@
 			"file": "application/controllers/integrated/admin_page.php",
 			"settings":
 			{
-				"buffer_size": 18858,
+				"buffer_size": 22604,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); \n\nclass Water {\n\n	var $CI = null;\n\n	public function __construct()\n    {\n        // Do something with $params\n    	$this->CI =& get_instance();\n        // using model\n		$this->CI->load->model('water_model');\n    }\n\n    // ADMIN SIDE\n    public function getAllWater($condition = array(), $conditionLike = array(), $limit = null, $offset = null)\n    {\n		return $this->CI->water_model->findLikeWithRegion($condition, $conditionLike, $limit, $offset)->result();\n    }\n\n    public function getSpecificWater($condition = array(), $limit = null, $offset = null)\n	{\n		return $this->CI->water_model->findWithRegion($condition, $limit, $offset)->row();\n	}\n\n	public function getAllYear($condition = array())\n	{\n		return $this->CI->water_model->findYear($condition)->result();\n	}\n\n	public function updateWater($data = array())\n	{\n		$checkData = $this->getSpecificWater(array('date' => $data['date']));\n\n		if ($checkData) {\n\n			unset($data['id']);\n\n			$result = $this->CI->water_model->update(array('water.date' => $data['date']), $data);\n\n			if ($result['status']) {\n				$text 		= 'Data debit air baru berhasil diupdate';\n				$message 	= array(\n					'status' 		=> 1, \n					'data' 			=> '', \n					'text'			=> $text,\n					'notification' 	=> '<div class=\"row\">\n								            <div class=\"col-lg-12\">\n								            	<div class=\"alert alert-success\">\n				                                	' . $text . '\n				                            	</div>\n				                            </div>\n				                        </div>');\n			} else {\n				$text 		= 'Terjadi kesalahan pada saat mengupdate data debit air.';\n				$message 	= array(\n					'status' 		=> 0, \n					'data' 			=> '', \n					'text '			=> $text,\n					'notification' 	=> '<div class=\"row\">\n								            <div class=\"col-lg-12\">\n								                <div class=\"alert alert-danger\">\n								                    ' . $text . '\n								                </div>\n								            </div>\n								        </div>');\n			}\n		} else {\n\n			$result = $this->CI->water_model->insert($data);\n\n			if ($result['status']) {\n				$text 		= 'Data debit air baru berhasil dimasukan';\n				$message 	= array(\n					'status' 		=> 1, \n					'data' 			=> '', \n					'text'			=> $text,\n					'notification' 	=> '<div class=\"row\">\n								            <div class=\"col-lg-12\">\n								            	<div class=\"alert alert-success\">\n				                                	' . $text . '\n				                            	</div>\n				                            </div>\n				                        </div>');\n			} else {\n				$text 		= 'Terjadi kesalahan pada saat memasukan data debit air.';\n				$message 	= array(\n					'status' 		=> 0, \n					'data' 			=> '', \n					'text '			=> $text,\n					'notification' 	=> '<div class=\"row\">\n								            <div class=\"col-lg-12\">\n								                <div class=\"alert alert-danger\">\n								                    ' . $text . '\n								                </div>\n								            </div>\n								        </div>');\n			}\n		}\n		\n		\n		\n    	\n    	$this->CI->session->set_flashdata('message', $message);\n\n    	return $result['status'];\n	}\n\n	public function deleteWater($waterID = 0)\n	{\n		$result = $this->CI->water_model->delete(array('water.id' => $waterID));\n		\n		if ($result['status']) {\n			$text 		= 'Data debit air berhasil dihapus';\n			$message 	= array(\n				'status' 		=> 1, \n				'data' 			=> $waterID, \n				'text'			=> $text,\n				'notification' 	=> '<div class=\"row\">\n							            <div class=\"col-lg-12\">\n							            	<div class=\"alert alert-success\">\n			                                	' . $text . '\n			                            	</div>\n			                            </div>\n			                        </div>');\n		} else {\n			$text 		= 'Terjadi kesalahan pada penghapusan data debit air.';\n			$message 	= array(\n				'status' 		=> 0, \n				'data' 			=> '', \n				'text '			=> $text,\n				'notification' 	=> '<div class=\"row\">\n							            <div class=\"col-lg-12\">\n							                <div class=\"alert alert-danger\">\n							                    ' . $text . '\n							                </div>\n							            </div>\n							        </div>');\n		}\n    	\n    	$this->CI->session->set_flashdata('message', $message);\n\n    	return $result['status'];\n	}\n\n	public function getDataAndalan($regionID = null, $year = null, $month = 1)\n	{\n		$this->CI->load->model('region_model');\n\n		$data = array();\n		$table = array();\n		$dataCollection = array();\n\n		$region = $this->CI->region_model->find()->row();\n		$regionID = $regionID?: $region->id;\n\n		$queryYear = $region ? array('region_id' => $regionID) : array();\n		$allYears = $this->CI->water_model->findYear($queryYear)->result();\n\n		$year = $allYears[0]->tahun;\n\n		$startDay =  $month ? '1-' . $month . '-' . $year : '1-1-2015';\n		$start = $month = strtotime($startDay);\n		$end = strtotime('+11 month', $start);\n\n		while($month <= $end) {\n			$dataCollection[date('F', $month)] = array();\n\n			// collecting first half of month\n			$coloumn1 = array();\n			// collecting second half of month\n			$coloumn2 = array();\n\n			// ============= FROM FIRST MONTH UNTIL HALF MONTH ===========\n			foreach ($allYears as $key => $value1) {\n\n				$startFirst = strtotime($value1->tahun . '-' .  date('F', $month) . '-1' );\n				$endFirst = strtotime('+14 day',  $startFirst);\n			\n				// define half \n				$half1 = array(	\n								date('Y-m-d', $startFirst), \n								date('Y-m-d', $endFirst), \n								$regionID\n							);\n\n				array_push($coloumn1, $this->CI->water_model->debitIntake($half1)->row());\n			}\n\n			// =========== HALF UNTIL LAST =================\n			foreach ($allYears as $key => $value2) {\n\n				$startSecond = strtotime('+1 day',  strtotime($value2->tahun . '-' . date('m-d', $endFirst)));\n				$endSecond = strtotime('last day of',  strtotime($value2->tahun . '-' . date('m-d', $endFirst)));\n\n				$half2 = array(\n								date('Y-m-d', $startSecond), \n								date('Y-m-d', $endSecond), \n								$regionID\n							);\n\n				array_push($coloumn2, $this->CI->water_model->debitIntake($half2)->row());\n			}\n\n\n			array_push($dataCollection[date('F', $month)], $coloumn1);\n			array_push($dataCollection[date('F', $month)], $coloumn2);\n\n			$month = strtotime(\"+1 month\", $month);\n		}\n		// echo \"<pre>\" . print_r($dataCollection, 1) . \"</pre>\";\n		// ======================================================================================================\n		$result = array();\n\n		$coloumnAndalan = round(0.8 * (count($allYears) + 1)) - 1; //because coloumn start with 0 in computer\n       	\n       	// echo $coloumnAndalan;\n       	foreach ($dataCollection as $key => $bulan) {\n\n            $intakeCollection = array();\n\n        	foreach ($bulan as $key => $setBulan) {\n\n        		$intakeCollection = array_map(function($obj) { \n\n        			$intake = empty($obj) ? 1110 : $obj->intake;\n        			return round($intake, 4);\n\n        		}, $setBulan);\n\n        		rsort($intakeCollection);\n        		$andalanVal = isset($intakeCollection[$coloumnAndalan]) ? $intakeCollection[$coloumnAndalan] : min($intakeCollection);\n            	\n            	array_push($result, $andalanVal);\n        	}\n        }\n\n        return $result;\n	}\n\n	// water demand\n	public function getDataWaterDemand($year = null)\n	{\n		$this->CI->load->model('plant_model');\n\n		$year = isset($year) ? : date('Y');\n\n		$startMonth = '1-11-' . ($year - 1);\n		$start = $month = strtotime($startMonth);\n		$end = strtotime(\"+11 month\", $start);\n\n		$condition = array(\n			'start >=' => date('Y-m-d', $start),\n			'start <=' => date('Y-m-d', $end),\n			// 'region_id' => 1\n			);\n\n		$data = $this->CI->plant_model->find($condition)->result();\n\n		$result = array_map(function($item) {\n			\n			$month = strtotime($item->start);\n\n			$newData = array(\n				// 'start' => $item->start,\n				// 'end' => $item->end,\n				// 'rice' => $item->rice * 0.75,\n				// 'palawija' => $item->palawija * 0.3,\n				// 'sugar' => $item->sugar * 0.85,\n				// 'bero' => $item->bero,\n				'month' => date('F', $month),\n				'demand' => (($item->rice * 0.75) + ($item->palawija * 0.3) + ($item->sugar * 0.85) + ($item->bero * 0)) * 0.01,\n				'irigasi' => ((($item->rice * 0.75) + ($item->palawija * 0.3) + ($item->sugar * 0.85) + ($item->bero * 0)) * 0.01) * 1.2,\n				);\n\n			return $newData;\n		}, $data);\n		\n		return $result;\n\n	}\n	// END : ADMIN SIDE\n}",
+			"file": "application/libraries/irigasi/Water.php",
+			"file_size": 8624,
+			"file_write_time": 130951408095441000,
+			"settings":
+			{
+				"buffer_size": 8338,
 				"line_ending": "Windows"
 			}
 		},
@@ -219,7 +238,15 @@
 			"file": "application/views/integrated/master.php",
 			"settings":
 			{
-				"buffer_size": 4168,
+				"buffer_size": 4807,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "assets/mobile/juru.js",
+			"settings":
+			{
+				"buffer_size": 9250,
 				"line_ending": "Windows"
 			}
 		},
@@ -243,7 +270,7 @@
 			"file": "application/controllers/integrated/guest_page.php",
 			"settings":
 			{
-				"buffer_size": 340,
+				"buffer_size": 343,
 				"line_ending": "Windows"
 			}
 		},
@@ -251,7 +278,7 @@
 			"file": "application/controllers/welcome.php",
 			"settings":
 			{
-				"buffer_size": 770,
+				"buffer_size": 844,
 				"line_ending": "Windows"
 			}
 		}
@@ -293,12 +320,26 @@
 	},
 	"expanded_folders":
 	[
+		"/D/www/new_irigasi",
+		"/D/www/new_irigasi/application",
+		"/D/www/new_irigasi/application/config",
+		"/D/www/new_irigasi/application/controllers",
+		"/D/www/new_irigasi/application/controllers/integrated",
+		"/D/www/new_irigasi/application/libraries",
+		"/D/www/new_irigasi/application/libraries/irigasi",
+		"/D/www/new_irigasi/application/views",
+		"/D/www/new_irigasi/application/views/integrated",
+		"/D/www/new_irigasi/application/views/integrated/pages",
+		"/D/www/new_irigasi/application/views/integrated/pages/auth",
+		"/D/www/new_irigasi/assets",
+		"/D/www/new_irigasi/assets/mobile",
 		"/D/www/new_irigasi/application/controllers",
 		"/D/www/new_irigasi/application/controllers/integrated",
 		"/D/www/new_irigasi/application/views",
 		"/D/www/new_irigasi/application/views/integrated",
 		"/D/www/new_irigasi/application/views/integrated/pages",
-		"/D/www/new_irigasi/application/views/integrated/pages/auth"
+		"/D/www/new_irigasi/application/views/integrated/pages/auth",
+		"/D/www/new_irigasi/application/config"
 	],
 	"file_history":
 	[
@@ -457,7 +498,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -466,7 +507,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6702,
+						"buffer_size": 7471,
 						"regions":
 						{
 						},
@@ -483,27 +524,56 @@
 							"syntax": "Packages/PHP/PHP.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1688.0,
+						"translation.y": 1800.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "application/controllers/integrated/admin_page.php",
+					"file": "application/config/config.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 18858,
+						"buffer_size": 13105,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								18576,
-								18576
+								368,
+								368
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "application/controllers/integrated/admin_page.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 22604,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								17813,
+								17813
 							]
 						],
 						"settings":
@@ -513,19 +583,49 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1467.0,
+						"translation.y": 498.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "application/libraries/irigasi/Water.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8338,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7658,
+								7658
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2295.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 4,
 					"file": "application/views/integrated/master.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4168,
+						"buffer_size": 4807,
 						"regions":
 						{
 						},
@@ -544,14 +644,44 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 624.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 5,
+					"file": "assets/mobile/juru.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9250,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7498,
+								7498
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4464.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
 					"file": "application/views/integrated/parts/top-nav/unlogged-in-nav-top.php",
 					"semi_transient": false,
 					"settings":
@@ -576,11 +706,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 7,
 					"file": "application/views/integrated/pages/auth/login.php",
 					"semi_transient": false,
 					"settings":
@@ -607,16 +737,16 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 8,
 					"file": "application/controllers/integrated/guest_page.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 340,
+						"buffer_size": 343,
 						"regions":
 						{
 						},
@@ -636,16 +766,16 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 9,
 					"file": "application/controllers/welcome.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 770,
+						"buffer_size": 844,
 						"regions":
 						{
 						},
@@ -662,11 +792,11 @@
 							"syntax": "Packages/PHP/PHP.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": -0.0,
-						"translation.y": 78.0,
+						"translation.x": 0.0,
+						"translation.y": 83.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 8,
 					"type": "text"
 				}
 			]
@@ -735,7 +865,7 @@
 		[
 			[
 				"",
-				"~/Documents/new_irigasi.sublime-project"
+				"D:\\Sublime-projects\\paperlust.sublime-project"
 			]
 		],
 		"width": 380.0
