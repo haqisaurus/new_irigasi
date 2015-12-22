@@ -143,7 +143,7 @@ class Water {
     	return $result['status'];
 	}
 
-	public function getDataAndalan($regionID = null, $year = null, $month = 1)
+	public function getDataAndalan($regionID = null, $monthStart = 1)
 	{
 		$this->CI->load->model('region_model');
 
@@ -159,11 +159,12 @@ class Water {
 
 		$year = $allYears[0]->tahun;
 
-		$startDay =  $month ? '1-' . $month . '-' . $year : '1-1-2015';
+		$startDay = '1-' . $monthStart . '-2015';
 		$start = $month = strtotime($startDay);
 		$end = strtotime('+11 month', $start);
 
 		while($month <= $end) {
+			
 			$dataCollection[date('F', $month)] = array();
 
 			// collecting first half of month
@@ -277,7 +278,6 @@ class Water {
 		}, $data);
 		
 		return $result;
-
 	}
 
 	public function planData() 
@@ -286,6 +286,7 @@ class Water {
 		$regionID 	= 1;
 		$year 		= 2015;
 		$startMonth = 11;
+		$split 		= [3,7,11];
 
 		$padi 		= array(400, 300, 200);
 		$palawija 	= array(200, 400, 100);
@@ -304,53 +305,44 @@ class Water {
 		$rsltMT3 = ((($padi[2] * 0.75) + ($palawija[2] * 0.3) + ($tebu[2] + 0.85) + ($bero[2] * 0)) * 0.01);
 
 
-		// return array(
-		// 		array(
-		// 			'water-demand' => $rsltMT1,
-		// 			'water-irigasi' => $rsltMT1 * $irigasiNeed,
-		// 			),
-		// 		array(
-		// 			'water-demand' => $rsltMT2,
-		// 			'water-irigasi' => $rsltMT2 * $irigasiNeed,
-		// 			),
-		// 		array(
-		// 			'water-demand' => $rsltMT3,
-		// 			'water-irigasi' => $rsltMT3 * $irigasiNeed,
-		// 			),
-		// 	);
+		$resultAllMT = array(
+				array(
+					'water-demand' => $rsltMT1,
+					'water-irigasi' => $rsltMT1 * $irigasiNeed,
+					),
+				array(
+					'water-demand' => $rsltMT2,
+					'water-irigasi' => $rsltMT2 * $irigasiNeed,
+					),
+				array(
+					'water-demand' => $rsltMT3,
+					'water-irigasi' => $rsltMT3 * $irigasiNeed,
+					),
+			);
 		
-		$startDay =  '1-' . $startMonth . '-' . $year;
-		$start = $month = strtotime($startDay);
-		$end = strtotime('+11 month', $start);
+		$startDay 	=  '1-' . $startMonth . '-' . $year;
+		$start 		= $month = strtotime($startDay);
+		$end 		= strtotime('+11 month', $start);
+		$n 			= 0;
+		$key 		= 0;
+		$result 	= array();
 
 		while($month <= $end) {
-			echo date('F', $month);
-			$month = strtotime("+1 month", $month);
-		}
-	}
+			
+			$data = array(
+				'month' 	=> date('F', $month),
+				'data' 		=> $resultAllMT[$key],
+				);
 
-	private function array_shift_circular(array $array, $steps = 1)
-	{
-	    if (!is_int($steps)) {
-	        throw new InvalidArgumentException(
-	                'steps has to be an (int)');
-	    }
-	 
-	    if ($steps === 0) {
-	        return $array;
-	    }
-	 
-	    $l = count($array);
-	 
-	    if ($l === 0) {
-	        return $array;
-	    }
-	 
-	    $steps = $steps % $l;
-	    $steps *= -1;
-	 
-	    return array_merge(array_slice($array, $steps),
-	                       array_slice($array, 0, $steps));
+			array_push($result, $data);
+
+			if($n == $split[$key]) $key++;
+
+			$month = strtotime("+1 month", $month);
+			$n++;
+		}
+
+		return json_encode($result);
 	}
 	// END : ADMIN SIDE
 }

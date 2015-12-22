@@ -9,13 +9,52 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <div class="col-sm-7 col-sm-offset-5">
+                    <?php 
+                    $attributes = array('class' => 'form-horizontal', 'id' => 'search-table');
+                    
+                    echo form_open('view-debit-andalan', $attributes);
+                    ?>
+                    <div class="col-xs-4 col-xs-offset-3">
+                        <label for="access" class="col-sm-12 control-label">Daerah Irigasi</label>
+                    </div>
+                    <div class="col-xs-4 form-group">
+                        <div class="col-sm-12">
+                            <?php 
+                            
+                            $options = array();
+
+                            foreach ($regions as $key => $item) {
+                                $options[$item->id] = $item->region_name;
+                            }
+
+                            echo form_dropdown('region-id', $options, set_value('region-id'), 'class="form-control" id="region-id" ');
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-xs-1">
+                        <button type="submit" class="btn btn-info"><span class="fa fa-search"></span> Lihat</button>
+                    </div>
+                    <?php echo form_close(); ?>
+                </div>
+                
+            </div>
+            
+            <br>
+            <br>
+        </div>
+    </div>
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Debit Andalan
+                    Debit Andalan <b><?php echo $current_reg; ?></b>
                 </div>
+                
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div id="morris-area-chart"></div>
@@ -54,6 +93,12 @@
                 return months[dataIndex];
             }
         });
+
+        $(document)
+            .off('change', '#region-id')
+            .on('change', '#region-id', function(e) {
+                console.log($(this).val())
+            });
 
     });
 

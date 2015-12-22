@@ -43,6 +43,33 @@
                         ?>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="access" class="col-sm-2 control-label">Bulan Mulai</label>
+                    <div class="col-sm-3">
+                        <?php 
+                                
+                        $options = array(
+                            '11'    => 'November',
+                            '12'    => 'Desember',
+                            '01'    => 'Januari',
+                            '02'    => 'Februari',
+                            '03'    => 'Maret',
+                            '04'    => 'April',
+                            '05'    => 'Mei',
+                            '06'    => 'Juni',
+                            '07'    => 'Juli',
+                            '08'    => 'Agustus',
+                            '09'    => 'September',
+                            '10'    => 'Oktober',
+                            );
+
+                        
+
+                        echo form_dropdown('month', $options, set_value('month'), 'class="form-control"');
+                        ?>
+                    </div>
+                </div>
+               
                 <div class="form-group <?php echo form_error('username') ? 'has-error' : ''; ?>">
                     <label for="access" class="col-sm-2 control-label">Rentang</label>
 
