@@ -143,7 +143,7 @@ class Water {
     	return $result['status'];
 	}
 
-	public function getDataAndalan($regionID = null, $year = null, $month = 1)
+	public function getDataAndalan($regionID = null, $monthStart = 1)
 	{
 		$this->CI->load->model('region_model');
 
@@ -159,11 +159,12 @@ class Water {
 
 		$year = $allYears[0]->tahun;
 
-		$startDay =  $month ? '1-' . $month . '-' . $year : '1-1-2015';
+		$startDay = '1-' . $monthStart . '-2015';
 		$start = $month = strtotime($startDay);
 		$end = strtotime('+11 month', $start);
 
 		while($month <= $end) {
+			
 			$dataCollection[date('F', $month)] = array();
 
 			// collecting first half of month
@@ -257,8 +258,6 @@ class Water {
 
 		$data = $this->CI->plant_model->find($condition)->result();
 
-
-
 		$result = array_map(function($item) {
 			
 			$month = strtotime($item->start);
@@ -279,7 +278,71 @@ class Water {
 		}, $data);
 		
 		return $result;
+	}
 
+	public function planData() 
+	{
+
+		$regionID 	= 1;
+		$year 		= 2015;
+		$startMonth = 11;
+		$split 		= [3,7,11];
+
+		$padi 		= array(400, 300, 200);
+		$palawija 	= array(200, 400, 100);
+		$tebu 		= array(100, 500, 200);
+		$bero 		= array(0, 0, 0);
+
+		$WaterNeed = 0.01;
+		$irigasiNeed = 1.2;
+
+		$rsltMT1 = 0;
+		$rsltMT2 = 0;
+		$rsltMT3 = 0;
+
+		$rsltMT1 = ((($padi[0] * 0.75) + ($palawija[0] * 0.3) + ($tebu[0] + 0.85) + ($bero[0] * 0)) * 0.01);
+		$rsltMT2 = ((($padi[1] * 0.75) + ($palawija[1] * 0.3) + ($tebu[1] + 0.85) + ($bero[1] * 0)) * 0.01);
+		$rsltMT3 = ((($padi[2] * 0.75) + ($palawija[2] * 0.3) + ($tebu[2] + 0.85) + ($bero[2] * 0)) * 0.01);
+
+
+		$resultAllMT = array(
+				array(
+					'water-demand' => $rsltMT1,
+					'water-irigasi' => $rsltMT1 * $irigasiNeed,
+					),
+				array(
+					'water-demand' => $rsltMT2,
+					'water-irigasi' => $rsltMT2 * $irigasiNeed,
+					),
+				array(
+					'water-demand' => $rsltMT3,
+					'water-irigasi' => $rsltMT3 * $irigasiNeed,
+					),
+			);
+		
+		$startDay 	=  '1-' . $startMonth . '-' . $year;
+		$start 		= $month = strtotime($startDay);
+		$end 		= strtotime('+11 month', $start);
+		$n 			= 0;
+		$key 		= 0;
+		$result 	= array();
+
+		while($month <= $end) {
+			
+			$data = array(
+				'month' 	=> date('F', $month),
+				'data' 		=> $resultAllMT[$key],
+				);
+
+			array_push($result, $data);
+
+			if($n == $split[$key]) $key++;
+
+			$month = strtotime("+1 month", $month);
+			$n++;
+		}
+
+		return json_encode($result);
 	}
 	// END : ADMIN SIDE
 }

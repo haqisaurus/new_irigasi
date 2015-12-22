@@ -312,25 +312,28 @@
 	        this.add = new AddView();
 	        this.list = new ListView();
 	        this.search = new SearchView();
+	        alert('initialize')
 	    },
 
 	    home:function () {
-	        $.mobile.changePage( "#home" , { reverse: false, changeHash: false } );
+	        // $.mobile.changePage( "#home" , { reverse: false, changeHash: false } );
 	        this.home.render();
+
 	    },
 
 	    addData: function() {
-	    	$.mobile.changePage( "#add-water" , { reverse: false, changeHash: false } );
+	    	// $.mobile.changePage( "#add-water" , { reverse: false, changeHash: false } );
 	    	this.add.render();
 	    },
 
 	    listWater: function() {
-	    	$.mobile.changePage( "#list-water" , { reverse: false, changeHash: false } );
+	    	// $.mobile.changePage( "#list-water" , { reverse: false, changeHash: false } );
 	    	this.list.render();
+	    	alert('adf')
 	    },
 
 	    searchWater: function() {
-	    	$.mobile.changePage( "#search-water" , { reverse: false, changeHash: false } );
+	    	// $.mobile.changePage( "#search-water" , { reverse: false, changeHash: false } );
 	    	this.search.render();
 	    }
 	    
@@ -345,7 +348,7 @@
 				$.mobile.linkBindingEnabled = false;
 
 				// Disabling this will prevent jQuery Mobile from handling hash changes
-				// $.mobile.hashListeningEnabled = false;
+				$.mobile.hashListeningEnabled = false;
 			}
 		);
 

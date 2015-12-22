@@ -578,25 +578,24 @@ class Admin_page extends CI_Controller {
 		public function getDebitAndalan()
 		{
 			$this->load->library('irigasi/water');
-			$dataAndalan = $this->water->getDataAndalan();
-			$year = date('Y');
-			$resultAndalan = array();
-			$negative = 12;
+			$this->load->library('irigasi/region');
 
+			$regionID 		= $this->input->post('region-id') ? : null;
+			$dataAndalan 	= $this->water->getDataAndalan($regionID);
+			$resultAndalan 	= array();
+			$year 			= date('Y');
+			
 			foreach ($dataAndalan as $key => $value) {
-				if ($key >= 12) {
-					$month = $key - ($negative - 1);
-					// $negative --;
-				} else {
-					$month = $key + 1;
-				}
 				
+				$month = $key + 1;
 				array_push($resultAndalan, array(
 						'month' => $year . '-' . $month,
 						'debit' => $value
 					));
 			}
-			
+
+			$data['regions'] 		= $this->region->getAllRegion();
+			$data['current_reg']	= $regionID ? $this->region->getSpecificRegion(array('id' => $regionID))->region_name : $data['regions'][0]->region_name;
 			$data['andalan'] 		= $resultAndalan;
 			$template['content'] 	= $this->load->view('integrated/pages/admin/debit-andalan/view-andalan', $data, true); 
 			$this->load->view('integrated/master', $template);
@@ -608,7 +607,7 @@ class Admin_page extends CI_Controller {
 		{
 			$this->load->library('irigasi/water');
 			$waterDemand = $this->water->getDataWaterDemand();
-			$dataAndalan = $this->water->getDataAndalan(null, null, 11);
+			$dataAndalan = $this->water->getDataAndalan(null, 11);
 			$year = date('Y');
 			$resultAndalan = array();
 			$negative = 12;
@@ -645,6 +644,13 @@ class Admin_page extends CI_Controller {
 
 			$template['content'] 	= $this->load->view('integrated/pages/admin/plant-plan/form-plan', $data, true); 
 			$this->load->view('integrated/master', $template);
+		}
+
+		public function planData()
+		{
+			$this->load->library('irigasi/water');
+			$waterDemand = $this->water->planData();
+			print_r($waterDemand);
 		}
 	// END : masa tanam ==================================================================================================
 }
