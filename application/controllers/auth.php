@@ -103,8 +103,8 @@ class Auth extends CI_Controller {
 	public function doLogout()
 	{
 		$this->session->unset_userdata('logged_in');
-		session_destroy();
-		redirect('/');
+		$this->session->sess_destroy();
+		redirect('/', 'refresh');
 	}
 
 	// AJAX DATA login

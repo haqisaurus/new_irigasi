@@ -20,7 +20,7 @@ if ($_SERVER['HTTP_HOST'] == 'op-irigasi.pe.hu') {
 	$config['base_url'] = 'http://op-irigasi.pe.hu/';
 	
 } else {
-	$config['base_url'] = 'http://192.168.0.91/new_irigasi/';
+	$config['base_url'] = 'http://localhost/new_irigasi/';
 	
 }
 

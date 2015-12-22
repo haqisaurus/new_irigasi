@@ -1,3 +1,5 @@
+<link href="<?php echo base_url('assets/integrated/style/ion.rangeSlider.css'); ?>" rel="stylesheet">
+<link href="<?php echo base_url('assets/integrated/style/ion.rangeSlider.skinNice.css'); ?>" rel="stylesheet">
 
 <div id="page-wrapper">
     <div class="row">
@@ -47,7 +49,7 @@
                     <label for="access" class="col-sm-2 control-label">Rentang</label>
 
                     <div class="col-sm-9">
-                        <input type="range" min="0" max="12" step="1" id="username" name="username" placeholder="Username" value="<?php echo set_value('username', ''); ?>">
+                        <input type="text" id="range" name="ranget">
                         <?php echo form_error('username'); ?>
                     </div>
                 </div>
@@ -100,3 +102,39 @@
     </div>
     <!-- /.row -->
 </div>
+<script type="text/javascript" src="<?php echo base_url('assets/integrated/js/ion.rangeSlider.min.js') ?>"></script>
+
+<script>
+    var months = [, 'November', 'Desember', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober'];
+
+    $("#range").ionRangeSlider({
+            
+            keyboard: true,
+            min: 1,
+            max: 12,
+            from: 3,
+            to: 8,
+            type: 'double',
+            step: 1,
+            prefix: "",
+            grid: true,
+            values : months,
+
+        });
+
+    var slider = $("#range").data("ionRangeSlider");
+
+    function rotate( array , times ){
+      while( times-- ){
+        var temp = array.shift();
+        array.push( temp )
+      }
+    }
+
+    slider.update({
+        values: [
+            "one", "two", "three",
+            "four", "five", "six", "seven"
+        ]
+    });
+</script>
