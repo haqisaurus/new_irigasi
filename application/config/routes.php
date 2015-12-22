@@ -163,7 +163,7 @@ $route['ajax-debit-andalan'] 		= 'integrated/admin_page/getDebitAndalanData';
 
 $route['view-water-demand']			= 'integrated/admin_page/getWaterDemand';
 $route['add-data-plan']				= 'integrated/admin_page/plan';
-$route['get-plan-ajax']				= 'integrated/admin_page/planData';
+$route['get-plan-calc']				= 'integrated/admin_page/planDataCalc';
 
 
 // mobile access

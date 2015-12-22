@@ -610,15 +610,9 @@ class Admin_page extends CI_Controller {
 			$dataAndalan = $this->water->getDataAndalan(null, 11);
 			$year = date('Y');
 			$resultAndalan = array();
-			$negative = 12;
-			// exit();
+			
 			foreach ($dataAndalan as $key => $value) {
-				// if ($key >= 12) {
-				// 	$month = $key - ($negative - 1);
-				// 	// $negative --;
-				// } else {
-				// 	$month = $key + 1;
-				// }
+				
 				$neraca = $value - $waterDemand[$key]['irigasi'];
 				array_push($resultAndalan, array(
 						'month' => $year . '-' . $key,
@@ -628,7 +622,7 @@ class Admin_page extends CI_Controller {
 					));
 			}
 			
-			
+			$data['current_reg']	= '';
 			$data['andalan'] 		= $resultAndalan;
 			
 			$template['content'] 	= $this->load->view('integrated/pages/admin/plant-plan/view-plant', $data, true); 
@@ -646,11 +640,47 @@ class Admin_page extends CI_Controller {
 			$this->load->view('integrated/master', $template);
 		}
 
-		public function planData()
+		public function planDataCalc()
 		{
+			$this->load->library('irigasi/region');
 			$this->load->library('irigasi/water');
-			$waterDemand = $this->water->planData();
-			print_r($waterDemand);
+			// =================== data water demand =============
+
+			$regionID 	= $this->input->post('region-id');
+			$year 		= $this->input->post('year');
+			$startMonth = $this->input->post('month');
+			$range 		= explode(',', $this->input->post('range'));
+			$rice 		= $this->input->post('rice');
+			$palawija 	= $this->input->post('palawija');
+			$sugar 		= $this->input->post('sugar');
+			$bero 		= $this->input->post('bero');
+
+			
+			$waterDemand = $this->water->planData($regionID, $year, $startMonth, $range, $rice, $palawija, $sugar, $bero);
+
+			// =================== data andalan =============
+			$dataAndalan = $this->water->getDataAndalan($regionID, $startMonth);
+			$year = date('Y');
+			$resultAndalan = array();
+			
+			foreach ($dataAndalan as $key => $value) {
+				
+				$neraca = $value - $waterDemand[$key]['data']['water-irigasi'];
+				array_push($resultAndalan, array(
+						'month' => $year . '-' . $key,
+						'month_string' =>  $waterDemand[$key]['month'],
+						'debit' => $value,
+						'demand' => $waterDemand[$key]['data']['water-irigasi'],
+						'neraca' => $neraca,
+					));
+			}
+			
+			$data['current_reg']	= $this->region->getSpecificRegion(array('id' => $regionID))->region_name;
+			$data['andalan'] 		= $resultAndalan;
+
+			$template['content'] 	= $this->load->view('integrated/pages/admin/plant-plan/view-plant', $data, true); 
+			$this->load->view('integrated/master', $template);
+
 		}
 	// END : masa tanam ==================================================================================================
 }

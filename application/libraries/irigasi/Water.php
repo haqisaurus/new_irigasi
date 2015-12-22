@@ -280,18 +280,19 @@ class Water {
 		return $result;
 	}
 
-	public function planData() 
+	public function planData($regionID, $year, $startMonth, $range, $padi, $palawija, $tebu, $bero) 
 	{
 
-		$regionID 	= 1;
-		$year 		= 2015;
-		$startMonth = 11;
-		$split 		= [3,7,11];
+		// $regionID 	= 1;
+		// $year 		= 2015;
+		// $startMonth = 11;
+		// $range 		= [3,7,11];
 
-		$padi 		= array(400, 300, 200);
-		$palawija 	= array(200, 400, 100);
-		$tebu 		= array(100, 500, 200);
-		$bero 		= array(0, 0, 0);
+		// $padi 		= array(400, 300, 200);
+		// $palawija 	= array(200, 400, 100);
+		// $tebu 		= array(100, 500, 200);
+		// $bero 		= array(0, 0, 0);
+		array_splice($range, 0, 1);
 
 		$WaterNeed = 0.01;
 		$irigasiNeed = 1.2;
@@ -326,23 +327,27 @@ class Water {
 		$n 			= 0;
 		$key 		= 0;
 		$result 	= array();
-
+		
 		while($month <= $end) {
 			
-			$data = array(
-				'month' 	=> date('F', $month),
+			$data1 = array(
+				'month' 	=> date('F', $month) . ' 1',
+				'data' 		=> $resultAllMT[$key],
+				);
+			$data2 = array(
+				'month' 	=> date('F', $month) . ' 2',
 				'data' 		=> $resultAllMT[$key],
 				);
 
-			array_push($result, $data);
-
-			if($n == $split[$key]) $key++;
+			array_push($result, $data1, $data2);
+			// echo $key;
+			if($key < 2 && $n == $range[$key]) $key++;
 
 			$month = strtotime("+1 month", $month);
 			$n++;
 		}
-
-		return json_encode($result);
+		
+		return $result;
 	}
 	// END : ADMIN SIDE
 }

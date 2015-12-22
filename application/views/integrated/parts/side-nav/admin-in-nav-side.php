@@ -49,7 +49,7 @@
                
             </li>
             <li>
-                <a href="<?php echo site_url('view-water-demand'); ?>"><i class="fa fa-thumb-tack fa-fw"></i> Rencana Tanam</a>
+                <a href="<?php echo site_url('add-data-plan'); ?>"><i class="fa fa-thumb-tack fa-fw"></i> Rencana Tanam</a>
                 
                 <!-- /.nav-second-level -->
             </li>

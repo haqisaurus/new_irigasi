@@ -14,7 +14,7 @@
             <?php 
             $attributes = array('class' => 'form-horizontal', 'id' => 'user-create');
 
-            echo form_open('user-add-action', $attributes);
+            echo form_open('get-plan-calc', $attributes);
             ?>
                 
                 <div class="form-group <?php echo form_error('region-id') ? 'has-error' : ''; ?>">
@@ -41,7 +41,7 @@
                             $options[$i] = $i;
                         }
 
-                        echo form_dropdown('role-id', $options, set_value('role-id'), 'class="form-control"');
+                        echo form_dropdown('year', $options, set_value('role-id'), 'class="form-control"');
                         ?>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
 
                         
 
-                        echo form_dropdown('month', $options, set_value('month'), 'class="form-control"');
+                        echo form_dropdown('month', $options, set_value('month'), 'class="form-control" id="month"');
                         ?>
                     </div>
                 </div>
@@ -76,7 +76,8 @@
                     <label for="access" class="col-sm-2 control-label">Rentang</label>
 
                     <div class="col-sm-9">
-                        <input type="text" id="range" name="ranget">
+                        <input type="text" id="range-ui" name="">
+                        <input type="hidden" name="range" id="range">
                         <?php echo form_error('username'); ?>
                     </div>
                 </div>
@@ -91,27 +92,27 @@
                             </tr>
                             <tr>
                                 <td><label for="">Padi</label></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="rice[]" value="150"></td>
+                                <td><input type="text" name="rice[]" value="90"></td>
+                                <td><input type="text" name="rice[]" value="170"></td>
                             </tr>
                             <tr>
                                 <td><label for="">Palawija</label></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="palawija[]" value="0"></td>
+                                <td><input type="text" name="palawija[]" value="70"></td>
+                                <td><input type="text" name="palawija[]" value="0"></td>
                             </tr>
                             <tr>
                                 <td><label for="">Tebu</label></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="sugar[]" value="10"></td>
+                                <td><input type="text" name="sugar[]" value="10"></td>
+                                <td><input type="text" name="sugar[]" value="10"></td>
                             </tr>
                             <tr>
                                 <td><label for="">Bero</label></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
-                                <td><input type="text"></td>
+                                <td><input type="text" name="bero[]" value="0"></td>
+                                <td><input type="text" name="bero[]" value="0"></td>
+                                <td><input type="text" name="bero[]" value="0"></td>
                             </tr>
                         </table>
                     </div>
@@ -132,9 +133,10 @@
 <script type="text/javascript" src="<?php echo base_url('assets/integrated/js/ion.rangeSlider.min.js') ?>"></script>
 
 <script>
-    var months = [, 'November', 'Desember', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober'];
+    var oriMonth = [ 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+    var months = [ 'November', 'Desember', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober'];
 
-    $("#range").ionRangeSlider({
+    $("#range-ui").ionRangeSlider({
             
             keyboard: true,
             min: 1,
@@ -149,19 +151,37 @@
 
         });
 
-    var slider = $("#range").data("ionRangeSlider");
+    var slider = $("#range-ui").data("ionRangeSlider");
 
-    function rotate( array , times ){
-      while( times-- ){
-        var temp = array.shift();
-        array.push( temp )
-      }
+    $(document)
+        .off('change', '#month')
+        .on('change', '#month', function(e) {
+            var value = parseInt($(this).val()) + 1;
+            rotate(months, value);
+
+            slider.update({
+                values: months
+            });
+
+            setValue();
+        });
+
+    function rotate( array , times ) {
+        while( times-- ){
+            var temp = array.shift();
+            array.push( temp )
+        }
     }
 
-    slider.update({
-        values: [
-            "one", "two", "three",
-            "four", "five", "six", "seven"
-        ]
-    });
+    function setValue () {
+        var range = $('#range-ui').val();
+        // search in index
+        var val = range.split(';');
+        var start = months.indexOf(val[0]);
+        var end = months.indexOf(val[1]);
+        $('#range').val('0,' + start + ',' + end);
+    }
+
+    setValue();    
+    
 </script>
