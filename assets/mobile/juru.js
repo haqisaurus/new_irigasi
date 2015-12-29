@@ -3,20 +3,21 @@
 	var siteUrl = $('#site-url').val();
 	Backbone.emulateHTTP = true;
     Backbone.emulateJSON = true;
+    $.mobile.date.prototype.options.dateFormat = "yy-mm-dd";
 
 // MODEL
 	var Region = Backbone.Model.extend({
 		defaults: {
 			region_name: '',
 		},
-		urlRoot : siteUrl + '/get-region-ajax',
+		urlRoot : 'get-region-ajax',
     });
 
     var Year = Backbone.Model.extend({
 		defaults: {
 			year: '',
 		},
-		urlRoot : siteUrl + '/get-year-ajax',
+		urlRoot : 'get-year-ajax',
     });
 
     var Water = Backbone.Model.extend({
@@ -31,16 +32,16 @@
     		
     		switch(method) {
     			case 'read': 
-	    			return siteUrl + '/get-water-ajax';
+	    			return '/get-water-ajax';
 	    			break;
 	    		case 'create': 
-	    			return siteUrl + '/add-water-ajax';
+	    			return '/add-water-ajax';
 	    			break;
 	    		case 'update': 
-	    			return siteUrl + '/';
+	    			return '/';
 	    			break;
 	    		case 'delete': 
-	    			return siteUrl + '/';
+	    			return '/';
 	    			break;
     		}
     	},
@@ -58,12 +59,12 @@
 // COLLECTION
 	var RegionCollection = Backbone.Collection.extend({
 		model: Region,
-    	url: siteUrl + '/get-region-ajax'
+    	url: 'get-region-ajax'
 	});
 
     var WaterCollection = Backbone.Collection.extend({
     	model: Water,
-    	url: siteUrl + '/get-water-ajax'
+    	url: 'get-water-ajax'
     });
 
 // END : COLLECTION 
@@ -74,10 +75,9 @@
 			years: Year,
 			regions: Region,
 		},
-		el : $('#search-water'),
 	    initialize: function() {
 	    	
-	        this.template = _.template($('#template-search').html());
+	        this.template = _.template($('#search').html());
 	    },
 	    render:function (eventName) {
 	    	var _this = this;
@@ -123,6 +123,7 @@
 	    	resultList.render(region, year, month);
 	    	setTimeout(function() {
 	    	$('a[href=#search-water]').hide();
+	    	$('a[href=#home]').attr('href', '#list-water');
 
 	    	}, 1000);
 	    },
@@ -149,9 +150,8 @@
 			debits: WaterCollection,
 			regions: Region,
 		},
-		el : $('#list-water'),
 		initialize: function() {
-	        this.template = _.template($('#template-list').html());
+	        this.template = _.template($('#list').html());
 		},
 		render: function(region, year, month) {
 			
@@ -218,9 +218,9 @@
 				region: Region, 
 				water: Water
 			},
-		el : $('#add-water'),
+		
 		initialize: function() {
-	        this.template = _.template($('#template-create').html());
+	        this.template = _.template($('#create').html());
 		},
 		render: function(eventName) {
 			var _this = this;
@@ -276,20 +276,12 @@
 	});
 
 	var HomeView = Backbone.View.extend({
-		el : $('#home'),
+		
 	    initialize: function() {
-	    	
-	        this.template = _.template($('#template-home').html());
+	        this.template = _.template($('#home').html());
 	    },
 	    render:function () {
-	    
-	    	// reset page
-	    	$(this.el).empty();
-
-	        $(this.el).html(this.template());
-	        
-	        $(this.el).trigger('create');
-
+			$(this.el).html(this.template());
 	        return this;
 	    }
 	});
@@ -308,54 +300,51 @@
 
 	    initialize:function () {
 	    
-	        this.home = new HomeView();
-	        this.add = new AddView();
-	        this.list = new ListView();
-	        this.search = new SearchView();
-	        alert('initialize')
+	 		$('.back').on('click', function(event) {
+	            window.history.back();
+
+	        });
+	        this.firstPage = true;
 	    },
 
 	    home:function () {
-	        // $.mobile.changePage( "#home" , { reverse: false, changeHash: false } );
-	        this.home.render();
-
+	        this.changePage(new HomeView());
 	    },
 
 	    addData: function() {
-	    	// $.mobile.changePage( "#add-water" , { reverse: false, changeHash: false } );
-	    	this.add.render();
+	    	this.changePage(new AddView());
 	    },
 
 	    listWater: function() {
-	    	// $.mobile.changePage( "#list-water" , { reverse: false, changeHash: false } );
-	    	this.list.render();
-	    	alert('adf')
+	    	this.changePage(new ListView());
 	    },
 
 	    searchWater: function() {
-	    	// $.mobile.changePage( "#search-water" , { reverse: false, changeHash: false } );
-	    	this.search.render();
+	    	this.changePage(new SearchView());
+	    },
+
+	    changePage:function (page) {
+	        $(page.el).attr('data-role', 'page');
+	        page.render();
+	        
+	        $('#content').html($(page.el));
+	        var transition = $.mobile.defaultPageTransition;
+	        // We don't want to slide the first page
+	        if (this.firstPage) {
+	            transition = 'none';
+	            this.firstPage = false;
+	        }
+	        $.mobile.changePage($(page.el), {changeHash:false, transition: transition});
 	    }
 	    
 	});
 
 	$(document).ready(function () {
-
-	    $( document ).on( "mobileinit",
-			// Set up the "mobileinit" handler before requiring jQuery Mobile's module
-			function() {
-				// Prevents all anchor click handling including the addition of active button state and alternate link bluring.
-				$.mobile.linkBindingEnabled = false;
-
-				// Disabling this will prevent jQuery Mobile from handling hash changes
-				$.mobile.hashListeningEnabled = false;
-			}
-		);
-
+	    console.log('document ready');
 	    app = new AppRouter();
 	    Backbone.history.start();
-	});
 
+	});
 	function dialogShow(msg) {
 		$('#popupDialog').find('.ui-title').html(msg);
 

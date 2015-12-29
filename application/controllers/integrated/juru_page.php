@@ -5,6 +5,13 @@ class Juru_page extends CI_Controller {
 	var $template = array();
 	var $limit = 20;
 
+	public function __construct()
+	{
+		parent::__construct();
+		
+		checkUser(array(2));
+	}
+
 	public function index()
 	{
 		$this->load->library('user_agent');

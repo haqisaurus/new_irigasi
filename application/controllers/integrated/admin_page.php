@@ -5,6 +5,13 @@ class Admin_page extends CI_Controller {
 	var $template = array();
 	var $limit = 20;
 
+	public function __construct()
+	{
+		parent::__construct();
+		
+		checkUser(array(1));
+	}
+
 	public function index()
 	{
 		$template['content'] 	= $this->load->view('integrated/pages/admin/dashboard', '', true); 

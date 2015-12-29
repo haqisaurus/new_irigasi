@@ -53,7 +53,7 @@
                 
                 <!-- /.nav-second-level -->
             </li>
-            <li>
+            <!-- <li>
                 <a href="#"><i class="fa fa-sitemap fa-fw"></i> Pembagian Air<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
@@ -63,7 +63,6 @@
                         <a href="morris.html">Morris.js Charts</a>
                     </li>
                 </ul>
-                <!-- /.nav-second-level -->
             </li>
             <li>
                 <a href="#"><i class="fa fa-gears fa-fw"></i> Kinerja Irigasi<span class="fa arrow"></span></a>
@@ -75,7 +74,6 @@
                         <a href="morris.html">Morris.js Charts</a>
                     </li>
                 </ul>
-                <!-- /.nav-second-level -->
             </li>
             <li>
                 <a href="#"><i class="fa fa-wrench fa-fw"></i> Pemeliharaan<span class="fa arrow"></span></a>
@@ -87,8 +85,7 @@
                         <a href="morris.html">Morris.js Charts</a>
                     </li>
                 </ul>
-                <!-- /.nav-second-level -->
-            </li>
+            </li> -->
         </ul>
     </div>
     <!-- /.sidebar-collapse -->
