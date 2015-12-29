@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 
-class Region {
+class Plant {
 
 	var $CI = null;
 
@@ -9,29 +9,28 @@ class Region {
         // Do something with $params
     	$this->CI =& get_instance();
         // using model
-		$this->CI->load->model('region_model');
-		$this->CI->load->model('wide_model');
+		$this->CI->load->model('plant_model');
     }
 
     // ADMIN SIDE
-    public function getAllRegion($condition = array(), $limit = null, $offset = null)
+    public function getAllPlant($condition = array(), $limit = null, $offset = null)
     {
-		return $this->CI->region_model->find($condition, $limit, $offset)->result();
+		return $this->CI->plant_model->findWithRegion($condition, $limit, $offset)->result();
     }
 
-    public function getSpecificRegion($condition = array(), $limit = null, $offset = null)
-	{
-		return $this->CI->region_model->find($condition, $limit, $offset)->row();
-	}
+    public function getSpesificPlant($condition = array(), $limit = null, $offset = null)
+    {
+    	return $this->CI->plant_model->findWithRegion($condition, $limit, $offset)->row();
+    }
 
-	public function updateRegion($data = array())
+    public function updatePlant($data = array())
 	{
 		if (isset($data['id'])) {
 
-			$result = $this->CI->region_model->update(array('region.id' => $data['id']), $data);
+			$result = $this->CI->plant_model->update(array('plant.id' => $data['id']), $data);
 
 			if ($result['status']) {
-				$text 		= 'Data daerah baru berhasil diupdate';
+				$text 		= 'Data plant baru berhasil diupdate';
 				$message 	= array(
 					'status' 		=> 1, 
 					'data' 			=> '', 
@@ -44,7 +43,7 @@ class Region {
 				                            </div>
 				                        </div>');
 			} else {
-				$text 		= 'Terjadi kesalahan pada saat mengupdate data daerah.';
+				$text 		= 'Terjadi kesalahan pada saat mengupdate data plant.';
 				$message 	= array(
 					'status' 		=> 0, 
 					'data' 			=> '', 
@@ -58,9 +57,9 @@ class Region {
 								        </div>');
 			}
 		} else {
-			$result = $this->CI->region_model->insert($data);
+			$result = $this->CI->plant_model->insert($data);
 			if ($result['status']) {
-				$text 		= 'Data daerah baru berhasil dimasukan';
+				$text 		= 'Data plant baru berhasil dimasukan';
 				$message 	= array(
 					'status' 		=> 1, 
 					'data' 			=> '', 
@@ -73,7 +72,7 @@ class Region {
 				                            </div>
 				                        </div>');
 			} else {
-				$text 		= 'Terjadi kesalahan pada saat memasukan data daerah.';
+				$text 		= 'Terjadi kesalahan pada saat memasukan data plant.';
 				$message 	= array(
 					'status' 		=> 0, 
 					'data' 			=> '', 
@@ -87,24 +86,21 @@ class Region {
 								        </div>');
 			}
 		}
-		
-		
-		
     	
     	$this->CI->session->set_flashdata('message', $message);
 
     	return $result['status'];
 	}
 
-	public function deleteRegion($regionID = 0)
+	public function deletePlant($plantID = 0)
 	{
-		$result = $this->CI->region_model->delete(array('region.id' => $regionID));
+		$result = $this->CI->plant_model->delete(array('plant.id' => $plantID));
 		
 		if ($result['status']) {
-			$text 		= 'Data region berhasil dihapus';
+			$text 		= 'Data plant berhasil dihapus';
 			$message 	= array(
 				'status' 		=> 1, 
-				'data' 			=> $regionID, 
+				'data' 			=> $plantID, 
 				'text'			=> $text,
 				'notification' 	=> '<div class="row">
 							            <div class="col-lg-12">
@@ -114,7 +110,7 @@ class Region {
 			                            </div>
 			                        </div>');
 		} else {
-			$text 		= 'Terjadi kesalahan pada penghapusan data region.';
+			$text 		= 'Terjadi kesalahan pada penghapusan data plant.';
 			$message 	= array(
 				'status' 		=> 0, 
 				'data' 			=> '', 
@@ -131,11 +127,6 @@ class Region {
     	$this->CI->session->set_flashdata('message', $message);
 
     	return $result['status'];
-	}
-
-	public function getRegionWide($regionID)
-	{
-		return $this->CI->wide_model->findRegionWide(array('region_id' => $regionID))->row();
 	}
 
 	// END : ADMIN SIDE

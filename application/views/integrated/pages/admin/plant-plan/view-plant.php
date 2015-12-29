@@ -42,7 +42,25 @@
                             ?>    
                         </tbody>
                     </table> 
-                    <div id="morris-area-chart"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                        <?php if (isset($data['region-id'])): ?>
+                            
+                            <?php echo form_open('save-plan') ?>
+                            <input type="hidden" name="region-id" value="<?php echo $data['region-id'] ?>">
+                            <input type="hidden" name="year" value="<?php echo $data['year'] ?>">
+                            <input type="hidden" name="month" value="<?php echo $data['month'] ?>">
+                            <input type="hidden" name="range" value="<?php echo $data['range'] ?>">
+                            <input type="hidden" name="rice" value="<?php print_r( implode(",", $data['rice']) ) ?>">
+                            <input type="hidden" name="palawija" value="<?php print_r( implode(",", $data['palawija']) ) ?>">
+                            <input type="hidden" name="sugar" value="<?php print_r( implode(",", $data['sugar']) ) ?>">
+                            <input type="hidden" name="bero" value="<?php print_r( implode(",", $data['bero']) ) ?>">
+                            <button type="submit" class="btn btn-info"><span class="fa fa-save"></span> Simpan</button>
+                            <?php echo form_close() ?>
+                            
+                        <?php endif ?>
+                        </div>
+                    </div>
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -61,29 +79,6 @@
         $(document).ready(function() {
           $('table.highchart').highchartTable();
         });
-        // var dataAndalan = <?php echo json_encode($andalan) ?>;
-        
-        // var months      = ['Nov1', 'Nov2', 'Des1', 'Des2', 'Jan1', 'Jan2', 'Feb1', 'Feb2', 'Mar1', 'Mar2', 'Apr1', 'Apr2', 'Mei1', 'Mei2', 'Jun1', 'Jun2', 'Jul1', 'Jul2', 'Ags1', 'Ags2', 'Sep1', 'Sep2', 'Okt1', 'Okt2'];
-        // var date        = new Date();
-        // var year        = date.getFullYear();
-        // var dataIndex   = 0;
-
-        // Morris.Line({
-        //     element: 'morris-area-chart',
-        //     data: dataAndalan,
-        //     xkey: 'month',
-        //     ykeys: ['debit', 'demand', 'neraca'],
-        //     labels: ['Debit', 'Demand', 'Neraca'],
-        //     pointSize: 2,
-        //     hideHover: 'auto',
-        //     resize: true,
-        //     xLabelFormat: function(x) {
-
-        //         dataIndex +=1;
-        //         console.log(x, x.getMonth(), x.getFullYear(), dataIndex);
-        //         return months[dataIndex];
-        //     }
-        // });
 
     });
 

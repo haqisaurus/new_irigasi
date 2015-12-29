@@ -70,4 +70,11 @@ Class Wide_model extends CI_Model
         return $query;
     }
 
+    public function findRegionWide($condition = array(), $limit = null, $offset = null)
+    {
+        $this->db->select('sum(wide) as total_wide');
+        $query = $this->find($condition, $limit, $offset);
+        
+        return $query;
+    }
 }

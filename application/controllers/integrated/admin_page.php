@@ -677,10 +677,114 @@ class Admin_page extends CI_Controller {
 			
 			$data['current_reg']	= $this->region->getSpecificRegion(array('id' => $regionID))->region_name;
 			$data['andalan'] 		= $resultAndalan;
+			$data['data'] 			= $_POST;
 
 			$template['content'] 	= $this->load->view('integrated/pages/admin/plant-plan/view-plant', $data, true); 
 			$this->load->view('integrated/master', $template);
 
+		}
+
+		public function savePlan()
+		{
+			$this->load->library('irigasi/plant');
+
+			$regionID 	= $this->input->post('region-id');
+			$year 		= $this->input->post('year');
+			$startMonth = $this->input->post('month');
+			$range 		= $this->input->post('range');
+			$rice 		= $this->input->post('rice');
+			$palawija 	= $this->input->post('palawija');
+			$sugar 		= $this->input->post('sugar');
+			$bero 		= $this->input->post('bero');
+
+			$dataInsert = array(
+				'region_id' 	=> $regionID,
+				'year' 			=> $year,
+				'start_month'	=> $startMonth,
+				'range' 		=> $range,
+				'rice' 			=> $rice,
+				'palawija'		=> $palawija,
+				'sugar'			=> $sugar,
+				'bero' 			=> $bero,
+				);
+
+			$insertResult = $this->plant->updatePlant($dataInsert);
+
+			if ($insertResult) {
+				// redirect user 
+				redirect('add-data-plan');
+			} else {
+				redirect('login');
+			}
+	     	//Go to private area
+		}
+
+		public function listPlan()
+		{
+			$this->load->library('irigasi/plant');
+			$data['table'] 		= $this->plant->getAllPlant();
+
+			$template['content'] 	= $this->load->view('integrated/pages/admin/plant-plan/list-plan', $data, true); 
+			$this->load->view('integrated/master', $template);
+		}
+
+		public function viewPlan($id)
+		{
+			$this->load->library('irigasi/region');
+			$this->load->library('irigasi/water');
+			$this->load->library('irigasi/plant');
+
+			$dataPlant = (array) $this->plant->getSpesificPlant(array('plan_plant.id' => $id));
+			// =================== data water demand =============
+
+
+			$regionID 	= $dataPlant['region_id'];
+			$year 		= $dataPlant['year'];
+			$startMonth = $dataPlant['start_month'];
+			$range 		= explode(',', $dataPlant['range']);
+			$rice 		= explode(',', $dataPlant['rice']);
+			$palawija 	= explode(',', $dataPlant['palawija']);
+			$sugar 		= explode(',', $dataPlant['sugar']);
+			$bero 		= explode(',', $dataPlant['bero']);
+
+			
+			$waterDemand = $this->water->planData($regionID, $year, $startMonth, $range, $rice, $palawija, $sugar, $bero);
+
+			// =================== data andalan =============
+			$dataAndalan = $this->water->getDataAndalan($regionID, $startMonth);
+			$year = date('Y');
+			$resultAndalan = array();
+			
+			foreach ($dataAndalan as $key => $value) {
+				
+				$neraca = $value - $waterDemand[$key]['data']['water-irigasi'];
+				array_push($resultAndalan, array(
+						'month' => $year . '-' . $key,
+						'month_string' =>  $waterDemand[$key]['month'],
+						'debit' => $value,
+						'demand' => $waterDemand[$key]['data']['water-irigasi'],
+						'neraca' => $neraca,
+					));
+			}
+			
+			$data['current_reg']	= $this->region->getSpecificRegion(array('id' => $regionID))->region_name;
+			$data['andalan'] 		= $resultAndalan;
+			$data['data'] 			= $dataPlant;
+
+			$template['content'] 	= $this->load->view('integrated/pages/admin/plant-plan/view-plant', $data, true); 
+			$this->load->view('integrated/master', $template);
+
+		}
+
+		public function ajaxGetWide()
+		{
+			$this->load->library('irigasi/region');
+
+			$regionID = $this->input->post('region-id');
+
+			$data = $this->region->getRegionWide($regionID);
+			
+			echo json_encode($data);
 		}
 	// END : masa tanam ==================================================================================================
 }

@@ -10,7 +10,14 @@
     </div>
     <!-- /.row -->
     <div class="row">
+        <div class="col-xs-2 col-xs-offset-10">
+            <a href="<?php echo site_url('list-plan') ?>" class="btn btn-info"><span class="fa fa-info"></span> List rencana</a>
+            <br><br>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-lg-12">
+
             <?php 
             $attributes = array('class' => 'form-horizontal', 'id' => 'user-create');
 
@@ -27,10 +34,13 @@
                             $options[$item->id] = $item->region_name;
                         }
 
-                        echo form_dropdown('region-id', $options, set_value('region-id'), 'class="form-control"');
+                        echo form_dropdown('region-id', $options, set_value('region-id'), 'class="form-control" id="region-id"');
                         echo form_error('region-id');
                         ?>
                     </div>
+                    <label for="access" class="col-sm-2 control-label">Luas Daerah</label>
+                    <span class="col-sm-2 control-label" ><i id="total-wide"><?php echo 90; ?></i> <b>ha</b></span>
+                    
                 </div>
                 <div class="form-group">
                     <label for="access" class="col-sm-2 control-label">Tahun</label>
@@ -119,7 +129,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-5 col-sm-7">
-                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Kalkulasi</button>
+                        <button type="submit" class="btn btn-primary" id="calculate"><span class="glyphicon glyphicon-floppy-disk"></span> Kalkulasi</button>
                     </div>
                 </div>
             <?php 
@@ -182,6 +192,81 @@
         $('#range').val('0,' + start + ',' + end);
     }
 
-    setValue();    
+    setValue();  
+
+    var regionID = $('#region-id').val();
+    getWide(regionID);
+    $('#region-id')
+        .off('change')
+        .on('change', function(e) {
+            var _this = this;
+            var value = $(_this).val();
+
+            getWide(value);
+        })
     
+    function getWide(id) {
+        $.ajax({
+            url: "<?php echo site_url('region-wide-ajax') ?>",
+            type: 'POST',
+            dataType: 'json',
+            data: {'region-id': id},
+        })
+        .done(function(response) {
+            
+            $('#total-wide').html(response.total_wide);
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    }
+
+    $(document)
+        .off('click', '#calculate')
+        .on('click', '#calculate', function(e) {
+            var valid = validationWide();
+            if (valid == false) {
+                e.preventDefault();
+            };
+        })
+    function validationWide() {
+        var total        = parseFloat($('#total-wide').text());
+
+        var rice1        = parseFloat($($('[name^=rice]')[0]).val());
+        var palawija1    = parseFloat($($('[name^=palawija]')[0]).val());
+        var sugar1       = parseFloat($($('[name^=sugar]')[0]).val());
+        var bero1        = parseFloat($($('[name^=bero]')[0]).val());
+
+        var rice2        = parseFloat($($('[name^=rice]')[1]).val());
+        var palawija2    = parseFloat($($('[name^=palawija]')[1]).val());
+        var sugar2       = parseFloat($($('[name^=sugar]')[1]).val());
+        var bero2        = parseFloat($($('[name^=bero]')[1]).val());
+
+        var rice3        = parseFloat($($('[name^=rice]')[2]).val());
+        var palawija3    = parseFloat($($('[name^=palawija]')[2]).val());
+        var sugar3       = parseFloat($($('[name^=sugar]')[2]).val());
+        var bero3        = parseFloat($($('[name^=bero]')[2]).val());
+        
+        console.log(parseFloat(rice1 + palawija1 + sugar1 + bero1), total)
+        if (parseFloat(rice1 + palawija1 + sugar1 + bero1) > total) {
+            alert('Data Masa Tanam 1 Lebih Besar Dari Luas Lahan');
+            $($('[name^=rice]')[0]).focus();
+            return false;
+        };
+
+        if (parseFloat(rice2 + palawija2 + sugar2 + bero2) > total) {
+            alert('Data Masa Tanam 2 Lebih Besar Dari Luas Lahan');
+            $($('[name^=rice]')[1]).focus();
+            return false;
+        };
+
+        if (parseFloat(rice3 + palawija3 + sugar3 + bero3) > total) {
+            alert('Data Masa Tanam 3 Lebih Besar Dari Luas Lahan');
+            $($('[name^=rice]')[2]).focus();
+            return false;
+        };
+    }
 </script>

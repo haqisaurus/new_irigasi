@@ -82,7 +82,16 @@ Class Plant_model extends CI_Model
 
     public function find($condition = array(), $limit = null, $offset = null)
     {
-        $query = $this->db->order_by('start', 'ASC')->get_where($this->table, $condition, $limit, $offset);
+        $query = $this->db->order_by('id', 'DESC')->get_where($this->table, $condition, $limit, $offset);
+
+        return $query;
+    }
+
+    public function findWithRegion($condition = array(), $limit = null, $offset = null)
+    {
+        $this->db->select('region.*, plan_plant.*');
+        $this->db->join('region', 'region.id = plan_plant.region_id');
+        $query = $this->db->order_by('plan_plant.id', 'DESC')->get_where($this->table, $condition, $limit, $offset);
 
         return $query;
     }
