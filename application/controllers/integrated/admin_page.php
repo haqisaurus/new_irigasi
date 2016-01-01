@@ -783,15 +783,6 @@ class Admin_page extends CI_Controller {
 
 		}
 
-		public function ajaxGetWide()
-		{
-			$this->load->library('irigasi/region');
-
-			$regionID = $this->input->post('region-id');
-
-			$data = $this->region->getRegionWide($regionID);
-			
-			echo json_encode($data);
-		}
+		
 	// END : masa tanam ==================================================================================================
 }

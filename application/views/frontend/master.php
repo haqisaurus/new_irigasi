@@ -35,7 +35,7 @@
             <?php   echo $content; ?>
         </div>
         <div id="footer">
-            <p> &copy;<?php echo date('Y') ?> <strong>Fakultas Teknologi Pertanian Universitas Gadjah Mada</strong> &nbsp;&nbsp; Design by: HQs</p>
+            <p> &copy;<?php echo date('Y') ?> <strong>Fakultas Teknologi Pertanian Universitas Gadjah Mada</strong></p>
         </div>
     </div>
 

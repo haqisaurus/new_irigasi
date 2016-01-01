@@ -58,6 +58,7 @@ Class Water_model extends CI_Model
     {
         $this->db->where('date > ', '0000-00-00');
         $this->db->order_by('water.id', 'DESC');
+        $this->db->distinct();
         $query = $this->db->get_where($this->table, $condition, $limit, $offset);
 
         return $query;
@@ -89,6 +90,18 @@ Class Water_model extends CI_Model
         $this->db->like($conditionLike);
         $this->db->group_by('date');
         $this->db->order_by('water.date', 'DESC');
+        $query = $this->find($condition, $limit, $offset);
+
+        return $query;
+    }
+
+    public function findLikeWithRegionASC($condition = array(), $conditionLike = array(), $limit = null, $offset = null)
+    {
+        $this->db->select('region.*, water.*');
+        $this->db->join('region', 'region.id = water.region_id');
+        $this->db->like($conditionLike);
+        $this->db->group_by('date');
+        $this->db->order_by('water.date', 'ASC');
         $query = $this->find($condition, $limit, $offset);
 
         return $query;

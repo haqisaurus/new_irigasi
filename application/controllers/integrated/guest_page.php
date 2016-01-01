@@ -7,9 +7,19 @@ class Guest_page extends CI_Controller {
 
 	public function index()
 	{
-		$template['content'] 	= $this->load->view('integrated/pages/admin/dashboard', '', true); 
-		$this->load->view('integrated/master', $template);
-	}
+		$this->load->library('irigasi/wide');
+		$data['regions'] 		= $this->wide->getAllWide();
 
+		$template['content'] = $this->load->view('frontend/pages/home', $data, true); 
+		$template['menuTop'] = $this->load->view('frontend/part/nav-top', 0, true);
+		$template['sideBar'] = $this->load->view('frontend/part/nav-right', '', true);
+		$this->load->view('frontend/master', $template);
+		
+		$this->load->library('user_agent');
+
+		if ($this->agent->is_mobile()) {
+			redirect('login');
+		}
+	}
 	
 }

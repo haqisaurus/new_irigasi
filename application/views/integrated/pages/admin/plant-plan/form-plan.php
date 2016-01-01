@@ -88,7 +88,7 @@
                     <div class="col-sm-9">
                         <input type="text" id="range-ui" name="">
                         <input type="hidden" name="range" id="range">
-                        <?php echo form_error('username'); ?>
+                        <?php echo form_error('range'); ?>
                     </div>
                 </div>
                 <div class="row">
@@ -250,23 +250,23 @@
         var sugar3       = parseFloat($($('[name^=sugar]')[2]).val());
         var bero3        = parseFloat($($('[name^=bero]')[2]).val());
         
-        console.log(parseFloat(rice1 + palawija1 + sugar1 + bero1), total)
-        if (parseFloat(rice1 + palawija1 + sugar1 + bero1) > total) {
-            alert('Data Masa Tanam 1 Lebih Besar Dari Luas Lahan');
-            $($('[name^=rice]')[0]).focus();
-            return false;
-        };
+        // console.log(parseFloat(rice1 + palawija1 + sugar1 + bero1), total)
+        // if (parseFloat(rice1 + palawija1 + sugar1 + bero1) > total) {
+        //     alert('Data Masa Tanam 1 Lebih Besar Dari Luas Lahan');
+        //     $($('[name^=rice]')[0]).focus();
+        //     return false;
+        // };
 
-        if (parseFloat(rice2 + palawija2 + sugar2 + bero2) > total) {
-            alert('Data Masa Tanam 2 Lebih Besar Dari Luas Lahan');
-            $($('[name^=rice]')[1]).focus();
-            return false;
-        };
+        // if (parseFloat(rice2 + palawija2 + sugar2 + bero2) > total) {
+        //     alert('Data Masa Tanam 2 Lebih Besar Dari Luas Lahan');
+        //     $($('[name^=rice]')[1]).focus();
+        //     return false;
+        // };
 
-        if (parseFloat(rice3 + palawija3 + sugar3 + bero3) > total) {
-            alert('Data Masa Tanam 3 Lebih Besar Dari Luas Lahan');
-            $($('[name^=rice]')[2]).focus();
-            return false;
-        };
+        // if (parseFloat(rice3 + palawija3 + sugar3 + bero3) > total) {
+        //     alert('Data Masa Tanam 3 Lebih Besar Dari Luas Lahan');
+        //     $($('[name^=rice]')[2]).focus();
+        //     return false;
+        // };
     }
 </script>

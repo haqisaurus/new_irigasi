@@ -18,6 +18,11 @@ class Water {
 		return $this->CI->water_model->findLikeWithRegion($condition, $conditionLike, $limit, $offset)->result();
     }
 
+    public function getAllWaterASC($condition = array(), $conditionLike = array(), $limit = null, $offset = null)
+    {
+		return $this->CI->water_model->findLikeWithRegionASC($condition, $conditionLike, $limit, $offset)->result();
+    }
+
     public function getSpecificWater($condition = array(), $limit = null, $offset = null)
 	{
 		return $this->CI->water_model->findWithRegion($condition, $limit, $offset)->row();

@@ -5,6 +5,7 @@
     <a href="javascript:window.history.go(-1);"><button>Kembali</button></a>
     <br>
     <br>
+    <?php var_dump($regions) ?>
     <table class="table-detail">
         <tr>
             <th>Nama daerah</th>

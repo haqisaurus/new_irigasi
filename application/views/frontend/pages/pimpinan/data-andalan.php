@@ -1,7 +1,7 @@
 <div id="main"> 
     <a name="SampleTags"></a>
     <h1>Tabel informasi irigasi</h1>
-    <?php echo form_open( current_url(), '', array('id' => $this->uri->segment(2))); ?>
+    <?php echo form_open( current_url(), array('style' => 'padding: 10px;'), array('id' => $this->uri->segment(2))); ?>
     <?php 
     $regionOption = array();
     foreach ($regions as $key => $region) {
@@ -9,7 +9,7 @@
     }
 
     echo form_dropdown('region', $regionOption, set_value('region'), 'class="form-control" id="region-id"');
-
+    echo form_close();
     ?>
     <?php 
     ?>
@@ -129,7 +129,6 @@
             })
             .done(function(response) {
 
-                console.log(response);
                 $.each(response, function(index, value) {
                     myLineChart.datasets[0].points[index].value = value;
                     

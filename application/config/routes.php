@@ -43,6 +43,7 @@ $route['default_controller'] = "frontend/page_controller";
 $route['login'] = 'auth/login';
 $route['login-action'] = 'auth/doLogin';
 $route['logout'] = 'auth/doLogout';
+$route['account-detail'] = 'auth/accountDetail';
 // admin 
 $route['dashboard'] = 'backend/dashboard';
 
@@ -85,7 +86,6 @@ $route['action-entri-water'] = 'frontend/page_controller/doInputWater';
 $route['edit-water/(:num)'] = 'frontend/page_controller/editWater/$1';
 $route['action-edit-water'] = 'frontend/page_controller/doEditWater';
 $route['user-login'] = 'frontend/page_controller/showLogin';
-$route['account-detail'] = 'frontend/page_controller/accountDetail';
 
 // pula tanam usulan
 $route['plant-view'] = 'frontend/page_controller/plantView';
@@ -167,22 +167,54 @@ $route['get-plan-calc']				= 'integrated/admin_page/planDataCalc';
 $route['save-plan'] 				= 'integrated/admin_page/savePlan';
 $route['list-plan'] 				= 'integrated/admin_page/listPlan';
 $route['view-plan/(:num)'] 			= 'integrated/admin_page/viewPlan/$1';
-$route['region-wide-ajax'] 			= 'integrated/admin_page/ajaxGetWide';
+$route['region-wide-ajax'] 			= 'integrated/ajax_req/ajaxGetWide';
 
 // mobile access
 $route['login-mobile'] 				= 'welcome/mobile';
 $route['login-action-ajax'] 		= 'auth/ajaxLogin';
 
-$route['get-water-ajax'] 			= 'integrated/juru_page/getAjaxWaterData';
-$route['get-region-ajax'] 			= 'integrated/juru_page/getAjaxRegionData';
-$route['get-year-ajax'] 			= 'integrated/juru_page/getAjaxYearsData';
-$route['add-water-ajax']			= 'integrated/juru_page/addAjaxWaterData';
+$route['get-water-ajax'] 			= 'integrated/ajax_req/getAjaxWaterData';
+$route['get-region-ajax'] 			= 'integrated/ajax_req/getAjaxRegionData';
+$route['get-year-ajax'] 			= 'integrated/ajax_req/getAjaxYearsData';
+$route['add-water-ajax']			= 'integrated/ajax_req/addAjaxWaterData';
 /* END : ADMIN */
 
 
 // JURU
 $route['juru'] 					= 'integrated/juru_page';
 // END : JURU
+
+// PENGAMAT
+$route['pengamat'] 							= 'integrated/pengamat_page';
+$route['pengamat-debit-andalan'] 			= 'integrated/pengamat_page/getDebitAndalan';
+$route['pengamat-debit-view'] 				= 'integrated/pengamat_page/viewWater';
+$route['pengamat-debit-andalan-ajax'] 		= 'integrated/pengamat_page/ajaxGetDebitAndalan';
+$route['pengamat-rencana-tanam'] 			= 'integrated/pengamat_page/plan';
+$route['pengamat-kalkulasi-rencana']		= 'integrated/pengamat_page/planDataCalc';
+$route['pengamat-kalkulasi-rencana-ajax']	= 'integrated/pengamat_page/ajaxGetDataWaterDemand';
+$route['pengamat-rencana-save'] 			= 'integrated/pengamat_page/savePlan';
+$route['pengamat-rencana-list'] 			= 'integrated/pengamat_page/listPlan';
+$route['pengamat-rencana-view/(:num)'] 		= 'integrated/pengamat_page/viewPlan/$1';
+// END: PENGAMAT
+
+// PEMIMPIN
+$route['pimpinan'] 							= 'integrated/pimpinan_page';
+$route['pimpinan-debit-andalan'] 			= 'integrated/pimpinan_page/getDebitAndalan';
+$route['pimpinan-debit-view'] 				= 'integrated/pimpinan_page/viewWater';
+$route['pimpinan-debit-add'] 				= 'integrated/pimpinan_page/createWater';
+$route['pimpinan-debit-add-action'] 		= 'integrated/pimpinan_page/createWaterAction';
+$route['pimpinan-debit-edit/(:num)'] 		= 'integrated/pimpinan_page/editWater/$1';
+$route['pimpinan-debit-edit-action'] 		= 'integrated/pimpinan_page/editWaterAction';
+$route['pimpinan-debit-delete-action/(:num)'] 	= 'integrated/pimpinan_page/deleteWater/$1';
+$route['pimpinan-debit-andalan-ajax'] 		= 'integrated/pimpinan_page/ajaxGetDebitAndalan';
+$route['pimpinan-rencana-tanam'] 			= 'integrated/pimpinan_page/plan';
+$route['pimpinan-kalkulasi-rencana']		= 'integrated/pimpinan_page/planDataCalc';
+$route['pimpinan-kalkulasi-rencana-ajax']	= 'integrated/pimpinan_page/ajaxGetDataWaterDemand';
+$route['pimpinan-rencana-save'] 			= 'integrated/pimpinan_page/savePlan';
+$route['pimpinan-rencana-list'] 			= 'integrated/pimpinan_page/listPlan';
+$route['pimpinan-rencana-view/(:num)'] 		= 'integrated/pimpinan_page/viewPlan/$1';
+
+// END : PEMIMPIN
 
 $route['404_override'] = '';
 

@@ -77,14 +77,13 @@ class Auth extends CI_Controller {
 				redirect('/juru');
 				break;
 			case '3':
-				# code...
+				redirect('/pengamat');
 				break;
 			case '4':
-				# code...
+				redirect('/pimpinan');
 				break;
-			
 			default:
-				# code...
+				edirect('/');
 				break;
 		}
 	}
@@ -156,6 +155,17 @@ class Auth extends CI_Controller {
 	     	echo json_encode($result);
 			
 		}
+	}
+
+	public function accountDetail()
+	{
+		checkUser(array(2, 3, 4));
+
+		$data = array();
+		$template['menuTop'] = $this->load->view('frontend/part/nav-top', 0, true);
+		$template['sideBar'] = $this->load->view('frontend/part/nav-right', '', true);
+		$template['content'] = $this->load->view('frontend/pages/account-detail', $data, true);
+		$this->load->view('frontend/master', $template);
 	}
 	
 }

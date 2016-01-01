@@ -1,8 +1,27 @@
 <div id="main"> 
-    <a name="TemplateInfo"></a>
-    <h1>Informasi</h1>
-    <p>Sistem Informasi <strong>OP Irigasi</strong> berisikan tentang informasi debit air di daerah yogyakarta.</p>
-    <p>silahkan beritahu kami jika terdapat kesalahan dalam sistem informasi ini</p>
-    <p class="post-footer align-right"> <a href="" class="readmore">Read more</a> <a href="" class="comments">Comments (0)</a> <span class="date"><?php echo date('d-F-Y') ?></span> </p>
-    <br><br>
+    <a name="SampleTags"></a>
+    <h1>Daerah Irigasi</h1>
+    <br>
+    <br>
+    <?php $totalWide = 0 ?>
+    <table class="table-detail">
+        <tr>
+            <th>Nama daerah</th>
+            <th>Area</th>
+            <th>Luas daerah</th>
+        </tr>
+        <?php foreach ($regions as $key => $region): ?>
+        	<?php $totalWide += $region->wide ?>
+            <tr>
+                <td><?php echo $region->region_name ?></td>
+                <td><?php echo $region->area_name ?></td>
+                <td><?php echo $region->wide ?> ha</td>
+            </tr>
+        <?php endforeach ?>
+        <tr>
+            <td colspan="2"><strong>Total luas </strong></td>
+            <td><strong><?php echo $totalWide ?> ha</strong></td>
+        </tr>
+    </table>
+    <br>
 </div>
