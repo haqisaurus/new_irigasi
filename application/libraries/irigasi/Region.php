@@ -138,5 +138,11 @@ class Region {
 		return $this->CI->wide_model->findRegionWide(array('region_id' => $regionID))->row();
 	}
 
+	public function getJuruRegion($condition = array(), $limit = null, $offset = null)
+	{
+		$data = $this->CI->region_model->findRelRegion($condition);
+		return $data->result();
+		# code...
+	}
 	// END : ADMIN SIDE
 }

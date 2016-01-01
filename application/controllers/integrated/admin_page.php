@@ -1,5 +1,4 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
 class Admin_page extends CI_Controller {
 
 	var $template = array();
@@ -179,6 +178,7 @@ class Admin_page extends CI_Controller {
 			$condition 				= array('user.id' => $juruID);
 			$data['user'] 			= $this->user->getSpecificUser($condition);
 			$data['regions'] 		= $this->region->getAllRegion();
+			$data['regions_selected'] 	= $this->region->getJuruRegion();
 			
 			$template['content'] 	= $this->load->view('integrated/pages/admin/juru-access/update', $data, true); 
 			$this->load->view('integrated/master', $template);
@@ -186,7 +186,49 @@ class Admin_page extends CI_Controller {
 
 		public function editJuruAction()
 		{
-			
+			$this->load->library('irigasi/user');
+
+			$this->form_validation->set_rules('id', 'user id', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('regions[]', 'Region', 'trim|required|xss_clean');
+			$this->form_validation->set_error_delimiters('<span class="help-block">', '</span>');
+
+			if($this->form_validation->run() == FALSE)
+			{
+				
+			    //Field validation failed.  User redirected to create page
+				$this->load->library('irigasi/region');
+
+				$this->session->set_flashdata('error', validation_errors());
+				$condition 				= array('user.id' => $this->input->post('id'));
+				$data['user'] 			= $this->user->getSpecificUser($condition);
+				$data['regions'] 		= $this->region->getAllRegion();
+				$data['regions_selected'] 	= $this->region->getJuruRegion();
+
+
+				$template['content'] 	= $this->load->view('integrated/pages/admin/juru-access/update', $data, true); 
+				$this->load->view('integrated/master', $template);
+			}
+			else
+			{
+				$dataInsert = array();
+				$regions = $this->input->post('regions');
+				$userID = $this->input->post('id');
+				
+				foreach ($regions as $region) {
+					array_push($dataInsert, array('user_id' => $userID, 'region_id' => $region));
+				}
+
+				$insertResult = $this->user->updateUserJuruGrant($userID, $dataInsert);
+
+				if ($insertResult) {
+					// redirect user 
+					redirect('juru-access');
+				} else {
+					redirect('login');
+				}
+		     	//Go to private area
+				
+			}
 		}
 	// END : juru access section =====================================================================================
 

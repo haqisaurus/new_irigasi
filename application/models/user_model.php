@@ -72,6 +72,8 @@ Class User_model extends CI_Model
         return $query;
     }
 
+    
+
     public function login($username, $password)
     {
         $this->db->select('id, username, first_name, last_name, role_id');
@@ -90,5 +92,38 @@ Class User_model extends CI_Model
         {
             return false;
         }
+    }
+
+    public function insertRelRegion($data = array())
+    {
+        $this->db->trans_start();
+
+        $this->db->insert_batch('region_user', $data); 
+
+        if ($this->db->trans_status()) {
+            $this->db->trans_commit();
+            return array('status' => 1);
+        } else {
+            $this->db->trans_rollback();
+            return array('status' => 0);
+        }
+    }
+
+ 
+    public function deleteRelRegion($condition = array())
+    {
+        $this->db->trans_start();
+
+        $this->db->where($condition);
+        $this->db->delete('region_user'); 
+
+        if ($this->db->trans_status()) {
+            $this->db->trans_commit();
+            return array('status' => 1);
+        } else {
+            $this->db->trans_rollback();
+            return array('status' => 0);
+        }
+
     }
 }

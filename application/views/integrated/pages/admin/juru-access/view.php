@@ -14,8 +14,6 @@
         <!-- /.row -->
         <div class="row">
             <div class="col-lg-12">
-                <a href="<?php echo site_url('user-add'); ?>" class="btn btn-primary"><span class="fa fa-plus-square"></span> Tambah</a>
-                <br>
                 <br>
                 <div class="panel panel-default">
                     <div class="panel-heading">

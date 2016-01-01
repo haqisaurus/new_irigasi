@@ -168,6 +168,14 @@ class User {
 
     	return $result['status'];
 	}
+
+	public function updateUserJuruGrant($userID = 0, $data = array())
+	{
+		$this->CI->user_model->deleteRelRegion(array('region_user.user_id' => $userID));
+		$this->CI->user_model->insertRelRegion($data);
+		return TRUE;
+		
+	}
 	// END : ADMIN SIDE
 }
 

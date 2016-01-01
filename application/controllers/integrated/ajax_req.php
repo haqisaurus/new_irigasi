@@ -101,7 +101,7 @@ class Ajax_req extends CI_Controller {
 		{
 			$this->load->library('irigasi/region');
 
-			echo json_encode($this->region->getAllRegion());
+			echo json_encode($this->region->getJuruRegion());
 		}
 
 		public function ajaxGetWide()

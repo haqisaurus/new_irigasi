@@ -76,4 +76,14 @@ Class Region_model extends CI_Model
         return $query;
     }
 
+    public function findRelRegion($condition = array(), $limit = null, $offset = null)
+    {   
+        $this->db->select('user.*, region.*');
+        $this->db->where('user.role_id', 2);
+        $this->db->join('user', 'region_user.user_id = user.id');
+        $this->db->join('region', 'region_user.region_id = region.id');
+        $query = $this->db->get_where('region_user', $condition, $limit, $offset);
+        return $query;
+    }
+
 }

@@ -16,7 +16,7 @@
                 <?php 
                 $attributes = array('class' => 'form-horizontal', 'id' => 'user-update');
 
-                echo form_open('user-edit-action', $attributes);
+                echo form_open('juru-access-edit-action', $attributes);
                 ?>
                     <div class="form-group <?php echo form_error('username') ? 'has-error' : ''; ?>">
                         <label for="username" class="col-sm-2 control-label">Username</label>
@@ -39,19 +39,25 @@
                             <?php echo form_error('last-name'); ?>
                         </div>
                     </div>
-                    <div class="form-group <?php echo form_error('last-name') ? 'has-error' : ''; ?>">
+                    <div class="form-group <?php echo form_error('regions[]') ? 'has-error' : ''; ?>">
                         <label for="last_name" class="col-sm-2 control-label">Daerah akses</label>
                         <div class="col-sm-6">
+                            <?php 
+                                $selected = [];
+                                foreach ($regions_selected as $value) {
+                                    array_push($selected, $value->id);
+                                }
+                             ?>
                             <?php foreach ($regions as $key => $region): ?>
                                 
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" value="<?php echo $region->id ?>"><?php echo $region->region_name; ?>
+                                        <input type="checkbox" name="regions[]" value="<?php echo $region->id ?>" <?php echo in_array($region->id, $selected) ? 'checked' : ''; ?>><?php echo $region->region_name; ?>
                                     </label>
                                 </div>
                             <?php endforeach ?>
-                           
-                            <?php echo form_error('regions'); ?>
+                          
+                            <?php echo form_error('regions[]'); ?>
                         </div>
                     </div>
                     <div class="form-group">
