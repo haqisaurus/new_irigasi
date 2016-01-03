@@ -158,7 +158,7 @@ Class Water_model extends CI_Model
                                          sum(`left`), 
                                          sum(`right`), 
                                          (sum(`left`) + sum(`right`) + sum(`limpas`))  / 15 as intake
-                                    FROM (SELECT DISTINCT * from `WATER`GROUP BY date) shortedTable 
+                                    FROM (SELECT DISTINCT * from `water` GROUP BY date) shortedTable 
                                     WHERE 
                                         date BETWEEN '" . $condition[0] . "' 
                                         AND '" . $condition[1] . "' 
