@@ -36,7 +36,7 @@ class Water {
 	public function updateWater($data = array())
 	{
 		$checkData = $this->getSpecificWater(array('date' => $data['date']));
-
+		
 		if ($checkData) {
 
 			unset($data['id']);

@@ -14,7 +14,9 @@
     <!-- JQuery Mobile -->
     <link href="<?php echo base_url('assets/mobile/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css'); ?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/mobile/jquery.mobile-1.4.5/jquery.mobile.theme-1.4.5.min.css'); ?>" rel="stylesheet">
-
+    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  
     <link rel="stylesheet" href="http://cdn.rawgit.com/arschmitz/jquery-mobile-datepicker-wrapper/v0.1.1/jquery.mobile.datepicker.css">
     <!-- jQuery -->
     <script src="<?php echo base_url('assets/integrated/bower_components/jquery/dist/jquery.min.js'); ?>"></script>
@@ -32,8 +34,47 @@
     </script>
     <script src="<?php echo base_url('assets/mobile/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js'); ?>"></script>
     <script src="http://cdn.rawgit.com/jquery/jquery-ui/1.10.4/ui/jquery.ui.datepicker.js"></script>
-    <script id="mobile-datepicker" src="http://cdn.rawgit.com/arschmitz/jquery-mobile-datepicker-wrapper/v0.1.1/jquery.mobile.datepicker.js"></script>
+    <!-- l<script id="mobile-datepicker" src="http://cdn.rawgit.com/arschmitz/jquery-mobile-datepicker-wrapper/v0.1.1/jquery.mobile.datepicker.js"></script> -->
     <!-- backbone template -->
+    <script type="text/template" id="edit">
+        <div data-role="header" data-position="fixed" data-theme="b">
+            <h3>Input Debit</h3>
+            <a class="ui-btn ui-btn-left ui-btn-icon-left ui-icon-carat-l back" href="#home" data-rel="back">Back</a>
+        </div>
+        <div role="main" class="ui-content" is="content">
+            <div class="ui-field-contain">
+                    
+                <label for="region-id">Daerah Irigasi</label>
+                <select id="region-id">
+                <%
+                    _.each(data.regions, function(region, key) {
+                        %>
+                        <option value="<%= region.id %>"><%= region.region_name %></option>
+                        <%
+                    }); 
+                %>
+                </select>
+            </div>
+            <div class="ui-field-contain">
+                <label for="date">Tanggal</label>
+                <input id="date" type="text" data-role="date" data-inline="true" data-date-format="yy-mm-dd" value="<%= data.water[0].date %>">
+            </div>
+            <div class="ui-field-contain">
+                <label for="right">Debit Kanan</label>
+                <input type="number" step="0.01" name="right" id="right" value="<%= data.water[0].right %>">
+            </div>
+            <div class="ui-field-contain">
+                <label for="left">Debit Kiri</label>
+                <input type="number" step="0.01" name="left" id="left" value="<%= data.water[0].left %>">
+            </div>
+            <div class="ui-field-contain">
+                <label for="limpas">Limpas</label>
+                <input type="number" step="0.01" name="limpas" id="limpas" value="<%= data.water[0].limpas %>">
+            </div>
+            <input type="hidden" name="id" id="id" value="<%= data.water[0].id %>">
+            <a class="ui-btn ui-icon-plus ui-btn-icon-left" id="btn-update">Update</a>
+        </div>
+    </script>
     <script type="text/template" id="search">
         <div data-role="header" data-position="fixed" data-theme="b">
             <h3>Cari</h3>
@@ -95,6 +136,8 @@
                         <th data-priority="1">Kanan</th>
                         <th data-priority="1">Kiri</th>
                         <th data-priority="1">Limpas</th>
+                        <th data-priority="1"></th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -105,11 +148,18 @@
                             <tr>
                                 <th><%= ( key + 1) %></th>
                                 <td><%= val.date %></td>
-                                <td><%= val.right %> <sub>lt/det</sub>
+                                <td>
+                                    <%= val.right %> <sub>lt/det</sub>
                                 </td>
-                                <td><%= val.left %> <sub>lt/det</sub>
+                                <td>
+                                    <%= val.left %> <sub>lt/det</sub>
                                 </td>
-                                <td><%= val.limpas %> <sub>lt/det</sub>
+                                <td>
+                                    <%= val.limpas %> <sub>lt/det</sub>
+                                </td>
+                                <td>
+                                    <a href="#delete-water/<%= val.id %>" data-role="button" data-mini="true" data-icon="delete" data-theme="b" data-inline="true">Delete</a>
+                                    <a href="#edit-water/<%= val.id %>" data-role="button" data-mini="true" data-icon="info" data-inline="true">&nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
                                 </td>
                             </tr>
                         <%
@@ -161,6 +211,8 @@
     <script type="text/template" id="home">
         <div data-role="header" data-position="fixed" data-theme="b">
             <h3>Juru</h3>
+            <a class="ui-btn ui-btn-right ui-icon-delete ui-btn-icon-right" href="<?php echo site_url('logout') ?>">Logout</a>
+            
         </div>
         <div role="main" class="ui-content">
             <h1 is="gk-text" style="text-align: center; margin-top: 100px;">Menu Juru</h1>
@@ -179,11 +231,14 @@
     <input type="hidden" id="site-url" value="<?php echo site_url(); ?>">
     <div id="content"></div>
     <!-- popup dialog -->
-    <div data-role="dialog" id="popupDialog">
-            <div role="main" class="ui-content" style="text-align: center;">
+    <div data-role="dialog" id="popupDialog" class="hidden" style="position: relative: width: 100%; height: 100%; display: none;">
+        <div style="position: relative: width: 100%; height: 100%;">
+            <img src="http://www.arabianbusiness.com/skins/ab.main/gfx/loading_spinner.gif" alt="loader" style="position: absolute; top: 0; right:0; bottom: 0; left: 0: margin: auto; width: 20px; height: 20px;">    
+        </div>
+            <!-- <div role="main" class="ui-content" style="text-align: center;">
                     <h3 class="ui-title">Akun yang anda masukan tidak terdaftar!!!</h3>
                     <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" id="close-dialog" data-rel="back">OK</a>
-            </div>
+            </div> -->
     </div>
 
     

@@ -1,9 +1,9 @@
 
 	var app = null;
 	var siteUrl = $('#site-url').val();
-	Backbone.emulateHTTP = true;
-    Backbone.emulateJSON = true;
-    $.mobile.date.prototype.options.dateFormat = "yy-mm-dd";
+	// Backbone.emulateHTTP = true;
+ //    Backbone.emulateJSON = true;
+    // $.mobile.date.prototype.options.dateFormat = "yy-mm-dd";
 
 // MODEL
 	var Region = Backbone.Model.extend({
@@ -28,25 +28,26 @@
     		right: 0,
     		limpas: 0,
     	},
+    	urlRoot : 'api/water',
     	getCustomUrl: function(method) {
     		
     		switch(method) {
     			case 'read': 
-	    			return '/get-water-ajax';
+	    			return '/api/water/' + this.id;
 	    			break;
 	    		case 'create': 
-	    			return '/add-water-ajax';
+	    			return '/api/water';
 	    			break;
 	    		case 'update': 
-	    			return '/';
+	    			return '/api/water/' + this.id;
 	    			break;
 	    		case 'delete': 
-	    			return '/';
+	    			return '/api/water/' + this.id;
 	    			break;
     		}
     	},
     	sync: function(method, model, options) {
-    		console.log(method, model, options)
+    		
     		options || (options = {});
     		options.url = this.getCustomUrl(method.toLowerCase());
     		
@@ -64,7 +65,7 @@
 
     var WaterCollection = Backbone.Collection.extend({
     	model: Water,
-    	url: 'get-water-ajax'
+    	url: '/api/water'
     });
 
 // END : COLLECTION 
@@ -234,6 +235,11 @@
 				var _data = { data: response };
 				$(_this.el).append(_this.template(_data));
 	        	$(_this.el).trigger('create');
+
+
+	        	$('#date').datepicker({
+	        		dateFormat: 'yy-mm-dd',
+	        	});
 				
 			})
 
@@ -251,7 +257,7 @@
 			var limpas = $('#limpas').val();
 
 			var data = {
-				'region-id': regionID,
+				region_id: regionID,
 	    		date: date,
 	    		left: left,
 	    		right: right,
@@ -262,13 +268,47 @@
 
 			// loader
 			$.mobile.loading( "show" );
-			waterModel.save({}, {data: data}).done(function(response) {
-				app.navigate('home', {trigger: true});
+			waterModel.save().done(function(response) {
+				if(response.status) {
+					alert('Input berhasil');
+					app.navigate('home', {trigger: true});
+				} else {
+					alert('Input gagal!!!');
+				}
 			})
 			.fail(function(error) {
 				var msg = $.parseJSON(error.responseText);
-				var str = msg.error.date + '<br>' + msg.error.right + '<br>' + msg.error.left + '<br>' + msg.error.limpas + '<br>' + msg.error['region-id'];
-				dialogShow(str)
+
+				if (msg.error.region_id) {
+					$('#region-id').css('border', '1px solid red');
+				} else {
+					$('#region-id').css('border', '1px transparent');
+				};
+
+				if (msg.error.date) {
+					$('#date').css('border', '1px solid red');
+				} else {
+					$('#date').css('border', '1px transparent');
+				};
+
+				if (msg.error.right) {
+					$('#right').css('border', '1px solid red');
+				} else {
+					$('#right').css('border', '1px transparent');
+				};
+
+				if (msg.error.left) {
+					$('#left').css('border', '1px solid red');
+				} else {
+					$('#left').css('border', '1px transparent')
+				};
+
+				if (msg.error.limpas) {
+					$('#limpas').css('border', '1px solid red');
+				} else {
+					$('#limpas').css('border', '1px transparent');
+				}
+				
 			}).always(function() {
 				$.mobile.loading( "hide" );
 			});
@@ -286,6 +326,115 @@
 	    }
 	});
 
+	var editView = Backbone.View.extend({
+		model: {
+				region: Region, 
+				water: Water
+			},
+		
+		initialize: function(id) {
+			
+			this.idSearch = id;
+	        this.template = _.template($('#edit').html());
+		},
+		render: function(eventName) {
+			var _this = this;
+			var regions = new this.model.region();
+			var water = new this.model.water({id: this.idSearch});
+			$.when(regions.fetch(), water.fetch()).done(function(response1, response2) {
+				
+				var _data = { 
+						data: {
+							regions : response1[0],
+							water : response2[0]
+						}
+					};
+
+				$(_this.el).append(_this.template(_data));
+	        	$(_this.el).trigger('create');
+
+	        	$('#date').datepicker({
+	        		dateFormat: 'yy-mm-dd',
+	        	});
+  				
+			});
+			
+
+	        return this;
+		},
+		events: {
+			'click #btn-update': 'saveAction',
+		},
+		saveAction: function(event) {
+
+			var ID = $('#id').val();
+			var regionID = $('#region-id').val();
+			var date = $('#date').val();
+			var right = $('#right').val();
+			var left = $('#left').val();
+			var limpas = $('#limpas').val();
+
+			// loader
+			$.mobile.loading( "show" );
+
+			var water = new this.model.water({
+				id: ID,
+				region_id: regionID,
+				date: date,
+				left: left,
+				right: right,
+				limpas: limpas,
+			});
+
+			water.save().done(function(response) {
+
+				if(response.status) {
+					alert('Udpate berhasil');
+					app.navigate('list-water', {trigger: true});
+				} else {
+					alert('Update gagal!!!');
+				}
+			})
+			.fail(function(error) {
+
+				if (msg.error.region_id) {
+					$('#region-id').css('border', '1px solid red');
+				} else {
+					$('#region-id').css('border', '1px transparent');
+				};
+
+				if (msg.error.date) {
+					$('#date').css('border', '1px solid red');
+				} else {
+					$('#date').css('border', '1px transparent');
+				};
+
+				if (msg.error.right) {
+					$('#right').css('border', '1px solid red');
+				} else {
+					$('#right').css('border', '1px transparent');
+				};
+
+				if (msg.error.left) {
+					$('#left').css('border', '1px solid red');
+				} else {
+					$('#left').css('border', '1px transparent')
+				};
+
+				if (msg.error.limpas) {
+					$('#limpas').css('border', '1px solid red');
+				} else {
+					$('#limpas').css('border', '1px transparent');
+				};
+
+			}).always(function() {
+				$.mobile.loading( "hide" );
+			});
+
+			
+		}
+	});	
+
 
 // END : VIEW
 	var AppRouter = Backbone.Router.extend({
@@ -296,6 +445,8 @@
 	        'add-water': 'addData',
 	        'list-water': 'listWater',
 	        'search-water': 'searchWater',
+	        'edit-water/:id': 'editWater',
+	        'delete-water/:id': 'deleteWater',
 	    },
 
 	    initialize:function () {
@@ -304,7 +455,7 @@
 	            window.history.back();
 
 	        });
-	        this.firstPage = true;
+	      
 	    },
 
 	    home:function () {
@@ -323,6 +474,22 @@
 	    	this.changePage(new SearchView());
 	    },
 
+	    editWater: function(id) {
+	       	this.changePage(new editView(id));
+	    },
+
+	    deleteWater: function(id) {
+	    	var water = new Water({id: id});
+	    	water.destroy().done(function(response) {
+	    		if(response.status) {
+					alert('Hapus data id ' + id + ' berhasil');
+					app.navigate('list-water', {trigger: true});
+				} else {
+					alert('Hapus data id ' + id + ' gagal!!!');
+				}
+	    	})
+	    },
+
 	    changePage:function (page) {
 	        $(page.el).attr('data-role', 'page');
 	        page.render();
@@ -330,11 +497,8 @@
 	        $('#content').html($(page.el));
 	        var transition = $.mobile.defaultPageTransition;
 	        // We don't want to slide the first page
-	        if (this.firstPage) {
-	            transition = 'none';
-	            this.firstPage = false;
-	        }
-	        $.mobile.changePage($(page.el), {changeHash:false, transition: transition});
+	        
+	        $.mobile.changePage($(page.el), {changeHash:false, transition: 'pop'});
 	    }
 	    
 	});

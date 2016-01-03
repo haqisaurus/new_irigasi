@@ -219,5 +219,13 @@ $route['pimpinan-rencana-view/(:num)'] 		= 'integrated/pimpinan_page/viewPlan/$1
 $route['404_override'] = '';
 
 
+/*
+| -------------------------------------------------------------------------
+| Sample REST API Routes
+| -------------------------------------------------------------------------
+*/
+$route['api/water'] = 'integrated/ajax_req/apiWater';
+$route['api/water/(:num)'] = 'integrated/ajax_req/apiWater/$1';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
