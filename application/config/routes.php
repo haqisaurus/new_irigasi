@@ -181,7 +181,12 @@ $route['add-water-ajax']			= 'integrated/ajax_req/addAjaxWaterData';
 
 
 // JURU
-$route['juru'] 					= 'integrated/juru_page';
+$route['juru'] 							= 'integrated/juru_page';
+$route['juru-debit-view'] 				= 'integrated/juru_page/viewWater';
+$route['juru-debit-add'] 				= 'integrated/juru_page/createWater';
+$route['juru-debit-add-action'] 		= 'integrated/juru_page/createWaterAction';
+$route['juru-debit-edit/(:num)'] 		= 'integrated/juru_page/editWater/$1';
+$route['juru-debit-edit-action'] 		= 'integrated/juru_page/editWaterAction';
 // END : JURU
 
 // PENGAMAT

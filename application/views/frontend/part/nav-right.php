@@ -4,10 +4,10 @@
     <?php if($currentUser && $currentUser->role_id == 2) : ?>
         <h1>Sidebar Menu</h1>
         <ul class="sidemenu">
-            <li><a href="<?php echo site_url('data-water') ?>">Data debit perdaerah</a></li>
-            <li><a href="<?php echo site_url('entri-water') ?>">Entery data debit air</a></li>
-            <li><a href="<?php echo site_url('plant-view') ?>">Pola tanam usulan</a></li>
-            <li><a href="<?php echo site_url('debit-andalan') ?>">Debit andalan</a></li>
+            <li><a href="<?php echo site_url('juru') ?>">Home</a></li>
+            <li>
+                <a href="<?php echo site_url('juru-debit-view') ?>">Data debit air</a>
+            </li>
         </ul>
     <!-- login pengamat -->
     <?php elseif($currentUser && $currentUser->role_id == 3): ?>

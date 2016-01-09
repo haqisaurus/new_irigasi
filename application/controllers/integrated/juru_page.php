@@ -40,19 +40,25 @@ class Juru_page extends CI_Controller {
 			$this->form_validation->run();
 
 			$this->load->library('irigasi/water');
+			$this->load->library('irigasi/region');
+			$data['regions'] 		= $this->region->getAllRegion();
 
-			$data['table'] = array();
-			$data['years'] = $this->water->getAllYear();
+			$data['table'] 	= array();
+			$regionID 		= $regionID ? : $data['regions'][0]->id;
+			$condition 		= array('region_id' => $regionID);
+			
+			$data['years'] 	= $this->water->getAllYear($condition);
+
 			if ($_POST) {
-				$condition 		= array();
-				$conditionLike  = array('date' => $year . '-' . $month);
-				$data['table'] 	= $this->water->getAllWater($condition, $conditionLike);
 				
+				$conditionLike  = array('date' => $year . '-' . sprintf("%02d", $month));
+				$data['table'] 	= $this->water->getAllWaterASC($condition, $conditionLike);
 			}
 			
-			$template['content'] 	= $this->load->view('integrated/pages/admin/water/view', $data, true);
-			$template['popup'] 		= $this->load->view('integrated/pages/admin/water/popup', '', true); 
-			$this->load->view('integrated/master', $template);
+			$template['menuTop'] = $this->load->view('frontend/part/nav-top', 0, true);
+			$template['sideBar'] = $this->load->view('frontend/part/nav-right', '', true);
+			$template['content'] = $this->load->view('frontend/pages/pimpinan/debit-list', $data, true);
+			$this->load->view('frontend/master', $template);
 		}
 
 		public function createWater()
@@ -60,8 +66,10 @@ class Juru_page extends CI_Controller {
 			$this->load->library('irigasi/region');
 			$data['regions'] 		= $this->region->getAllRegion();
 
-			$template['content'] 	= $this->load->view('integrated/pages/admin/water/create', $data, true); 
-			$this->load->view('integrated/master', $template);
+			$template['menuTop'] = $this->load->view('frontend/part/nav-top', 0, true);
+			$template['sideBar'] = $this->load->view('frontend/part/nav-right', '', true);
+			$template['content'] = $this->load->view('frontend/pages/pimpinan/debit-add', $data, true);
+			$this->load->view('frontend/master', $template);
 		}
 
 		public function createWaterAction()
@@ -98,7 +106,7 @@ class Juru_page extends CI_Controller {
 
 				if ($insertResult) {
 					// redirect user 
-					redirect('water');
+					redirect('pimpinan-debit-view');
 				} else {
 					redirect('login');
 				}
@@ -109,15 +117,19 @@ class Juru_page extends CI_Controller {
 
 		public function editWater($waterID = 0)
 		{
+
 			$this->load->library('irigasi/region');
 			$this->load->library('irigasi/water');
 
 			$condition 				= array('water.id' => $waterID);
 			$data['regions'] 		= $this->region->getAllRegion();
-			$data['water'] 			= $this->water->getSpecificWater($condition);
+			$data['update'] 			= $this->water->getSpecificWater($condition);
 			
-			$template['content'] 	= $this->load->view('integrated/pages/admin/water/update', $data, true); 
-			$this->load->view('integrated/master', $template);
+			$template['menuTop'] = $this->load->view('frontend/part/nav-top', 0, true);
+			$template['sideBar'] = $this->load->view('frontend/part/nav-right', '', true);
+			$template['content'] = $this->load->view('frontend/pages/pimpinan/debit-edit', $data, true);
+			$this->load->view('frontend/master', $template);
+
 		}
 
 		public function editWaterAction()
@@ -137,11 +149,13 @@ class Juru_page extends CI_Controller {
 			    //Field validation failed.  User redirected to create page
 				$this->session->set_flashdata('error', validation_errors());
 				$condition 				= array('water.id' => $this->input->post('id'));
-				$data['water'] 			= $this->water->getSpecificWater($condition);
+				$data['update'] 			= $this->water->getSpecificWater($condition);
 				$data['regions'] 		= $this->region->getAllRegion();
 				
-				$template['content'] 	= $this->load->view('integrated/pages/admin/water/update', $data, true); 
-				$this->load->view('integrated/master', $template);
+				$template['menuTop'] = $this->load->view('frontend/part/nav-top', 0, true);
+				$template['sideBar'] = $this->load->view('frontend/part/nav-right', '', true);
+				$template['content'] = $this->load->view('frontend/pages/pimpinan/debit-edit', $data, true);
+				$this->load->view('frontend/master', $template);
 			}
 			else
 			{
@@ -161,7 +175,7 @@ class Juru_page extends CI_Controller {
 
 				if ($insertResult) {
 					// redirect Region 
-					redirect('water');
+					redirect('pimpinan-debit-edit/' . $this->input->post('id'));
 				} else {
 					redirect('login');
 				}
@@ -176,7 +190,9 @@ class Juru_page extends CI_Controller {
 
 			$result = $this->water->deleteWater($waterID);
 
-	 		redirect('water');
+	 		$previousPage = $_SERVER["HTTP_REFERER"];
+			header('Location: '.$previousPage);
+
 		}
 	// END : water section =====================================================================================
 
