@@ -18,11 +18,11 @@
 	?>
 	<table class="table-form form-plant" style="">
 		<tr>
-			<th colspan="4">Pola tanam usulan</th>
+			<th colspan="4">Pola tanam usulan <i id="total-wide">4.1700</i></th>
 		</tr>
 		<tr>
 			<td> <label for="region-id">Region</label> </td>
-			<td colspan="3"><?php echo form_dropdown('region-id', $regionOption, $region, 'class="form-control" id="region-id"'); ?></td>
+			<td colspan="3"><?php echo form_dropdown('region-id', $regionOption, $region, 'class="form-control" id="region-id"'); ?> &nbsp;&nbsp;&nbsp;&nbsp;<i id="total-wide">4.1700</i> ha</td>
 		</tr>
 		<tr>
 			<td> <label for="region-id">Tahun</label> </td>
@@ -102,7 +102,7 @@
 			<td><input type="text" name="bero[]" value="<?php echo set_value('bero', '0') ?>"> <?php echo form_error('bero'); ?></td>
 		</tr>
 		<tr>
-			<td colspan="4"><br><button type="submit">Kalkulasi</button><br></td>
+			<td colspan="4"><br><button type="submit" id="calculate">Kalkulasi</button><br></td>
 		</tr>
 	</table>
 	<?php echo form_close(); ?>
@@ -220,19 +220,19 @@
         var bero3        = parseFloat($($('[name^=bero]')[2]).val());
         
         console.log(parseFloat(rice1 + palawija1 + sugar1 + bero1), total)
-        if (parseFloat(rice1 + palawija1 + sugar1 + bero1) > total) {
+        if (parseFloat(rice1 + palawija1 + sugar1 + bero1) >= total) {
             alert('Data Masa Tanam 1 Lebih Besar Dari Luas Lahan');
             $($('[name^=rice]')[0]).focus();
             return false;
         };
 
-        if (parseFloat(rice2 + palawija2 + sugar2 + bero2) > total) {
+        if (parseFloat(rice2 + palawija2 + sugar2 + bero2) >= total) {
             alert('Data Masa Tanam 2 Lebih Besar Dari Luas Lahan');
             $($('[name^=rice]')[1]).focus();
             return false;
         };
 
-        if (parseFloat(rice3 + palawija3 + sugar3 + bero3) > total) {
+        if (parseFloat(rice3 + palawija3 + sugar3 + bero3) >= total) {
             alert('Data Masa Tanam 3 Lebih Besar Dari Luas Lahan');
             $($('[name^=rice]')[2]).focus();
             return false;
