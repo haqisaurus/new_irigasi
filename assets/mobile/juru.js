@@ -10,14 +10,14 @@
 		defaults: {
 			region_name: '',
 		},
-		urlRoot : 'get-region-ajax',
+		urlRoot : '/get-region-ajax',
     });
 
     var Year = Backbone.Model.extend({
 		defaults: {
 			year: '',
 		},
-		urlRoot : 'get-year-ajax',
+		urlRoot : '/get-year-ajax',
     });
 
     var Water = Backbone.Model.extend({
@@ -28,9 +28,8 @@
     		right: 0,
     		limpas: 0,
     	},
-    	urlRoot : 'api/water',
+    	urlRoot : '/api/water',
     	getCustomUrl: function(method) {
-    		
     		switch(method) {
     			case 'read': 
 	    			return '/api/water/' + this.id;
@@ -60,7 +59,7 @@
 // COLLECTION
 	var RegionCollection = Backbone.Collection.extend({
 		model: Region,
-    	url: 'get-region-ajax'
+    	url: '/get-region-ajax'
 	});
 
     var WaterCollection = Backbone.Collection.extend({
