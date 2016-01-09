@@ -102,21 +102,21 @@
                             </tr>
                             <tr>
                                 <td><label for="">Padi</label></td>
-                                <td><input type="text" name="rice[]" value="150"></td>
-                                <td><input type="text" name="rice[]" value="90"></td>
-                                <td><input type="text" name="rice[]" value="170"></td>
+                                <td><input type="text" name="rice[]" value="0"></td>
+                                <td><input type="text" name="rice[]" value="0"></td>
+                                <td><input type="text" name="rice[]" value="0"></td>
                             </tr>
                             <tr>
                                 <td><label for="">Palawija</label></td>
                                 <td><input type="text" name="palawija[]" value="0"></td>
-                                <td><input type="text" name="palawija[]" value="70"></td>
+                                <td><input type="text" name="palawija[]" value="0"></td>
                                 <td><input type="text" name="palawija[]" value="0"></td>
                             </tr>
                             <tr>
                                 <td><label for="">Tebu</label></td>
-                                <td><input type="text" name="sugar[]" value="10"></td>
-                                <td><input type="text" name="sugar[]" value="10"></td>
-                                <td><input type="text" name="sugar[]" value="10"></td>
+                                <td><input type="text" name="sugar[]" value="0"></td>
+                                <td><input type="text" name="sugar[]" value="0"></td>
+                                <td><input type="text" name="sugar[]" value="0"></td>
                             </tr>
                             <tr>
                                 <td><label for="">Bero</label></td>

@@ -79,21 +79,21 @@
 		</tr>
 		<tr>
 			<td> <label for="rice">Padi</label> </td>
-			<td><input type="text" name="rice[]" value="<?php echo set_value('rice', '150') ?>"> <?php echo form_error('rice'); ?></td>
-			<td><input type="text" name="rice[]" value="<?php echo set_value('rice', '90') ?>"> <?php echo form_error('rice'); ?></td>
-			<td><input type="text" name="rice[]" value="<?php echo set_value('rice', '170') ?>"> <?php echo form_error('rice'); ?></td>
+			<td><input type="text" name="rice[]" value="<?php echo set_value('rice', '0') ?>"> <?php echo form_error('rice'); ?></td>
+			<td><input type="text" name="rice[]" value="<?php echo set_value('rice', '0') ?>"> <?php echo form_error('rice'); ?></td>
+			<td><input type="text" name="rice[]" value="<?php echo set_value('rice', '0') ?>"> <?php echo form_error('rice'); ?></td>
 		</tr>
 		<tr>
 			<td> <label for="palawija">Palawija</label> </td>
 			<td><input type="text" name="palawija[]" value="<?php echo set_value('palawija', '0') ?>"> <?php echo form_error('palawija'); ?></td>
-			<td><input type="text" name="palawija[]" value="<?php echo set_value('palawija', '70') ?>"> <?php echo form_error('palawija'); ?></td>
+			<td><input type="text" name="palawija[]" value="<?php echo set_value('palawija', '0') ?>"> <?php echo form_error('palawija'); ?></td>
 			<td><input type="text" name="palawija[]" value="<?php echo set_value('palawija', '0') ?>"> <?php echo form_error('palawija'); ?></td>
 		</tr>
 		<tr>
 			<td> <label for="sugar">Tebu</label> </td>
-			<td><input type="text" name="sugar[]" value="<?php echo set_value('sugar', '10') ?>"> <?php echo form_error('sugar'); ?></td>
-			<td><input type="text" name="sugar[]" value="<?php echo set_value('sugar', '10') ?>"> <?php echo form_error('sugar'); ?></td>
-			<td><input type="text" name="sugar[]" value="<?php echo set_value('sugar', '10') ?>"> <?php echo form_error('sugar'); ?></td>
+			<td><input type="text" name="sugar[]" value="<?php echo set_value('sugar', '0') ?>"> <?php echo form_error('sugar'); ?></td>
+			<td><input type="text" name="sugar[]" value="<?php echo set_value('sugar', '0') ?>"> <?php echo form_error('sugar'); ?></td>
+			<td><input type="text" name="sugar[]" value="<?php echo set_value('sugar', '0') ?>"> <?php echo form_error('sugar'); ?></td>
 		</tr>
 		<tr>
 			<td> <label for="sugar">Bero</label> </td>

@@ -49,7 +49,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <input type="hidden" name="id" value="<?php echo set_value('id', $region->id); ?>">
+                            <input type="hidden" name="id" value="<?php echo set_value('id', $wide->id); ?>">
                             <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> Perbarui</button>
                         </div>
                     </div>
