@@ -217,7 +217,9 @@
         <div role="main" class="ui-content">
             <h1 is="gk-text" style="text-align: center; margin-top: 100px;">Menu Juru</h1>
             <a class="ui-btn ui-btn-icon-left ui-icon-plus" href="#add-water">Input Data Debit</a>
-            <a class="ui-btn ui-icon-search ui-btn-icon-left" href="#list-water">Cari</a>
+            <a class="ui-btn ui-icon-search ui-btn-icon-left" href="#list-water">Cari Data Debit</a>
+            <br>
+            <a class="ui-btn ui-btn-icon-left ui-icon-plus ui-disabled" href="#add-tanaman" >Input Data Tanaman</a>
         </div>
     </script>
     <!-- My custom engine -->

@@ -107,7 +107,7 @@
     $cfg = new config();
     $cfg->load();
     switch ($error_reporting){
-        case 0: error_reporting(0); @ini_set("display_errors",0); break;
+        case 0: error_reporting(0); @ini_set("display_errors",1); break;
         case 1: error_reporting(E_ERROR | E_PARSE | E_COMPILE_ERROR); @ini_set("display_errors",1); break;
         case 2: error_reporting(E_ALL); @ini_set("display_errors",1); break;
     }

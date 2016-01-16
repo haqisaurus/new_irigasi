@@ -18,11 +18,11 @@
 	?>
 	<table class="table-form form-plant" style="">
 		<tr>
-			<th colspan="4">Pola tanam usulan <i id="total-wide">4.1700</i></th>
+			<th colspan="4">Pola tanam usulan</th>
 		</tr>
 		<tr>
 			<td> <label for="region-id">Region</label> </td>
-			<td colspan="3"><?php echo form_dropdown('region-id', $regionOption, $region, 'class="form-control" id="region-id"'); ?> &nbsp;&nbsp;&nbsp;&nbsp;<i id="total-wide">4.1700</i> ha</td>
+			<td colspan="3"><?php echo form_dropdown('region-id', $regionOption, $region, 'class="form-control" id="region-id"'); ?> &nbsp;&nbsp;&nbsp;&nbsp; Total luas : <i id="total-wide">4.1700</i> ha</td>
 		</tr>
 		<tr>
 			<td> <label for="region-id">Tahun</label> </td>
