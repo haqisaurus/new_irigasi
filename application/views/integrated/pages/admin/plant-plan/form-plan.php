@@ -159,6 +159,9 @@
             grid: true,
             values : months,
 
+            onFinish: function (data) {
+                $('#range').val('0,' + data.from + ',' + data.to);
+            },
         });
 
     var slider = $("#range-ui").data("ionRangeSlider");
@@ -186,6 +189,7 @@
     function setValue () {
         var range = $('#range-ui').val();
         // search in index
+        console.log(range);
         var val = range.split(';');
         var start = months.indexOf(val[0]);
         var end = months.indexOf(val[1]);
@@ -250,23 +254,23 @@
         var sugar3       = parseFloat($($('[name^=sugar]')[2]).val());
         var bero3        = parseFloat($($('[name^=bero]')[2]).val());
         
-        // console.log(parseFloat(rice1 + palawija1 + sugar1 + bero1), total)
-        // if (parseFloat(rice1 + palawija1 + sugar1 + bero1) > total) {
-        //     alert('Data Masa Tanam 1 Lebih Besar Dari Luas Lahan');
-        //     $($('[name^=rice]')[0]).focus();
-        //     return false;
-        // };
+        console.log(parseFloat(rice1 + palawija1 + sugar1 + bero1), total)
+        if (parseFloat(rice1 + palawija1 + sugar1 + bero1) > total) {
+            alert('Data Masa Tanam 1 Lebih Besar Dari Luas Lahan');
+            $($('[name^=rice]')[0]).focus();
+            return false;
+        };
 
-        // if (parseFloat(rice2 + palawija2 + sugar2 + bero2) > total) {
-        //     alert('Data Masa Tanam 2 Lebih Besar Dari Luas Lahan');
-        //     $($('[name^=rice]')[1]).focus();
-        //     return false;
-        // };
+        if (parseFloat(rice2 + palawija2 + sugar2 + bero2) > total) {
+            alert('Data Masa Tanam 2 Lebih Besar Dari Luas Lahan');
+            $($('[name^=rice]')[1]).focus();
+            return false;
+        };
 
-        // if (parseFloat(rice3 + palawija3 + sugar3 + bero3) > total) {
-        //     alert('Data Masa Tanam 3 Lebih Besar Dari Luas Lahan');
-        //     $($('[name^=rice]')[2]).focus();
-        //     return false;
-        // };
+        if (parseFloat(rice3 + palawija3 + sugar3 + bero3) > total) {
+            alert('Data Masa Tanam 3 Lebih Besar Dari Luas Lahan');
+            $($('[name^=rice]')[2]).focus();
+            return false;
+        };
     }
 </script>

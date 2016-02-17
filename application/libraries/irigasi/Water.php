@@ -244,6 +244,45 @@ class Water {
         return $result;
 	}
 
+	public function newAndalan($regionID = 1, $monthStart = 1)
+	{
+		$data = array();
+		$table = array();
+		$dataCollection = array();
+
+		$queryYear = array('region_id' => $regionID);
+		$allYears = $this->CI->water_model->findYear($queryYear)->row();
+
+		$year = $allYears->tahun;
+
+		$startDay = '1-' . $monthStart . '-2015';
+		$start = $month = strtotime($startDay);
+		$end = strtotime('+11 month', $start);
+
+		while($month <= $end) {
+			// echo date('F', $month);
+			$condition1 = ' region_id = ' . $regionID . ' and month(date) = ' . date('m', $month) . ' and dayofmonth( `date` ) < 16';
+			$datas1 = $this->CI->water_model->intake($condition1)->result_array();
+			$dataCollection[] = $datas1;
+
+			$condition2 = ' region_id = ' . $regionID . ' and month(date) = ' . date('m', $month) . ' and dayofmonth( `date` ) >= 16';
+			$datas2 = $this->CI->water_model->intake($condition2)->result_array();
+			$dataCollection[] = $datas2;
+
+			$month = strtotime("+1 month", $month);
+		}
+
+		$coloumnAndalan = (int) (0.8 * ($this->CI->water_model->findYear($queryYear)->num_rows() + 1)) - 1; //because coloumn start with 0 in computer
+		$result = array();
+		
+		foreach ($dataCollection as $key => $data) {
+			$result[] = $data[$coloumnAndalan]['intake'];
+		}
+
+		return $result;
+
+	}
+
 	// water demand
 	public function getDataWaterDemand($year = null)
 	{
@@ -299,55 +338,33 @@ class Water {
 		// $bero 		= array(0, 0, 0);
 		array_splice($range, 0, 1);
 
-		$WaterNeed = 0.01;
 		$irigasiNeed = 1.2;
 
-		$rsltMT1 = 0;
-		$rsltMT2 = 0;
-		$rsltMT3 = 0;
-
-		$rsltMT1 = ((($padi[0] * 0.75) + ($palawija[0] * 0.3) + ($tebu[0] + 0.85) + ($bero[0] * 0)) * 0.01);
-		$rsltMT2 = ((($padi[1] * 0.75) + ($palawija[1] * 0.3) + ($tebu[1] + 0.85) + ($bero[1] * 0)) * 0.01);
-		$rsltMT3 = ((($padi[2] * 0.75) + ($palawija[2] * 0.3) + ($tebu[2] + 0.85) + ($bero[2] * 0)) * 0.01);
-
-
-		$resultAllMT = array(
-				array(
-					'water-demand' => $rsltMT1,
-					'water-irigasi' => $rsltMT1 * $irigasiNeed,
-					),
-				array(
-					'water-demand' => $rsltMT2,
-					'water-irigasi' => $rsltMT2 * $irigasiNeed,
-					),
-				array(
-					'water-demand' => $rsltMT3,
-					'water-irigasi' => $rsltMT3 * $irigasiNeed,
-					),
-			);
+		$rsltMT[] = (($padi[0] * 0.75) + ($palawija[0] * 0.3) + ($tebu[0] * 0.85) + ($bero[0] * 0));
+		$rsltMT[] = (($padi[1] * 0.75) + ($palawija[1] * 0.3) + ($tebu[1] * 0.85) + ($bero[1] * 0));
+		$rsltMT[] = (($padi[2] * 0.75) + ($palawija[2] * 0.3) + ($tebu[2] * 0.85) + ($bero[2] * 0));
 		
+		$key = 0;
+		$resultTMP = array();
+		for ($i=0; $i < 12; $i++) { 
+			if (in_array($i, $range)) $key++;
+			
+			$resultTMP[] = $rsltMT[$key];
+			$resultTMP[] = $rsltMT[$key];
+
+		}
+		// var_dump($resultTMP);	
 		$startDay 	=  '1-' . $startMonth . '-' . $year;
 		$start 		= $month = strtotime($startDay);
 		$end 		= strtotime('+11 month', $start);
 		$n 			= 0;
-		$key 		= 0;
 		$result 	= array();
-		
+
 		while($month <= $end) {
 			
-			$data1 = array(
-				'month' 	=> date('F', $month) . ' 1',
-				'data' 		=> $resultAllMT[$key],
-				);
-			$data2 = array(
-				'month' 	=> date('F', $month) . ' 2',
-				'data' 		=> $resultAllMT[$key],
-				);
-
-			array_push($result, $data1, $data2);
-			// echo $key;
-			if($key < 2 && $n == $range[$key]) $key++;
-
+			$result[date('F', $month) . ' 1'] = array_shift($resultTMP);
+			$result[date('F', $month) . ' 2'] = array_shift($resultTMP);
+			
 			$month = strtotime("+1 month", $month);
 			$n++;
 		}

@@ -205,7 +205,7 @@ class Pimpinan_page extends CI_Controller {
 			$this->load->library('irigasi/water');
 
 			$regionID 		= $this->input->post('region-id') ? : null;
-			$dataAndalan 	= $this->water->getDataAndalan($regionID);
+			$dataAndalan 	= $this->water->newAndalan($regionID);
 			$resultAndalan 	= array();
 
 			foreach ($dataAndalan as $key => $value) {
@@ -261,20 +261,41 @@ class Pimpinan_page extends CI_Controller {
 			$waterDemand = $this->water->planData($regionID, $year, $startMonth, $range, $rice, $palawija, $sugar, $bero);
 
 			// =================== data andalan =============
-			$dataAndalan = $this->water->getDataAndalan($regionID, $startMonth);
+			$dataAndalan = $this->water->newAndalan($regionID, 1);
 			
-			$andalan = array();
-			$neraca = array();
-			$demand = array();
 
-			foreach ($dataAndalan as $key => $value) {
+			$year = date('Y');
+			$resultAndalan = array();
+		
+			$startDay 	=  '01-01-' . $year;
+			$start 		= $month = strtotime($startDay);
+			$end 		= strtotime('+11 month', $start);
+			$n 			= 0;
+
+			while($month <= $end) {
 				
-				array_push($andalan, $value);
-				array_push($demand, $waterDemand[$key]['data']['water-irigasi']);
-				array_push($neraca, $value - $waterDemand[$key]['data']['water-irigasi']);
+				array_push($resultAndalan, array(
+					
+					'month_string' =>  date('F', $month) . ' 1',
+					'debit' => $dataAndalan[$n],
+					'demand' => $waterDemand[date('F', $month) . ' 1'],
+					'neraca' => $dataAndalan[$n] - $waterDemand[date('F', $month) . ' 1'],
+				));
+				$n++;
+				array_push($resultAndalan, array(
+					
+					'month_string' =>  date('F', $month) . ' 2',
+					'debit' => $dataAndalan[$n],
+					'demand' => $waterDemand[date('F', $month) . ' 2'],
+					'neraca' => $dataAndalan[$n] - $waterDemand[date('F', $month) . ' 2'],
+				));
+				$n++;
+
+				$month = strtotime("+1 month", $month);
+				
 			}
-			
-			echo json_encode([$startMonth, $andalan, $demand, $neraca]);
+
+			echo json_encode($resultAndalan);
 		}
 
 		public function savePlan()

@@ -168,4 +168,65 @@ Class Water_model extends CI_Model
         return $query;
     }
 
+    public function intake($condition)
+    {
+        $query = $this->db->query("select
+                
+                                        (avg( `right` ) + avg( `left` ) + avg( `limpas`)) as intake
+                                    from 
+                                        water
+                                    where
+                                        " . $condition . "
+                                    group by
+                                        CONCAT( DATE_FORMAT(`date`, '%b %Y Day ' ),
+                                             case when dayofmonth( `date` ) < 16
+                                                 then '01-15'
+                                             else 
+                                                 CONCAT( '16-', right( last_day( `date` ), 2)  )
+                                             end )    order by
+                                        
+                                        intake DESC;
+                                        
+                                   ");
+
+        return $query;
+    }
+    // select
+    //     CONCAT( DATE_FORMAT(`date`, '%b %Y Day ' ),
+    //         case when dayofmonth( `date` ) < 16
+    //             then '01-15'
+    //         else 
+    //             CONCAT( '16-', right( last_day( `date` ), 2)  )
+    //         end ) as CharMonth,
+    //     CONCAT(
+    //         case when dayofmonth( `date` ) < 16
+    //             then '0'
+    //         else 
+    //              '1'       
+    //         end ) as half,
+    //     avg( `right` ) as avRight,
+    //     avg( `left` ) as avLeft,
+    //     avg( `limpas`) as avLimpas,
+    //     (avg( `right` ) + avg( `left` ) + avg( `limpas`)) as intake
+    // from 
+    //     water
+    // where
+    //     region_id = 1
+    // and 
+    //     month(date)=1
+    // and 
+    //     dayofmonth( `date` ) > 16
+    // group by
+    //     CONCAT( DATE_FORMAT(`date`, '%b %Y Day ' ),
+    //         case when dayofmonth( `date` ) < 16
+    //             then '01-15'
+    //         else 
+    //             CONCAT( '16-', right( last_day( `date` ), 2)  )
+    //         end )
+    // order by
+        
+    //     intake DESC
+    //     year( `date` ),
+    //     month( `date` ),
+    //     min( dayofmonth( `date` ))
 }

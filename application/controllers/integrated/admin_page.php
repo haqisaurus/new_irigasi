@@ -628,21 +628,41 @@ class Admin_page extends CI_Controller {
 		{
 			$this->load->library('irigasi/water');
 			$this->load->library('irigasi/region');
+			
+			$regionID 		= $this->input->post('region-id') ? : 1;
 
-			$regionID 		= $this->input->post('region-id') ? : null;
-			$dataAndalan 	= $this->water->getDataAndalan($regionID);
+			$dataAndalan 	= $this->water->newAndalan($regionID);
+			
 			$resultAndalan 	= array();
 			$year 			= date('Y');
 			
-			foreach ($dataAndalan as $key => $value) {
+
+			$startMonth = '01';
+			$startDay 	=  '1-' . $startMonth . '-' . $year;
+			$start 		= $month = strtotime($startDay);
+			$end 		= strtotime('+11 month', $start);
+			$n 			= 0;
+
+			while($month <= $end) {
 				
-				$month = $key + 1;
 				array_push($resultAndalan, array(
-						'month' => $year . '-' . $month,
-						'debit' => $value
-					));
+					
+					'month' =>  date('F', $month) . ' 1',
+					'debit' => $dataAndalan[$n],
+				));
+				$n++;
+				array_push($resultAndalan, array(
+					
+					'month' =>  date('F', $month) . ' 2',
+					'debit' => $dataAndalan[$n],
+				));
+				$n++;
+
+				$month = strtotime("+1 month", $month);
+				
 			}
 
+			$data['region-id'] 		= $regionID;
 			$data['regions'] 		= $this->region->getAllRegion();
 			$data['current_reg']	= $regionID ? $this->region->getSpecificRegion(array('id' => $regionID))->region_name : $data['regions'][0]->region_name;
 			$data['andalan'] 		= $resultAndalan;
@@ -664,7 +684,7 @@ class Admin_page extends CI_Controller {
 				
 				$neraca = $value - $waterDemand[$key]['irigasi'];
 				array_push($resultAndalan, array(
-						'month' => $year . '-' . $key,
+						'month' => date('F'),
 						'debit' => $value,
 						'demand' => $waterDemand[$key]['irigasi'],
 						'neraca' => $neraca,
@@ -704,24 +724,40 @@ class Admin_page extends CI_Controller {
 			$sugar 		= $this->input->post('sugar');
 			$bero 		= $this->input->post('bero');
 
-			
 			$waterDemand = $this->water->planData($regionID, $year, $startMonth, $range, $rice, $palawija, $sugar, $bero);
 
 			// =================== data andalan =============
-			$dataAndalan = $this->water->getDataAndalan($regionID, $startMonth);
+			$dataAndalan = $this->water->newAndalan($regionID, 1);
+			
 			$year = date('Y');
 			$resultAndalan = array();
-			
-			foreach ($dataAndalan as $key => $value) {
+		
+			$startDay 	=  '01-01-' . $year;
+			$start 		= $month = strtotime($startDay);
+			$end 		= strtotime('+11 month', $start);
+			$n 			= 0;
+
+			while($month <= $end) {
 				
-				$neraca = $value - $waterDemand[$key]['data']['water-irigasi'];
 				array_push($resultAndalan, array(
-						'month' => $year . '-' . $key,
-						'month_string' =>  $waterDemand[$key]['month'],
-						'debit' => $value,
-						'demand' => $waterDemand[$key]['data']['water-irigasi'],
-						'neraca' => $neraca,
-					));
+					
+					'month_string' =>  date('F', $month) . ' 1',
+					'debit' => $dataAndalan[$n],
+					'demand' => $waterDemand[date('F', $month) . ' 1'],
+					'neraca' => $dataAndalan[$n] - $waterDemand[date('F', $month) . ' 1'],
+				));
+				$n++;
+				array_push($resultAndalan, array(
+					
+					'month_string' =>  date('F', $month) . ' 2',
+					'debit' => $dataAndalan[$n],
+					'demand' => $waterDemand[date('F', $month) . ' 2'],
+					'neraca' => $dataAndalan[$n] - $waterDemand[date('F', $month) . ' 2'],
+				));
+				$n++;
+
+				$month = strtotime("+1 month", $month);
+				
 			}
 			
 			$data['current_reg']	= $this->region->getSpecificRegion(array('id' => $regionID))->region_name;
@@ -795,25 +831,42 @@ class Admin_page extends CI_Controller {
 			$palawija 	= explode(',', $dataPlant['palawija']);
 			$sugar 		= explode(',', $dataPlant['sugar']);
 			$bero 		= explode(',', $dataPlant['bero']);
+			// $startMonth = 1;
 
-			
 			$waterDemand = $this->water->planData($regionID, $year, $startMonth, $range, $rice, $palawija, $sugar, $bero);
 
 			// =================== data andalan =============
-			$dataAndalan = $this->water->getDataAndalan($regionID, $startMonth);
+			$dataAndalan = $this->water->newAndalan($regionID, 1);
+
 			$year = date('Y');
 			$resultAndalan = array();
-			
-			foreach ($dataAndalan as $key => $value) {
+		
+			$startDay 	=  '01-01-' . $year;
+			$start 		= $month = strtotime($startDay);
+			$end 		= strtotime('+11 month', $start);
+			$n 			= 0;
+
+			while($month <= $end) {
 				
-				$neraca = $value - $waterDemand[$key]['data']['water-irigasi'];
 				array_push($resultAndalan, array(
-						'month' => $year . '-' . $key,
-						'month_string' =>  $waterDemand[$key]['month'],
-						'debit' => $value,
-						'demand' => $waterDemand[$key]['data']['water-irigasi'],
-						'neraca' => $neraca,
-					));
+					
+					'month_string' =>  date('F', $month) . ' 1',
+					'debit' => $dataAndalan[$n],
+					'demand' => $waterDemand[date('F', $month) . ' 1'],
+					'neraca' => $dataAndalan[$n] - $waterDemand[date('F', $month) . ' 1'],
+				));
+				$n++;
+				array_push($resultAndalan, array(
+					
+					'month_string' =>  date('F', $month) . ' 2',
+					'debit' => $dataAndalan[$n],
+					'demand' => $waterDemand[date('F', $month) . ' 2'],
+					'neraca' => $dataAndalan[$n] - $waterDemand[date('F', $month) . ' 2'],
+				));
+				$n++;
+
+				$month = strtotime("+1 month", $month);
+				
 			}
 			
 			$data['current_reg']	= $this->region->getSpecificRegion(array('id' => $regionID))->region_name;

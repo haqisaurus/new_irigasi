@@ -182,25 +182,14 @@
             .done(function(response) {
                 
                 var months = [];
-                var date = new Date(response[0] + "-01-2015");
-   
-                var endDate = new Date(new Date(date).setMonth(date.getMonth()+12))
-                var monthNameList = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "Desember"];
 
-                while (date <= endDate)
-                {
-                    months.push(monthNameList[date.getMonth()] + " 1", monthNameList[date.getMonth()] + " 2");
-                    date.setMonth(date.getMonth() + 1);
-                }
-                
-                myLineChart.scale.xLabels = months;
-                
-
-                $.each(response[1], function(index, value) {
-                    myLineChart.datasets[0].points[index].value = response[1][index];
-                    myLineChart.datasets[1].points[index].value = response[2][index];
-                    myLineChart.datasets[2].points[index].value = response[3][index];
+                $.each(response, function(index, value) {
+                    myLineChart.datasets[0].points[index].value = response[index].debit;
+                    myLineChart.datasets[1].points[index].value = response[index].demand;
+                    myLineChart.datasets[2].points[index].value = response[index].neraca;
+                    months.push(response[index].month_string);
                 });
+                myLineChart.scale.xLabels = months;
 
                 myLineChart.update();
             })
