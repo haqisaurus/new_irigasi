@@ -713,8 +713,8 @@ class Admin_page extends CI_Controller {
 		{
 			$this->load->library('irigasi/region');
 			$this->load->library('irigasi/water');
-			// =================== data water demand =============
 
+			// =================== data water demand =============
 			$regionID 	= $this->input->post('region-id');
 			$year 		= $this->input->post('year');
 			$startMonth = $this->input->post('month');
@@ -834,14 +834,14 @@ class Admin_page extends CI_Controller {
 			// $startMonth = 1;
 
 			$waterDemand = $this->water->planData($regionID, $year, $startMonth, $range, $rice, $palawija, $sugar, $bero);
-
+			// var_dump($waterDemand);
 			// =================== data andalan =============
-			$dataAndalan = $this->water->newAndalan($regionID, 1);
+			$dataAndalan = $this->water->newAndalan($regionID, $startMonth);
 
 			$year = date('Y');
 			$resultAndalan = array();
 		
-			$startDay 	=  '01-01-' . $year;
+			$startDay 	=  '01-' . $startMonth . '-' . $year;
 			$start 		= $month = strtotime($startDay);
 			$end 		= strtotime('+11 month', $start);
 			$n 			= 0;
@@ -852,16 +852,16 @@ class Admin_page extends CI_Controller {
 					
 					'month_string' =>  date('F', $month) . ' 1',
 					'debit' => $dataAndalan[$n],
-					'demand' => $waterDemand[date('F', $month) . ' 1'],
-					'neraca' => $dataAndalan[$n] - $waterDemand[date('F', $month) . ' 1'],
+					'demand' => $dataAndalan[$n] * 1.1 ,
+					'neraca' => $waterDemand[date('F', $month) . ' 1'],
 				));
 				$n++;
 				array_push($resultAndalan, array(
 					
 					'month_string' =>  date('F', $month) . ' 2',
 					'debit' => $dataAndalan[$n],
-					'demand' => $waterDemand[date('F', $month) . ' 2'],
-					'neraca' => $dataAndalan[$n] - $waterDemand[date('F', $month) . ' 2'],
+					'demand' => $dataAndalan[$n] * 1.1,
+					'neraca' => $waterDemand[date('F', $month) . ' 2'],
 				));
 				$n++;
 
@@ -880,4 +880,62 @@ class Admin_page extends CI_Controller {
 
 		
 	// END : masa tanam ==================================================================================================
+	// START : CONSTANT
+		public function constant()
+		{
+			$this->load->model('settings_model');
+			$constant = $this->settings_model->getItem('constant')->row()->value;
+			
+			$data['constant'] = unserialize($constant);
+			$template['content'] 	= $this->load->view('integrated/pages/admin/constant/constant', $data, true); 
+			$this->load->view('integrated/master', $template);
+		}
+
+		public function constantSave()
+		{
+			$data = serialize($_POST);
+			$dataInsert = array('key' => 'constant', 'value' => $data);
+			$this->load->model('settings_model');
+			$result = $this->settings_model->save($dataInsert);
+			if ($result) {
+				
+			} else {
+				# code...
+			}
+			
+			redirect('constant');
+		}
+
+		public function allocation()
+		{
+			$this->load->library('irigasi/region');
+
+			$data['regions'] 		= $this->region->getAllRegion();
+
+			$template['content'] 	= $this->load->view('integrated/pages/admin/allocation/allocation', $data, true); 
+			$this->load->view('integrated/master', $template);
+		}
+
+		public function allocationCalc()
+		{
+			$this->load->library('irigasi/water');
+			$this->load->library('irigasi/region');
+
+			$data['regions'] 		= $this->region->getAllRegion();
+
+			$regionID 	= $this->input->post('region-id');
+			$growth 	= $this->input->post('growth');
+			$mature 	= $this->input->post('mature');
+			$harvest 	= $this->input->post('harvest');
+			$palawija 	= $this->input->post('palawija');
+			$sugar 		= $this->input->post('sugar');
+			$bero 		= $this->input->post('bero');
+
+			$debitNext 		= $this->water->allocation($regionID, $growth, $mature, $harvest, $palawija, $sugar, $bero);
+			$data['result'] = $debitNext;
+			$data['post'] 	= $_POST;
+			$template['content'] 	= $this->load->view('integrated/pages/admin/allocation/allocation', $data, true); 
+			$this->load->view('integrated/master', $template);
+		}
+	// END : CONSTANT
 }

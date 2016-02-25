@@ -177,6 +177,10 @@ $route['get-water-ajax'] 			= 'integrated/ajax_req/getAjaxWaterData';
 $route['get-region-ajax'] 			= 'integrated/ajax_req/getAjaxRegionData';
 $route['get-year-ajax'] 			= 'integrated/ajax_req/getAjaxYearsData';
 $route['add-water-ajax']			= 'integrated/ajax_req/addAjaxWaterData';
+
+$route['constant'] 					= 'integrated/admin_page/constant';
+$route['constant-save'] 			= 'integrated/admin_page/constantSave';
+$route['allocation'] 				= 'integrated/admin_page/allocation';
 /* END : ADMIN */
 
 

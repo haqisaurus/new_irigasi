@@ -1,4 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+// yrl?fwtfL6uO
+
 
 class Water {
 
@@ -148,102 +150,6 @@ class Water {
     	return $result['status'];
 	}
 
-	public function getDataAndalan($regionID = null, $monthStart = 1)
-	{
-		$this->CI->load->model('region_model');
-
-		$data = array();
-		$table = array();
-		$dataCollection = array();
-
-		$region = $this->CI->region_model->find()->row();
-		$regionID = $regionID?: $region->id;
-
-		$queryYear = $region ? array('region_id' => $regionID) : array();
-		$allYears = $this->CI->water_model->findYear($queryYear)->result();
-
-		$year = $allYears[0]->tahun;
-
-		$startDay = '1-' . $monthStart . '-2015';
-		$start = $month = strtotime($startDay);
-		$end = strtotime('+11 month', $start);
-
-		while($month <= $end) {
-			
-			$dataCollection[date('F', $month)] = array();
-
-			// collecting first half of month
-			$coloumn1 = array();
-			// collecting second half of month
-			$coloumn2 = array();
-
-			// ============= FROM FIRST MONTH UNTIL HALF MONTH ===========
-			foreach ($allYears as $key => $value1) {
-
-				$startFirst = strtotime($value1->tahun . '-' .  date('F', $month) . '-1' );
-				$endFirst = strtotime('+14 day',  $startFirst);
-			
-				// define half 
-				$half1 = array(	
-								date('Y-m-d', $startFirst), 
-								date('Y-m-d', $endFirst), 
-								$regionID
-							);
-
-				array_push($coloumn1, $this->CI->water_model->debitIntake($half1)->row());
-			}
-
-			// =========== HALF UNTIL LAST =================
-			foreach ($allYears as $key => $value2) {
-
-				$startSecond = strtotime('+1 day',  strtotime($value2->tahun . '-' . date('m-d', $endFirst)));
-				$endSecond = strtotime('last day of',  strtotime($value2->tahun . '-' . date('m-d', $endFirst)));
-
-				$half2 = array(
-								date('Y-m-d', $startSecond), 
-								date('Y-m-d', $endSecond), 
-								$regionID
-							);
-
-				array_push($coloumn2, $this->CI->water_model->debitIntake($half2)->row());
-			}
-
-
-			array_push($dataCollection[date('F', $month)], $coloumn1);
-			array_push($dataCollection[date('F', $month)], $coloumn2);
-
-			$month = strtotime("+1 month", $month);
-		}
-		// echo "<pre>" . print_r($dataCollection, 1) . "</pre>";
-		// ======================================================================================================
-		$result = array();
-
-		$coloumnAndalan = round(0.8 * (count($allYears) + 1)) - 1; //because coloumn start with 0 in computer
-       	
-       	// echo $coloumnAndalan;
-       	foreach ($dataCollection as $key => $bulan) {
-
-            $intakeCollection = array();
-
-        	foreach ($bulan as $key => $setBulan) {
-
-        		$intakeCollection = array_map(function($obj) { 
-
-        			$intake = empty($obj) ? 1110 : $obj->intake;
-        			return round($intake, 4);
-
-        		}, $setBulan);
-
-        		rsort($intakeCollection);
-        		$andalanVal = isset($intakeCollection[$coloumnAndalan]) ? $intakeCollection[$coloumnAndalan] : min($intakeCollection);
-            	
-            	array_push($result, $andalanVal);
-        	}
-        }
-
-        return $result;
-	}
-
 	public function newAndalan($regionID = 1, $monthStart = 1)
 	{
 		$data = array();
@@ -307,12 +213,7 @@ class Water {
 			$month = strtotime($item->start);
 
 			$newData = array(
-				// 'start' => $item->start,
-				// 'end' => $item->end,
-				// 'rice' => $item->rice * 0.75,
-				// 'palawija' => $item->palawija * 0.3,
-				// 'sugar' => $item->sugar * 0.85,
-				// 'bero' => $item->bero,
+				
 				'month' => date('F', $month),
 				'demand' => (($item->rice * 0.75) + ($item->palawija * 0.3) + ($item->sugar * 0.85) + ($item->bero * 0)) * 0.01,
 				'irigasi' => ((($item->rice * 0.75) + ($item->palawija * 0.3) + ($item->sugar * 0.85) + ($item->bero * 0)) * 0.01) * 1.2,
@@ -326,34 +227,31 @@ class Water {
 
 	public function planData($regionID, $year, $startMonth, $range, $padi, $palawija, $tebu, $bero) 
 	{
+		$this->CI->load->model('settings_model');
 
-		// $regionID 	= 1;
-		// $year 		= 2015;
-		// $startMonth = 11;
-		// $range 		= [3,7,11];
-
-		// $padi 		= array(400, 300, 200);
-		// $palawija 	= array(200, 400, 100);
-		// $tebu 		= array(100, 500, 200);
-		// $bero 		= array(0, 0, 0);
+		
 		array_splice($range, 0, 1);
+		$range =  array_map(function($el) { return $el * 2; }, $range);
 
 		$irigasiNeed = 1.2;
 
-		$rsltMT[] = (($padi[0] * 0.75) + ($palawija[0] * 0.3) + ($tebu[0] * 0.85) + ($bero[0] * 0));
-		$rsltMT[] = (($padi[1] * 0.75) + ($palawija[1] * 0.3) + ($tebu[1] * 0.85) + ($bero[1] * 0));
-		$rsltMT[] = (($padi[2] * 0.75) + ($palawija[2] * 0.3) + ($tebu[2] * 0.85) + ($bero[2] * 0));
+		$data = $this->CI->settings_model->getItem('constant')->row();
+		$constant = unserialize($data->value);
 		
+		$multiplyConstant['rice'] = array_merge($constant['rice'], $constant['rice'], $constant['rice']);
+		$multiplyConstant['palawija'] = array_merge($constant['palawija'], $constant['palawija'], $constant['palawija']);
+		$multiplyConstant['sugar'] = array_merge($constant['sugar'], $constant['sugar'], $constant['sugar']);
+		$multiplyConstant['bero'] = array_merge($constant['bero'], $constant['bero'], $constant['bero']);
+	
 		$key = 0;
 		$resultTMP = array();
-		for ($i=0; $i < 12; $i++) { 
+		for ($i=0; $i < 24; $i++) { 
 			if (in_array($i, $range)) $key++;
 			
-			$resultTMP[] = $rsltMT[$key];
-			$resultTMP[] = $rsltMT[$key];
-
+			$rsltMT[] = (($padi[$key] * $multiplyConstant['rice'][$i]) + ($palawija[$key] * $multiplyConstant['palawija'][$i]) + ($tebu[$key] * $multiplyConstant['sugar'][$i]) + ($bero[$key] * $multiplyConstant['bero'][$i]));			
+			
 		}
-		// var_dump($resultTMP);	
+		
 		$startDay 	=  '1-' . $startMonth . '-' . $year;
 		$start 		= $month = strtotime($startDay);
 		$end 		= strtotime('+11 month', $start);
@@ -362,8 +260,8 @@ class Water {
 
 		while($month <= $end) {
 			
-			$result[date('F', $month) . ' 1'] = array_shift($resultTMP);
-			$result[date('F', $month) . ' 2'] = array_shift($resultTMP);
+			$result[date('F', $month) . ' 1'] = array_shift($rsltMT);
+			$result[date('F', $month) . ' 2'] = array_shift($rsltMT);
 			
 			$month = strtotime("+1 month", $month);
 			$n++;
@@ -371,5 +269,36 @@ class Water {
 		
 		return $result;
 	}
+
+	// SELECT * FROM water WHERE date > ((SELECT MAX(date) FROM water) - INTERVAL 15 day) and region_id = 1
+	public function allocation($regionID = 1, $growth = 0, $mature = 0, $harvest = 0, $palawija = 0, $sugar = 0, $bero = 0)
+	{
+		$this->CI->load->model('settings_model');
+		$this->CI->load->model('water_model');
+		$data = $this->CI->settings_model->getItem('constant')->row();
+		$constant = unserialize($data->value);
+		
+	
+		
+	   	$debit = $this->CI->water_model->lastMonthDebit($regionID);
+
+		$debitKeb = 	($growth * $constant['rice'][1]) + 
+					($mature * $constant['rice'][5]) + 
+					($harvest * $constant['rice'][7]) + 
+					($palawija * $constant['palawija'][0]) + 
+					($sugar * $constant['sugar'][0]) + 
+					($bero * $constant['bero'][0]);
+
+		$total = $debit / ($debitKeb * 1.1);
+
+		if ($total >= 1) {
+			return round($debitKeb);
+		} else {
+			return round($debitKeb * $total);
+		}
+		
+	}
+
+
 	// END : ADMIN SIDE
 }

@@ -41,6 +41,9 @@
                     <li>
                         <a href="<?php echo site_url('water') ?>">Debit air</a>
                     </li>
+                    <li>
+                        <a href="<?php echo site_url('constant') ?>">Constant</a>
+                    </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
@@ -50,6 +53,11 @@
             </li>
             <li>
                 <a href="<?php echo site_url('add-data-plan'); ?>"><i class="fa fa-thumb-tack fa-fw"></i> Rencana Tanam</a>
+                
+                <!-- /.nav-second-level -->
+            </li>
+            <li>
+                <a href="<?php echo site_url('allocation'); ?>"><i class="fa fa-thumb-tack fa-fw"></i> Alokasi Debit</a>
                 
                 <!-- /.nav-second-level -->
             </li>

@@ -20,7 +20,7 @@ if ($_SERVER['HTTP_HOST'] == 'op-irigasi.pe.hu') {
 	$config['base_url'] = 'http://op-irigasi.pe.hu/';
 	
 } else {
-	$config['base_url'] = 'http://op-irigasi.com/';
+	$config['base_url'] = 'http://localhost/new_irigasi/';
 	// $config['base_url'] = 'http://192.168.43.230/';
 	
 }
@@ -36,7 +36,7 @@ if ($_SERVER['HTTP_HOST'] == 'op-irigasi.pe.hu') {
 | variable so that it is blank.
 |
 */
-$config['index_page'] = '';
+$config['index_page'] = 'index.php';
 
 /*
 |--------------------------------------------------------------------------

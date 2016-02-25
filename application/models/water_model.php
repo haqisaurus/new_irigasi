@@ -56,9 +56,9 @@ Class Water_model extends CI_Model
 
     public function find($condition = array(), $limit = null, $offset = null)
     {
+        $this->db->distinct();
         $this->db->where('date > ', '0000-00-00');
         $this->db->order_by('water.id', 'DESC');
-        $this->db->distinct();
         $query = $this->db->get_where($this->table, $condition, $limit, $offset);
 
         return $query;
@@ -114,7 +114,11 @@ Class Water_model extends CI_Model
         $this->db->where($condition);
         $this->db->order_by('tahun', 'DESC');
         $this->db->group_by('YEAR(date)');
-        $query = $this->find($condition, $limit, $offset);
+        $this->db->distinct();
+        // $this->db->where('date > ', '0000-00-00');
+        // $this->db->order_by('water.id', 'DESC');
+        $query = $this->db->get($this->table, $limit, $offset);
+        
         return $query;
     }
 
@@ -229,4 +233,60 @@ Class Water_model extends CI_Model
     //     year( `date` ),
     //     month( `date` ),
     //     min( dayofmonth( `date` ))
+
+    public function lastMonthDebit($regionID = 1)
+    {
+
+        // SELECT date FROM water WHERE region_id = " . $regionID . " ORDER BY date DESC LIMIT 1 into @lastDate;
+
+        //                             SELECT date FROM water WHERE MONTH(date) = month(@lastDate - INTERVAL 1 MONTH ) and region_id = " . $regionID . " ORDER BY date DESC LIMIT 1 INTO @lastMonth;
+
+        //                             SELECT (avg( `right` ) + avg( `left` ) ) as rata FROM water WHERE 
+        //                                     (dayofmonth(@lastDate) < 16 AND 
+        //                                     date >= concat(year(@lastMonth),'-', month(@lastMonth),'-01') AND 
+        //                                     date < concat(year(@lastMonth),'-', month(@lastMonth),'-16') AND
+        //                                     region_id = " . $regionID . "
+        //                                     )
+                                            
+        //                                     or
+                                            
+        //                                     (dayofmonth(@lastDate) > 15 AND 
+        //                                     date > concat(year(@lastMonth),'-', month(@lastMonth),'-15') AND 
+        //                                     date <= concat(year(@lastMonth),'-', month(@lastMonth),'-31') AND 
+        //                                     region_id = " . $regionID . "
+        //                                     )
+        $lastDate = $this->db->query("SELECT date FROM water WHERE region_id = " . $regionID . " ORDER BY date DESC LIMIT 1")->row();
+
+
+        $date = date('Y-m-d', strtotime($lastDate->date));
+        $lastMonth = $this->db->query("SELECT date FROM water WHERE MONTH(date) = month(date('" . $date . "') - INTERVAL 1 MONTH ) and region_id = " . $regionID . " ORDER BY date DESC")->row();
+
+        $date = date('d', strtotime($lastDate->date));
+        $month = strtotime($lastMonth->date);
+
+
+        $date1 = date('Y-m-', $month) . '01';
+        $date2 = date('Y-m-', $month) . '16';
+        $date3 = date('Y-m-', $month) . '15';
+        $date4 = date('Y-m-', $month) . '31';
+
+        $sql = "
+                                    SELECT (avg( `right` ) + avg( `left` ) ) as rata FROM water WHERE 
+                                            (" . $date . " < 16 AND 
+                                            date >= '" . $date1 . "' AND 
+                                            date < '" . $date2 . "' AND
+                                            region_id = " . $regionID . "
+                                            )
+                                            
+                                            or
+                                            
+                                            (" . $date . " > 15 AND 
+                                            date > '" . $date3 . "' AND 
+                                            date <= '" . $date4 . "' AND 
+                                            region_id = " . $regionID . "
+                                            )
+                                ";
+
+        return $this->db->query($sql)->row()->rata;
+    }
 }
