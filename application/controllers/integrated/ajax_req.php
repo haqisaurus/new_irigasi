@@ -189,9 +189,9 @@ class Ajax_req extends CI_Controller {
 
 			$this->form_validation->set_rules('region_id', 'Region', 'trim|required|xss_clean');
 			$this->form_validation->set_rules('date', 'Tanggal', 'trim|required|xss_clean');
-			$this->form_validation->set_rules('right', 'Debit kanan', 'trim|decimal|required|xss_clean');
-			$this->form_validation->set_rules('left', 'Debit kiri', 'trim|decimal|required|xss_clean');
-			$this->form_validation->set_rules('limpas', 'Debit limpas', 'trim|decimal|required|xss_clean');
+			$this->form_validation->set_rules('right', 'Debit kanan', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('left', 'Debit kiri', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('limpas', 'Debit limpas', 'trim|required|xss_clean');
 			$this->form_validation->set_error_delimiters('', '');
 
 			if($this->form_validation->run() == FALSE)
@@ -216,9 +216,9 @@ class Ajax_req extends CI_Controller {
 				$dataInsert = array(
 					'region_id' 	=> $this->input->post('region_id'),
 					'date' 			=> $this->input->post('date'),
-					'right' 		=> $this->input->post('right'),
-					'left' 			=> $this->input->post('left'),
-					'limpas' 		=> $this->input->post('limpas'),
+					'right' 		=> floatval($this->input->post('right')),
+					'left' 			=> floatval($this->input->post('left')),
+					'limpas' 		=> floatval($this->input->post('limpas')),
 					);
 
 				$insertResult = $this->water->updateWater($dataInsert);

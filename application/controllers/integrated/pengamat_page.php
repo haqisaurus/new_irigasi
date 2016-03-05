@@ -126,12 +126,13 @@ class Pengamat_page extends CI_Controller {
 			$waterDemand = $this->water->planData($regionID, $year, $startMonth, $range, $rice, $palawija, $sugar, $bero);
 
 			// =================== data andalan =============
-			$dataAndalan = $this->water->newAndalan($regionID, 1);
+			$dataAndalan = $this->water->newAndalan($regionID, $startMonth);
 			
+
 			$year = date('Y');
 			$resultAndalan = array();
 		
-			$startDay 	=  '01-01-' . $year;
+			$startDay 	=  '01-' . $startMonth . '-' . $year;
 			$start 		= $month = strtotime($startDay);
 			$end 		= strtotime('+11 month', $start);
 			$n 			= 0;

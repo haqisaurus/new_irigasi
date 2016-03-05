@@ -23,7 +23,7 @@
                             <tr>
                                 <th>Data</th>
                                 <th>Debit Andalan</th>
-                                <th>Kebutuhan Air</th>
+                                <th>Kebutuhan Irigasi</th>
                                 <th>Neraca Air</th>
                             </tr>
                         </thead>

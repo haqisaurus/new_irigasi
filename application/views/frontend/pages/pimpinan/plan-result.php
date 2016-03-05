@@ -14,7 +14,7 @@
     <label style="display: inline-block">Debit andalan</label>
     <!-- pink -->
     <div style="background-color: rgba(216,177,187,1);width: 17px; height: 17px; display: inline-block;margin: 5px 0;">&nbsp;</div>
-    <label style="display: inline-block">Kebutuhan air tanaman </label>
+    <label style="display: inline-block">Kebutuhan irigasi </label>
     <!-- hijo -->
     <div style="background-color: rgba(97,137,115,1);width: 17px; height: 17px; display: inline-block;margin: 5px 0;">&nbsp;</div>
     <label style="display: inline-block">Neraca air</label>

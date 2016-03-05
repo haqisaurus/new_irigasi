@@ -12,7 +12,7 @@
                 </div>
             </li> -->
             <li>
-                <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                <a href="<?php echo site_url('admin') ?>"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
             <li>
                 <a href="#"><i class="fa fa-group fa-fw"></i> Users Management<span class="fa arrow"></span></a>
@@ -57,7 +57,7 @@
                 <!-- /.nav-second-level -->
             </li>
             <li>
-                <a href="<?php echo site_url('allocation'); ?>"><i class="fa fa-thumb-tack fa-fw"></i> Alokasi Debit</a>
+                <a href="<?php echo site_url('allocation'); ?>"><i class="fa fa-code-fork fa-fw"></i> Alokasi Debit</a>
                 
                 <!-- /.nav-second-level -->
             </li>

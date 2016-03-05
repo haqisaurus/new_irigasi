@@ -19,16 +19,30 @@
                         <a href="<?php echo site_url('water-add'); ?>" class="btn btn-primary"><span class="fa fa-plus-square"></span> Tambah</a>
                     </div>
                     
-                    <div class="col-sm-7 col-sm-offset-2">
+                    <div class="col-sm-9 ">
                         <?php 
                         $attributes = array('class' => 'form-horizontal', 'id' => 'search-table');
                         
                         echo form_open('', $attributes);
                         ?>
                         <div class="col-xs-3">
-                            <label for="access" class="col-sm-12 control-label">Thn - Bln</label>
+                            <div class="col-sm-12">
+                                <?php 
+                                
+                                $options = array();
+
+                                foreach ($regions as $key => $item) {
+                                    $options[$item->id] = $item->region_name;
+                                }
+
+                                echo form_dropdown('region-id', $options, isset($_POST['region-id'])?$_POST['region-id']:'', 'class="form-control" id="region-id" ');
+                                ?>
+                            </div>
                         </div>
-                        <div class="col-xs-4 form-group">
+                        <div class="col-xs-1">
+                            <label for="access" class="control-label">Thn</label>
+                        </div>
+                        <div class="col-xs-3 form-group">
                             <div class="col-sm-12">
                                 <?php 
                                 
@@ -42,7 +56,10 @@
                                 ?>
                             </div>
                         </div>
-                        <div class="col-xs-4 form-group">
+                        <div class="col-xs-1">
+                            <label for="access" class="control-label">Bln</label>
+                        </div>
+                        <div class="col-xs-3 form-group">
                             <!-- <label for="access" class="col-sm-5 control-label">Bulan</label> -->
                             <div class="col-sm-12">
                                 <?php 
@@ -96,9 +113,9 @@
                                         <th>No</th>
                                         <th>Nama daerah</th>
                                         <th>Tanggal</th>
-                                        <th>Kanan</th>
-                                        <th>Kiri</th>
-                                        <th>Limpas</th>
+                                        <th>Kanan (lit/det)</th>
+                                        <th>Kiri (lit/det)</th>
+                                        <th>Limpas (lit/det)</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -109,9 +126,9 @@
                                                 <td><?php echo $key + 1 ?></td>
                                                 <td><?php echo $item->region_name ?></td>
                                                 <td><?php echo $item->date ?></td>
-                                                <td><?php echo $item->right ?> dm<sup>3</sup></td>
-                                                <td><?php echo $item->left ?> dm<sup>3</sup></td>
-                                                <td><?php echo $item->limpas ?> dm<sup>3</sup></td>
+                                                <td class="text-right"><?php echo $item->right ?> </td>
+                                                <td class="text-right"><?php echo $item->left ?> </td>
+                                                <td class="text-right"><?php echo $item->limpas ?> </td>
                                                 <td>
                                                     <a href="<?php echo site_url('water-edit/' . $item->id) ?>" class="btn btn-info btn-xs"><span class="fa fa-edit"></span> Edit</a> | 
                                                     <button class="btn btn-danger btn-xs" data-url="<?php echo site_url('water-delete/' . $item->id) ?>" data-toggle="modal" data-target="#confirm-delete"><span class="fa fa-trash-o"></span> Edit</button>
@@ -122,9 +139,9 @@
                                                 <td><?php echo $key + 1 ?></td>
                                                 <td><?php echo $item->region_name ?></td>
                                                 <td><?php echo $item->date ?></td>
-                                                <td><?php echo $item->right ?> dm<sup>3</sup></td>
-                                                <td><?php echo $item->left ?> dm<sup>3</sup></td>
-                                                <td><?php echo $item->limpas ?> dm<sup>3</sup></td>
+                                                <td class="text-right"><?php echo $item->right ?> </td>
+                                                <td class="text-right"><?php echo $item->left ?> </td>
+                                                <td class="text-right"><?php echo $item->limpas ?> </td>
                                                 <td>
                                                     <a href="<?php echo site_url('water-edit/' . $item->id) ?>" class="btn btn-info btn-xs"><span class="fa fa-edit"></span> Edit</a> | 
                                                     <button class="btn btn-danger btn-xs" data-url="<?php echo site_url('water-delete/' . $item->id) ?>" data-toggle="modal" data-target="#confirm-delete"><span class="fa fa-trash-o"></span> Edit</button>

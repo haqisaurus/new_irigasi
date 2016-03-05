@@ -277,7 +277,7 @@
 			})
 			.fail(function(error) {
 				var msg = $.parseJSON(error.responseText);
-
+				alert('Error!!\nData tidak lengkap.');
 				if (msg.error.region_id) {
 					$('#region-id').css('border', '1px solid red');
 				} else {

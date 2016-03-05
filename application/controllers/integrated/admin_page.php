@@ -13,7 +13,16 @@ class Admin_page extends CI_Controller {
 
 	public function index()
 	{
-		$template['content'] 	= $this->load->view('integrated/pages/admin/dashboard', '', true); 
+		$this->load->library('irigasi/water');
+		$this->load->library('irigasi/region');
+		$this->load->library('irigasi/user');
+		$this->load->library('irigasi/wide');
+
+		$data['total_user'] 	= count($this->user->getAllUser());
+		$data['total_region'] 	= count($this->region->getAllRegion());
+		$data['total_water'] 	= count($this->water->getAllWater());
+		$data['total_wide'] 	= count($this->wide->getAllWide());
+		$template['content'] 	= $this->load->view('integrated/pages/admin/dashboard', $data, true); 
 		$this->load->view('integrated/master', $template);
 	}
 
@@ -483,11 +492,13 @@ class Admin_page extends CI_Controller {
 			$this->form_validation->run();
 
 			$this->load->library('irigasi/water');
+			$this->load->library('irigasi/region');
 
+			$data['regions'] 		= $this->region->getAllRegion();
 			$data['table'] = array();
 			$data['years'] = $this->water->getAllYear();
 			if ($_POST) {
-				$condition 		= array();
+				$condition 		= array('region_id' => $regionID);
 				$conditionLike  = array('date' => $year . '-' . $month);
 				$data['table'] 	= $this->water->getAllWater($condition, $conditionLike);
 				
@@ -727,12 +738,12 @@ class Admin_page extends CI_Controller {
 			$waterDemand = $this->water->planData($regionID, $year, $startMonth, $range, $rice, $palawija, $sugar, $bero);
 
 			// =================== data andalan =============
-			$dataAndalan = $this->water->newAndalan($regionID, 1);
+			$dataAndalan = $this->water->newAndalan($regionID, $startMonth);
 			
 			$year = date('Y');
 			$resultAndalan = array();
 		
-			$startDay 	=  '01-01-' . $year;
+			$startDay 	=  '01-' . $startMonth . '-' . $year;
 			$start 		= $month = strtotime($startDay);
 			$end 		= strtotime('+11 month', $start);
 			$n 			= 0;
@@ -852,16 +863,16 @@ class Admin_page extends CI_Controller {
 					
 					'month_string' =>  date('F', $month) . ' 1',
 					'debit' => $dataAndalan[$n],
-					'demand' => $dataAndalan[$n] * 1.1 ,
-					'neraca' => $waterDemand[date('F', $month) . ' 1'],
+					'demand' => $waterDemand[date('F', $month) . ' 1'], #keb irigasi
+					'neraca' => $dataAndalan[$n] - $waterDemand[date('F', $month) . ' 1'],
 				));
 				$n++;
 				array_push($resultAndalan, array(
 					
 					'month_string' =>  date('F', $month) . ' 2',
 					'debit' => $dataAndalan[$n],
-					'demand' => $dataAndalan[$n] * 1.1,
-					'neraca' => $waterDemand[date('F', $month) . ' 2'],
+					'demand' => $waterDemand[date('F', $month) . ' 2'], #keb irigasi
+					'neraca' => $dataAndalan[$n] - $waterDemand[date('F', $month) . ' 2'],
 				));
 				$n++;
 

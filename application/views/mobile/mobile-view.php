@@ -191,19 +191,19 @@
             </div>
             <div class="ui-field-contain">
                 <label for="date">Tanggal</label>
-                <input id="date" type="text" data-role="date" data-inline="true" data-date-format="yy-mm-dd">
+                <input id="date" type="text" data-role="date" data-inline="true" data-date-format="yy-mm-dd" value="<?php echo date('Y-m-d') ?>">
             </div>
             <div class="ui-field-contain">
                 <label for="right">Debit Kanan</label>
-                <input type="number" step="0.01" name="right" id="right">
+                <input type="number" step="0.01" name="right" id="right" value="0">
             </div>
             <div class="ui-field-contain">
                 <label for="left">Debit Kiri</label>
-                <input type="number" step="0.01" name="left" id="left">
+                <input type="number" step="0.01" name="left" id="left" value="0">
             </div>
             <div class="ui-field-contain">
                 <label for="limpas">Limpas</label>
-                <input type="number" step="0.01" name="limpas" id="limpas">
+                <input type="number" step="0.01" name="limpas" id="limpas"  value="0">
             </div>
             <a class="ui-btn ui-icon-plus ui-btn-icon-left" id="btn-save">Simpan</a>
         </div>
