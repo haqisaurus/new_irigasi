@@ -219,7 +219,74 @@
             <a class="ui-btn ui-btn-icon-left ui-icon-plus" href="#add-water">Input Data Debit</a>
             <a class="ui-btn ui-icon-search ui-btn-icon-left" href="#list-water">Cari Data Debit</a>
             <br>
-            <a class="ui-btn ui-btn-icon-left ui-icon-plus ui-disabled" href="#add-tanaman" >Input Data Tanaman</a>
+            <a class="ui-btn ui-btn-icon-left ui-icon-plus" href="#allocation" >Alokasi Air</a>
+        </div>
+    </script>
+    <script type="text/template" id="allocation">
+        <div data-role="header" data-position="fixed" data-theme="b">
+            <h3>Input Debit</h3>
+            <a class="ui-btn ui-btn-left ui-btn-icon-left ui-icon-carat-l back" href="#home" data-rel="back">Back</a>
+        </div>
+        <div role="main" class="ui-content" is="content">
+            <div class="ui-field-contain">
+                <label for="region-id">Periode</label>
+                <select id="region-id">
+                <%
+                    console.log()
+                    var today = new Date();
+                    if(today.getDate() < 16) {
+                        var now = ((today.getMonth() + 1) * 2) - 1;
+                    } else {
+                        var now = ((today.getMonth() + 1) * 2);
+                    }
+
+                    _.each(data.months, function(val, key) {
+                        var selected = (key+1 == now) ? 'selected' : '';
+                        %>
+                        <option <%= selected %> value="<%= val.id %>"><%= val %></option>
+                        <%
+                    }); 
+                %>
+                </select>
+            </div>
+            <div class="ui-field-contain">
+                    
+                <label for="region-id">Daerah Irigasi</label>
+                <select id="region-id">
+                <%
+                    _.each(data, function(val, key) {
+                        %>
+                        <option value="<%= val.id %>"><%= val.region_name %></option>
+                        <%
+                    }); 
+                %>
+                </select>
+            </div>
+            <div class="ui-field-contain">
+                <label for="growth">Padi Fase Pertumbuhan</label>
+                <input type="number" step="0.01" name="growth" id="growth" value="0">
+            </div>
+            <div class="ui-field-contain">
+                <label for="mature">Padi Fase Pemasakan</label>
+                <input type="number" step="0.01" name="mature" id="mature" value="0">
+            </div>
+            <div class="ui-field-contain">
+                <label for="haravest">Padi Fase Panen</label>
+                <input type="number" step="0.01" name="haravest" id="haravest"  value="0">
+            </div>
+            <div class="ui-field-contain">
+                <label for="palawija">Palawija</label>
+                <input type="number" step="0.01" name="palawija" id="palawija"  value="0">
+            </div>
+            <div class="ui-field-contain">
+                <label for="sugar">Tebu</label>
+                <input type="number" step="0.01" name="sugar" id="sugar"  value="0">
+            </div>
+            <div class="ui-field-contain">
+                <label for="bero">Bero</label>
+                <input type="number" step="0.01" name="bero" id="bero"  value="0">
+            </div>
+            <a class="ui-btn ui-icon-plus ui-btn-icon-left" id="btn-save">Simpan</a>
         </div>
     </script>
     <!-- My custom engine -->

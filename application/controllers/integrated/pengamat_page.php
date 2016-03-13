@@ -102,6 +102,12 @@ class Pengamat_page extends CI_Controller {
 			$data['current_reg']	= $this->region->getSpecificRegion(array('id' => $regionID))->region_name;
 			$data['data'] 			= $_POST;
 
+			$from = '01-'.$_POST['month'].'-'.$_POST['year'];
+			$data['firstPeriode'] = date('F');
+			$data['lastPeriode'] = date('F',strtotime($from.'+ 11 month'));
+			$data['lastPeriodeYear'] = date('Y',strtotime($from.'+ 11 month'));
+
+
 			$template['menuTop'] = $this->load->view('frontend/part/nav-top', 0, true);
 			$template['sideBar'] = $this->load->view('frontend/part/nav-right', '', true);
 			$template['content'] = $this->load->view('frontend/pages/pengamat/plan-result', $data, true);
@@ -191,6 +197,11 @@ class Pengamat_page extends CI_Controller {
 			
 			$data['data'] = $dataPlant;
 			$data['current_reg']	= $this->region->getSpecificRegion(array('region.id' => $dataPlant['region_id']))->region_name;
+
+			$from = '01-'.$dataPlant['start_month'].'-'.$data['data']['year'];
+			$data['firstPeriode'] = date('F');
+			$data['lastPeriode'] = date('F',strtotime($from.'+ 11 month'));
+			$data['lastPeriodeYear'] = date('Y',strtotime($from.'+ 11 month'));
 
 			$template['menuTop'] = $this->load->view('frontend/part/nav-top', 0, true);
 			$template['sideBar'] = $this->load->view('frontend/part/nav-right', '', true);

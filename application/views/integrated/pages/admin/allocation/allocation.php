@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">
-                Constant <small>edit</small>
+                Alokasi Air <small>edit</small>
             </h1>
             <ol class="breadcrumb">
                 <li>
@@ -36,8 +36,35 @@
 
     <div class="row">
         <?php 
+        $options = array(
+                    'Januari 1',
+                    'Januari 2',
+                    'February 1',
+                    'February 2',
+                    'Maret 1',
+                    'Maret 2',
+                    'April 1',
+                    'April 2',
+                    'Mei 1',
+                    'Mei 2',
+                    'Juni 1',
+                    'Juni 2',
+                    'Juli 1',
+                    'Juli 2',
+                    'Agustus 1',
+                    'Agustus 2',
+                    'September 1',
+                    'September 2',
+                    'Oktober 1',
+                    'Oktober 2',
+                    'November 1',
+                    'November 2',
+                    'Desember 1',
+                    'Desember 2',
+                    );
+
         if(isset($result)) {
-            echo 'hasil perhitungan deengan tampilan sementara <b>' . $result . '</b>'; 
+            echo 'Debit rencana periode ' .$options[$_POST['periode']]. ' :  <b>' . $result . '</b> liter/detik'; 
         }
         ?>
         <div class="col-lg-12">
@@ -47,7 +74,23 @@
             echo form_open('integrated/admin_page/allocationCalc', $attributes);
             ?>
             <div class="form-group">
-                <label for="access" class="col-sm-2 control-label">Pertumbuhan</label>
+                <label for="access" class="col-sm-3 control-label">Periode</label>
+
+                <div class="col-sm-4">
+                    <?php 
+                    
+                    if (date('d') < 16) {
+                        $now = ((int) date('m') * 2) - 2;
+                    } else {
+                        $now = ((int) date('m') * 2);
+                    }
+
+                    echo form_dropdown('periode', $options, isset($_POST['periode'])?$_POST['periode']:$now, 'class="form-control" id="periode" ');
+                    ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="access" class="col-sm-3 control-label">Daerah</label>
 
                 <div class="col-sm-4">
                     <?php 
@@ -63,38 +106,38 @@
                 </div>
             </div>
             <div class="form-group <?php echo form_error('growth') ? 'has-error' : ''; ?>">
-                <label for="access" class="col-sm-2 control-label">Pertumbuhan</label>
-                <div class="col-sm-9">
+                <label for="access" class="col-sm-3 control-label">Padi Fase Pertumbuhan</label>
+                <div class="col-sm-5">
                     <input type="text" name="growth" class="form-control col-xs-4" value="<?php echo isset($post['growth'])?$post['growth']:0 ?>">
                 </div>
             </div>
             <div class="form-group <?php echo form_error('mature') ? 'has-error' : ''; ?>">
-                <label for="access" class="col-sm-2 control-label">Pemasakan</label>
-                <div class="col-sm-9">
+                <label for="access" class="col-sm-3 control-label">Padi Fase Pemasakan</label>
+                <div class="col-sm-5">
                     <input type="text" name="mature" class="form-control col-xs-4" value="<?php echo isset($post['mature'])?$post['mature']:0 ?>">
                 </div>
             </div>
             <div class="form-group <?php echo form_error('harvest') ? 'has-error' : ''; ?>">
-                <label for="access" class="col-sm-2 control-label">Panen</label>
-                <div class="col-sm-9">
+                <label for="access" class="col-sm-3 control-label">Padi Fase Panen</label>
+                <div class="col-sm-5">
                     <input type="text" name="harvest" class="form-control col-xs-4" value="<?php echo isset($post['harvest'])?$post['harvest']:0 ?>">
                 </div>
             </div>
             <div class="form-group <?php echo form_error('palawija') ? 'has-error' : ''; ?>">
-                <label for="access" class="col-sm-2 control-label">Palawija</label>
-                <div class="col-sm-9">
+                <label for="access" class="col-sm-3 control-label">Palawija</label>
+                <div class="col-sm-5">
                     <input type="text" name="palawija" class="form-control col-xs-4" value="<?php echo isset($post['palawija'])?$post['palawija']:0 ?>">
                 </div>
             </div>
             <div class="form-group <?php echo form_error('sugar') ? 'has-error' : ''; ?>">
-                <label for="access" class="col-sm-2 control-label">Tebu</label>
-                <div class="col-sm-9">
+                <label for="access" class="col-sm-3 control-label">Tebu</label>
+                <div class="col-sm-5">
                     <input type="text" name="sugar" class="form-control col-xs-4" value="<?php echo isset($post['sugar'])?$post['sugar']:0 ?>">
                 </div>
             </div>
             <div class="form-group <?php echo form_error('bero') ? 'has-error' : ''; ?>">
-                <label for="access" class="col-sm-2 control-label">Bero</label>
-                <div class="col-sm-9">
+                <label for="access" class="col-sm-3 control-label">Bero</label>
+                <div class="col-sm-5">
                     <input type="text" name="bero" class="form-control col-xs-4" value="<?php echo isset($post['bero'])?$post['bero']:0 ?>">
                 </div>
             </div>

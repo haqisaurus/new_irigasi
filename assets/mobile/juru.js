@@ -434,6 +434,59 @@
 		}
 	});	
 
+	var AllocationView = Backbone.View.extend({
+		model: {
+				region: Region, 
+			},
+	    initialize: function() {
+	        this.template = _.template($('#allocation').html());
+	    },
+	    render:function () {
+	    	var _this = this;
+			var regions = new this.model.region();
+	    	$.when(regions.fetch()).done(function(response1) {
+			var months = ['Januari 1', 
+						'Januari 2', 
+						'Februari 1', 
+						'Februari 2', 
+						'Maret 1', 
+						'Maret 2', 
+						'April 1', 
+						'April 2', 
+						'Mei 1', 
+						'Mei 2', 
+						'Juni 1',
+						'Juni 2',
+						'Juli 1',
+						'Juli 2',
+						'Agustus 1',
+						'Agustus 2',
+						'September 1',
+						'September 2',
+						'Oktober 1',
+						'Oktober 2',
+						'November 1',
+						'November 2',
+						'Desember 1',
+						'Desember 2'
+						];
+				
+				var _data = { 
+						data: {
+							regions : response1[0],
+							months : months,
+						}
+					};
+
+				$(_this.el).append(_this.template(_data));
+	        	$(_this.el).trigger('create');
+
+			});
+
+	        return this;
+	    }
+	});
+
 
 // END : VIEW
 	var AppRouter = Backbone.Router.extend({
@@ -446,6 +499,7 @@
 	        'search-water': 'searchWater',
 	        'edit-water/:id': 'editWater',
 	        'delete-water/:id': 'deleteWater',
+	        'allocation': 'allocation',
 	    },
 
 	    initialize:function () {
@@ -498,6 +552,10 @@
 	        // We don't want to slide the first page
 	        
 	        $.mobile.changePage($(page.el), {changeHash:false, transition: 'pop'});
+	    },
+
+	    allocation: function() {
+	       	this.changePage(new AllocationView());
 	    }
 	    
 	});

@@ -941,6 +941,7 @@ class Admin_page extends CI_Controller {
 			$palawija 	= $this->input->post('palawija');
 			$sugar 		= $this->input->post('sugar');
 			$bero 		= $this->input->post('bero');
+			$periode	= $this->input->post('periode');
 
 			$debitNext 		= $this->water->allocation($regionID, $growth, $mature, $harvest, $palawija, $sugar, $bero);
 			$data['result'] = $debitNext;

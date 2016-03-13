@@ -5,7 +5,7 @@
     <br>
     <a href="javascript:window.history.go(-1);"><button>Kembali</button></a>
     <br>
-    <h3>Grafik perbandingan data <b><?php echo $current_reg ?></b></h3>
+    <h3>Grafik neraca Air <b><?php echo $current_reg ?></b> periode <?php echo $firstPeriode ?>  <?php echo $data['year'] ?> sampai <?php echo $lastPeriode.' '.$lastPeriodeYear ?></h3>
     <div id="spinner" style="position: relative"></div>
     <canvas id="myChart" width="535" height="400"></canvas>
 
@@ -37,6 +37,47 @@
         <?php echo form_close() ?>
         
     <?php echo form_close(); ?>
+    <?php 
+
+        $range = explode(',',$data['range']);
+        $startDate = strtotime($data['year'].'-'.$firstPeriode.'-01 + '.$range[0].' month');
+        $mt1 = date('F-Y', strtotime($data['year'].'-'.$firstPeriode.'-01 + '.$range[0].' month'));
+        $mt2 = date('F-Y', strtotime($mt1.  '+ '.$range[1].' month'));
+        $mt3 = date('F-Y', strtotime($mt2.  '+ '.$range[2].' month'));
+        
+    ?>
+    <table>
+        <tr>
+            <th>#</th>
+            <th style="text-align: center;">MT1 <?php echo $mt1 ?></th>
+            <th style="text-align: center;">MT2 <?php echo $mt2 ?></th>
+            <th style="text-align: center;">MT3 <?php echo $mt3 ?></th>
+        </tr>
+        <tr>
+            <td>Padi</td>
+            <td style="text-align: right;"><b><?php echo $data['rice'][0] ?> </b>ha</td>
+            <td style="text-align: right;"><b><?php echo $data['rice'][1] ?> </b>ha</td>
+            <td style="text-align: right;"><b><?php echo $data['rice'][2] ?> </b>ha</td>
+        </tr>
+        <tr>
+            <td>Palawija</td>
+            <td style="text-align: right;"><b><?php echo $data['palawija'][0] ?> </b>ha</td>
+            <td style="text-align: right;"><b><?php echo $data['palawija'][1] ?> </b>ha</td>
+            <td style="text-align: right;"><b><?php echo $data['palawija'][2] ?> </b>ha</td>
+        </tr>
+        <tr>
+            <td>Tebu</td>
+            <td style="text-align: right;"><b><?php echo $data['sugar'][0] ?> </b>ha</td>
+            <td style="text-align: right;"><b><?php echo $data['sugar'][1] ?> </b>ha</td>
+            <td style="text-align: right;"><b><?php echo $data['sugar'][2] ?> </b>ha</td>
+        </tr>
+        <tr>
+            <td>Bero</td>
+            <td style="text-align: right;"><b><?php echo $data['bero'][0] ?> </b>ha</td>
+            <td style="text-align: right;"><b><?php echo $data['bero'][1] ?> </b>ha</td>
+            <td style="text-align: right;"><b><?php echo $data['bero'][2] ?> </b>ha</td>
+        </tr>
+    </table>
     <script type="text/javascript" src="http://fgnass.github.io/spin.js/spin.min.js"></script>
     <script type="text/javascript">
 
