@@ -54,6 +54,105 @@
     	},
     	
     });
+
+    var Allocation = Backbone.Model.extend({
+    	defaults: {
+    		growth: 0,
+    		mature: 0,
+    		harvest: 0,
+    		palawija: 0,
+    		sugar: 0,
+    		bero: 0,
+    	},
+    	urlRoot : '/api/allocation',
+    	getCustomUrl: function(method) {
+    		switch(method) {
+    			case 'read': 
+	    			return '/api/allocation/' + this.id;
+	    			break;
+	    		case 'create': 
+	    			return '/api/allocation';
+	    			break;
+	    		case 'update': 
+	    			return '/api/water/' + this.id;
+	    			break;
+	    		case 'delete': 
+	    			return '/api/water/' + this.id;
+	    			break;
+    		}
+    	},
+    	sync: function(method, model, options) {
+    		
+    		options || (options = {});
+    		options.url = this.getCustomUrl(method.toLowerCase());
+    		
+    		return Backbone.sync.apply(this, arguments);
+    	},
+    	allocation: function(id) {
+    		$.ajax({
+    			url: '/api/ajaxCalcAlloc/' + id,
+    			type: 'GET',
+    			dataType: 'json',
+    		})
+    		.done(function(response) {
+    			var months = ['Januari 1', 
+						'Januari 2', 
+						'Februari 1', 
+						'Februari 2', 
+						'Maret 1', 
+						'Maret 2', 
+						'April 1', 
+						'April 2', 
+						'Mei 1', 
+						'Mei 2', 
+						'Juni 1',
+						'Juni 2',
+						'Juli 1',
+						'Juli 2',
+						'Agustus 1',
+						'Agustus 2',
+						'September 1',
+						'September 2',
+						'Oktober 1',
+						'Oktober 2',
+						'November 1',
+						'November 2',
+						'Desember 1',
+						'Desember 2'
+						];
+				var index = index == 23 ? 0 : parseInt(response.periode) + 1;
+				alert('Alokasi Air periode ' + months[index] + ' = ' + response.data + ' liter/detik');
+
+    		})
+    		.fail(function() {
+    			console.log("error");
+    		});
+    		
+    	}
+    });
+
+    var Wide = Backbone.Model.extend({
+    	
+    	urlRoot : '/api/region-wide',
+    	getCustomUrl: function(method) {
+    		switch(method) {
+    			case 'read': 
+	    			return '/api/region-wide';
+	    			break;
+	    		case 'create': 
+	    			return '/api/region-wide';
+	    			break;
+	    		
+    		}
+    	},
+    	sync: function(method, model, options) {
+    		
+    		options || (options = {});
+    		options.url = this.getCustomUrl(method.toLowerCase());
+    		
+    		return Backbone.sync.apply(this, arguments);
+    	},
+    });
 // END : MODEL
 
 // COLLECTION
@@ -437,6 +536,8 @@
 	var AllocationView = Backbone.View.extend({
 		model: {
 				region: Region, 
+				allocation : Allocation,
+				wide: Wide,
 			},
 	    initialize: function() {
 	        this.template = _.template($('#allocation').html());
@@ -444,6 +545,8 @@
 	    render:function () {
 	    	var _this = this;
 			var regions = new this.model.region();
+			var wide = new this.model.wide();
+
 	    	$.when(regions.fetch()).done(function(response1) {
 			var months = ['Januari 1', 
 						'Januari 2', 
@@ -471,20 +574,146 @@
 						'Desember 2'
 						];
 				
-				var _data = { 
-						data: {
-							regions : response1[0],
-							months : months,
-						}
-					};
 
-				$(_this.el).append(_this.template(_data));
-	        	$(_this.el).trigger('create');
+				wide.save({'region-id': response1[0].id}).done(function(response) {
+					var _data = { 
+							data: {
+								regions : response1,
+								months : months,
+								totalWide: response.total_wide,
+							}
+						};
 
+					$(_this.el).append(_this.template(_data));
+		        	$(_this.el).trigger('create');
+				});
 			});
 
 	        return this;
-	    }
+	    },
+	    events: {
+			'click #btn-save': 'saveAction',
+			'change #region-id': 'changeWidthVal',
+		},
+		saveAction: function(event) {
+			
+			var regionID = $('#region-id').val();
+			var periode = $('#periode').val();
+			var growth = $('#growth').val();
+			var mature = $('#mature').val();
+			var harvest = $('#harvest').val();
+			var palawija = $('#palawija').val();
+			var sugar = $('#sugar').val();
+			var bero = $('#bero').val();
+			var totalWide = parseInt($('#total-wide').val());
+			var total = growth + mature + harvest + palawija + sugar + bero;
+			if(totalWide < total) {
+				alert('Total Luas Terlalu Besar!!');
+				return;
+			}
+
+			var data = {
+				region_id: regionID,
+	    		periode: periode,
+	    		growth: growth,
+	    		mature: mature,
+	    		harvest: harvest,
+	    		palawija: palawija,
+	    		sugar: sugar,
+	    		bero: bero,
+			};
+
+			var allocation = new this.model.allocation();
+			allocation.save(data).done(function(response) {
+
+				if(response.status) {
+					var nextPeriode = parseInt(periode) == 23 ? 0 : parseInt(periode) + 1;
+
+					alert('Alokasi Air periode ' + $('#periode option[value='+nextPeriode+']').text() + ' = ' + response.data + ' liter/detik');
+				} else {
+					alert('Kalkulasi menghasilkan angka 0!!!\nPeriksa kembali nilai masukan.');
+				}
+			})
+			.fail(function(error) {
+				alert('koneksi error')
+			}).always(function() {
+				$.mobile.loading( "hide" );
+			});
+			
+		},
+		changeWidthVal: function(e){ 
+			var regionID = $(e.target).val();
+			var wide = new this.model.wide();
+
+			wide.save({'region-id': regionID}).done(function(response) {
+				$('#total-wide').val(response.total_wide);
+			})
+		}
+	});
+
+	var ListAllocation = Backbone.View.extend({
+		model: {
+			regions: Region,
+		},
+		initialize: function() {
+	        this.template = _.template($('#list-allocation').html());
+		},
+		render: function(region, year, month) {
+			
+			var _this = this;
+			var regionsData = new this.model.regions();
+			
+	    	regionsData.fetch().done(function(regionsResponse) {
+	    		
+				var _data = {
+					data: regionsResponse, 
+				};
+
+				$(_this.el).append(_this.template(_data));
+
+	        	$(_this.el).trigger('create');
+
+	    	});
+	
+	        return this;
+		}
+	});
+
+	var AllocationRegion = Backbone.View.extend({
+		model: {
+			allocation : Allocation,
+		},
+		initialize: function(id) {
+			this.idSearch = id;
+	        this.template = _.template($('#allocation-region').html());
+		},
+		render: function(region, year, month) {
+			
+			var _this = this;
+			var allocation = new this.model.allocation({id: this.idSearch});
+			
+	    	allocation.fetch().done(function(regionsResponse) {
+	    		
+				var _data = {
+					data: regionsResponse, 
+				};
+
+				$(_this.el).append(_this.template(_data));
+
+	        	$(_this.el).trigger('create');
+
+	    	});
+	
+	        return this;
+		},
+		events: {
+			'click ul li': 'ajaxCalcAlloc'
+		},
+		ajaxCalcAlloc: function(e) {
+			var allocation = new this.model.allocation();
+			var id = $(e.target).data('id');
+			allocation.allocation(id);
+		}
 	});
 
 
@@ -500,6 +729,8 @@
 	        'edit-water/:id': 'editWater',
 	        'delete-water/:id': 'deleteWater',
 	        'allocation': 'allocation',
+	        'allocation-region/:id': 'allocationRegion',
+	        'list-allocation': 'listAllocation',
 	    },
 
 	    initialize:function () {
@@ -556,7 +787,15 @@
 
 	    allocation: function() {
 	       	this.changePage(new AllocationView());
-	    }
+	    },
+
+	    listAllocation: function() {
+	       	this.changePage(new ListAllocation());
+	    },
+
+	    allocationRegion: function(id) {
+	       	this.changePage(new AllocationRegion(id));
+	    },
 	    
 	});
 

@@ -289,4 +289,9 @@ Class Water_model extends CI_Model
 
         return $this->db->query($sql)->row()->rata;
     }
+
+    public function regionAllocation($value='')
+    {
+        # code...
+    }
 }

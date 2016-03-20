@@ -108,7 +108,12 @@ class Ajax_req extends CI_Controller {
 		{
 			$this->load->library('irigasi/region');
 
-			$regionID = $this->input->post('region-id');
+			if($_POST) {
+				$regionID = $this->input->post('region-id');
+			} else {
+				$data = json_decode(file_get_contents('php://input'));
+				$regionID = $data->{'region-id'};
+			}
 
 			$data = $this->region->getRegionWide($regionID);
 			
@@ -333,4 +338,70 @@ class Ajax_req extends CI_Controller {
 			echo json_encode($result);
 		}
 	// END : water api
+
+	// allocation 
+		public function ajaxAddAllocation()
+		{
+			$this->load->library('irigasi/water');
+			$data = json_decode(file_get_contents('php://input'));
+			$debitNext 		= $this->water->allocation(
+				$data->region_id, 
+				$data->growth, 
+				$data->mature, 
+				$data->harvest, 
+				$data->palawija, 
+				$data->sugar, 
+				$data->bero);
+
+			if($debitNext) {
+				$this->water->saveAllocationData($data);
+				echo json_encode(array(
+							'status' => true,
+							'data' 	=> $debitNext,
+							));
+			} else {
+				echo json_encode(array(
+							'status' => false,
+							'data' 	=> $debitNext,
+							));
+			}
+		}
+
+		public function ajaxRegionAllocation($regionID=1)
+		{
+			$this->load->model('allocation_model');
+			$data = $this->allocation_model->find(array('region_id' => $regionID))->result();
+
+			echo json_encode($data);
+		}
+
+		public function ajaxAllocationCalc($id=0)
+		{
+			$this->load->library('irigasi/water');
+			$this->load->model('allocation_model');
+			$data = $this->allocation_model->find(array('id' => $id))->row();
+
+			$debitNext 		= $this->water->allocation(
+				$data->region_id, 
+				$data->rice_growth_fase, 
+				$data->rice_mature_fase, 
+				$data->rice_harvest_face, 
+				$data->palawija, 
+				$data->sugar, 
+				$data->bero);
+
+			if($debitNext) {
+				echo json_encode(array(
+							'status' => true,
+							'data' 	=> $debitNext,
+							'periode' => $data->periode,
+							));
+			} else {
+				echo json_encode(array(
+							'status' => false,
+							'data' 	=> $debitNext,
+							));
+			}
+		}
+	// END OF ALLOCATION 
 }

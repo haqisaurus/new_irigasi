@@ -220,6 +220,7 @@
             <a class="ui-btn ui-icon-search ui-btn-icon-left" href="#list-water">Cari Data Debit</a>
             <br>
             <a class="ui-btn ui-btn-icon-left ui-icon-plus" href="#allocation" >Alokasi Air</a>
+            <a class="ui-btn ui-icon-search ui-btn-icon-left" href="#list-allocation">Daftar Alokasi</a>
         </div>
     </script>
     <script type="text/template" id="allocation">
@@ -229,10 +230,9 @@
         </div>
         <div role="main" class="ui-content" is="content">
             <div class="ui-field-contain">
-                <label for="region-id">Periode</label>
-                <select id="region-id">
+                <label for="periode">Periode</label>
+                <select id="periode" name="periode">
                 <%
-                    console.log()
                     var today = new Date();
                     if(today.getDate() < 16) {
                         var now = ((today.getMonth() + 1) * 2) - 1;
@@ -243,7 +243,7 @@
                     _.each(data.months, function(val, key) {
                         var selected = (key+1 == now) ? 'selected' : '';
                         %>
-                        <option <%= selected %> value="<%= val.id %>"><%= val %></option>
+                        <option <%= selected %> value="<%= key %>"><%= val %></option>
                         <%
                     }); 
                 %>
@@ -252,9 +252,9 @@
             <div class="ui-field-contain">
                     
                 <label for="region-id">Daerah Irigasi</label>
-                <select id="region-id">
+                <select id="region-id" name="region-id">
                 <%
-                    _.each(data, function(val, key) {
+                    _.each(data.regions, function(val, key) {
                         %>
                         <option value="<%= val.id %>"><%= val.region_name %></option>
                         <%
@@ -272,7 +272,7 @@
             </div>
             <div class="ui-field-contain">
                 <label for="haravest">Padi Fase Panen</label>
-                <input type="number" step="0.01" name="haravest" id="haravest"  value="0">
+                <input type="number" step="0.01" name="harvest" id="harvest"  value="0">
             </div>
             <div class="ui-field-contain">
                 <label for="palawija">Palawija</label>
@@ -286,7 +286,94 @@
                 <label for="bero">Bero</label>
                 <input type="number" step="0.01" name="bero" id="bero"  value="0">
             </div>
+            <input type="hidden" id="total-wide" value="<%= data.totalWide %>">
             <a class="ui-btn ui-icon-plus ui-btn-icon-left" id="btn-save">Simpan</a>
+        </div>
+    </script>
+    <script type="text/template" id="allocation-result">
+        <div data-role="header" data-position="fixed" data-theme="b">
+            <h3>Daerah Alokasi</h3>
+            <a class="ui-btn ui-btn-left ui-btn-icon-left ui-icon-carat-l back" href="#home" data-rel="back">Back</a>
+        </div>
+        <div role="main" class="ui-content" is="content">
+            <h1 is="gk-text" style="text-align:center;">Alokasi Air <%= date %></h1>
+            
+        </div>
+    </script>
+    <script type="text/template" id="list-allocation">
+        <div data-role="header" data-position="fixed" data-theme="b">
+            <h3>Daerah Alokasi</h3>
+            <a class="ui-btn ui-btn-left ui-btn-icon-left ui-icon-carat-l back" href="#home" data-rel="back">Back</a>
+        </div>
+        <div role="main" class="ui-content" is="content">
+            
+              
+            <ul data-role="listview">
+                <%
+                _.each(data, function(val, key) {
+                    
+                    %>
+                         
+                        <li>
+                            <a href="#allocation-region/<%= val.id %>"  data-theme="b" data-inline="true"><%= val.region_name %></a>
+                            
+                        </li>
+                    <%
+                })
+                %>
+            </ul>
+            <br>
+        </div>
+    </script>
+    <script type="text/template" id="allocation-region">
+        <div data-role="header" data-position="fixed" data-theme="b">
+            <h3>Data Periode Alokasi</h3>
+            <a class="ui-btn ui-btn-left ui-btn-icon-left ui-icon-carat-l back" href="#list-allocation" data-rel="back">Back</a>
+        </div>
+        <div role="main" class="ui-content" is="content">
+            
+              
+            <ul data-role="listview">
+                <%
+                var months = ['Januari 1', 
+                        'Januari 2', 
+                        'Februari 1', 
+                        'Februari 2', 
+                        'Maret 1', 
+                        'Maret 2', 
+                        'April 1', 
+                        'April 2', 
+                        'Mei 1', 
+                        'Mei 2', 
+                        'Juni 1',
+                        'Juni 2',
+                        'Juli 1',
+                        'Juli 2',
+                        'Agustus 1',
+                        'Agustus 2',
+                        'September 1',
+                        'September 2',
+                        'Oktober 1',
+                        'Oktober 2',
+                        'November 1',
+                        'November 2',
+                        'Desember 1',
+                        'Desember 2'
+                        ];
+
+                _.each(data, function(val, key) {
+                    
+                    %>
+                         
+                        <li>
+                            <button data-id="<%= val.id %>"  data-theme="b" data-inline="true">Periode <%= months[val.periode] %></button>
+                            
+                        </li>
+                    <%
+                })
+                %>
+            </ul>
+            <br>
         </div>
     </script>
     <!-- My custom engine -->

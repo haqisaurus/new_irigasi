@@ -289,7 +289,7 @@ class Water {
 					($sugar * $constant['sugar'][0]) + 
 					($bero * $constant['bero'][0]);
 
-		$total = $debit / ($debitKeb * 1.1);
+		$total = ($debitKeb) ? $debit / ($debitKeb * 1.1) : 0;
 
 		if ($total >= 1) {
 			return round($debitKeb);
@@ -299,6 +299,24 @@ class Water {
 		
 	}
 
+	public function saveAllocationData($data)
+	{
+		$this->CI->load->model('allocation_model');
+
+		$insertData = array(
+			'region_id' 		=> $data->region_id,
+			'periode' 			=> $data->periode,
+			'year' 				=> date('Y'),
+			'rice_growth_fase' 	=> $data->growth,
+			'rice_mature_fase' 	=> $data->mature,
+			'rice_harvest_face' => $data->harvest,
+			'palawija' 			=> $data->palawija,
+			'sugar' 			=> $data->sugar,
+			'bero' 				=> $data->bero,
+			);
+
+		$this->CI->allocation_model->save($insertData);
+	}
 
 	// END : ADMIN SIDE
 }

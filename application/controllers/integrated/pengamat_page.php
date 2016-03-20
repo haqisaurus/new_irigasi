@@ -221,6 +221,19 @@ class Pengamat_page extends CI_Controller {
 			echo json_encode($data);
 		}
 	// END : masa tanam ==================================================================================================
+	// START allocation
+		public function allocation()
+		{
+			$this->load->model('allocation_model');
 
+			$data['allocation'] = $this->allocation_model->findWithRegion()->result();
+			
+			$template['menuTop'] = $this->load->view('frontend/part/nav-top', 0, true);
+			$template['sideBar'] = $this->load->view('frontend/part/nav-right', '', true);
+			$template['content'] = $this->load->view('frontend/pages/pengamat/allocation', $data, true);
+
+			$this->load->view('frontend/master', $template);
+		}
+	// END : allocation
 	
 }

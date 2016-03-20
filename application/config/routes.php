@@ -204,6 +204,7 @@ $route['pengamat-kalkulasi-rencana-ajax']	= 'integrated/pengamat_page/ajaxGetDat
 $route['pengamat-rencana-save'] 			= 'integrated/pengamat_page/savePlan';
 $route['pengamat-rencana-list'] 			= 'integrated/pengamat_page/listPlan';
 $route['pengamat-rencana-view/(:num)'] 		= 'integrated/pengamat_page/viewPlan/$1';
+$route['pengamat-allocation'] 				= 'integrated/pengamat_page/allocation';
 // END: PENGAMAT
 
 // PEMIMPIN
@@ -233,8 +234,13 @@ $route['404_override'] = '';
 | Sample REST API Routes
 | -------------------------------------------------------------------------
 */
-$route['api/water'] = 'integrated/ajax_req/apiWater';
-$route['api/water/(:num)'] = 'integrated/ajax_req/apiWater/$1';
+$route['api/water'] 		= 'integrated/ajax_req/apiWater';
+$route['api/water/(:num)'] 	= 'integrated/ajax_req/apiWater/$1';
+
+$route['api/allocation'] 	= 'integrated/ajax_req/ajaxAddAllocation';
+$route['api/allocation/(:num)'] 	= 'integrated/ajax_req/ajaxRegionAllocation/$1';
+$route['api/ajaxCalcAlloc/(:num)'] 	= 'integrated/ajax_req/ajaxAllocationCalc/$1';
+$route['api/region-wide'] 			= 'integrated/ajax_req/ajaxGetWide';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

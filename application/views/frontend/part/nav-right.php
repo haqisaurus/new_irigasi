@@ -22,6 +22,9 @@
             <li>
                 <a href="<?php echo site_url('pengamat-rencana-tanam') ?>">Pola tanam usul</a>
             </li>
+            <li>
+                <a href="<?php echo site_url('pengamat-allocation') ?>">Daftar Alokasi</a>
+            </li>
         </ul>
     <!-- login pimpinan -->
     <?php elseif($currentUser && $currentUser->role_id == 4): ?>
