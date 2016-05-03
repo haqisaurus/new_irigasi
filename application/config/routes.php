@@ -181,6 +181,8 @@ $route['add-water-ajax']			= 'integrated/ajax_req/addAjaxWaterData';
 $route['constant'] 					= 'integrated/admin_page/constant';
 $route['constant-save'] 			= 'integrated/admin_page/constantSave';
 $route['allocation'] 				= 'integrated/admin_page/allocation';
+$route['kinerja'] 					= 'integrated/admin_page/kinerja';
+$route['kinerja-calc/(:num)'] 					= 'integrated/admin_page/kinerjaCalc/$1';
 /* END : ADMIN */
 
 

@@ -950,4 +950,31 @@ class Admin_page extends CI_Controller {
 			$this->load->view('integrated/master', $template);
 		}
 	// END : CONSTANT
+		public function kinerja()
+		{
+			$this->load->library('irigasi/water');
+			$this->load->library('irigasi/plant');
+			$this->load->library('irigasi/region');
+
+			$data['regions'] 		= $this->region->getAllRegion();
+			$data['table'] 			= $this->plant->getAllPlant();
+
+			$data['years'] = $this->water->getAllYear(array('region_id' => $data['regions'][0]->id));
+
+			$template['content'] 	= $this->load->view('integrated/pages/admin/kinerja/kinerja', $data, true); 
+			$this->load->view('integrated/master', $template);
+		}
+		public function kinerjaCalc($id)
+		{
+			$this->load->library('irigasi/plant');
+			$this->load->library('irigasi/water');
+			$dataPlant = (array) $this->plant->getSpesificPlant(array('plan_plant.id' => $id));
+			$data['pengamat'] = $this->water->indexDebitPeriode($dataPlant);
+			
+			$data['result'] = $this->water->calcKinerja($dataPlant);
+			$data['current_index'] = $this->water->avgAct($dataPlant);
+
+			$template['content'] 	= $this->load->view('integrated/pages/admin/kinerja/kinerja-result', $data, true); 
+			$this->load->view('integrated/master', $template);
+		}
 }

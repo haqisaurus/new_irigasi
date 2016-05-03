@@ -355,6 +355,7 @@ class Ajax_req extends CI_Controller {
 
 			if($debitNext) {
 				$this->water->saveAllocationData($data);
+				$data->$debitNext;
 				echo json_encode(array(
 							'status' => true,
 							'data' 	=> $debitNext,

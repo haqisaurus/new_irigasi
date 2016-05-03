@@ -121,7 +121,7 @@
             min: 1,
             max: 12,
             from: 3,
-            to: 8,
+            to: 7,
             type: 'double',
             step: 1,
             prefix: "",

@@ -14,13 +14,13 @@
                     <i class="fa fa-edit"></i> Constant edit
                 </li>
             </ol>
-        </div>
+        </div> 
     </div>
     <!-- /.row -->
 
     <div class="row">
         <div class="col-lg-12">
-            <a href="<?php echo site_url('water') ?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Kembali</a>
+            <a href="<?php echo site_url('allocation') ?>" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Kembali</a>
             <br>
             <br>
             <?php if(validation_errors() != false): ?>
@@ -60,11 +60,11 @@
                     'November 1',
                     'November 2',
                     'Desember 1',
-                    'Desember 2',
+                    'Desember 2', 
                     );
 
         if(isset($result)) {
-            echo 'Debit rencana periode ' .$options[$_POST['periode']]. ' :  <b>' . $result . '</b> liter/detik'; 
+            echo 'Debit rencana periode ' .$options[$_POST['periode']]. ' :  <b>' . $result['debit'] . '</b> liter/detik<br>Faktor K : ' . $result['k_factor']; 
         }
         ?>
         <div class="col-lg-12">

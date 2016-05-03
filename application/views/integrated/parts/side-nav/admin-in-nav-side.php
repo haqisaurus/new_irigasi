@@ -61,6 +61,12 @@
                 
                 <!-- /.nav-second-level -->
             </li>
+            
+            <li>
+                <a href="<?php echo site_url('kinerja'); ?>"><i class="fa fa-binoculars fa-fw"></i> Kinerja</a>
+                
+                <!-- /.nav-second-level -->
+            </li>
             <!-- <li>
                 <a href="#"><i class="fa fa-sitemap fa-fw"></i> Pembagian Air<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">

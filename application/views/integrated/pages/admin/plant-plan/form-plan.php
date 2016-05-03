@@ -47,7 +47,7 @@
                     <div class="col-sm-3">
                         <?php 
                         $options = array();
-                        for ($i=2014; $i < 2026; $i++) { 
+                        for ($i=2013; $i < 2050; $i++) { 
                             $options[$i] = $i;
                         }
 
@@ -152,7 +152,7 @@
             min: 1,
             max: 12,
             from: 3,
-            to: 8,
+            to: 7,
             type: 'double',
             step: 1,
             prefix: "",

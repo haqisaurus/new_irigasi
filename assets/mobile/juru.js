@@ -607,7 +607,7 @@
 			var bero = $('#bero').val();
 			var totalWide = parseInt($('#total-wide').val());
 			var total = growth + mature + harvest + palawija + sugar + bero;
-			if(totalWide < total) {
+			if(totalWide > total) {
 				alert('Total Luas Terlalu Besar!!');
 				return;
 			}

@@ -195,66 +195,10 @@ Class Water_model extends CI_Model
 
         return $query;
     }
-    // select
-    //     CONCAT( DATE_FORMAT(`date`, '%b %Y Day ' ),
-    //         case when dayofmonth( `date` ) < 16
-    //             then '01-15'
-    //         else 
-    //             CONCAT( '16-', right( last_day( `date` ), 2)  )
-    //         end ) as CharMonth,
-    //     CONCAT(
-    //         case when dayofmonth( `date` ) < 16
-    //             then '0'
-    //         else 
-    //              '1'       
-    //         end ) as half,
-    //     avg( `right` ) as avRight,
-    //     avg( `left` ) as avLeft,
-    //     avg( `limpas`) as avLimpas,
-    //     (avg( `right` ) + avg( `left` ) + avg( `limpas`)) as intake
-    // from 
-    //     water
-    // where
-    //     region_id = 1
-    // and 
-    //     month(date)=1
-    // and 
-    //     dayofmonth( `date` ) > 16
-    // group by
-    //     CONCAT( DATE_FORMAT(`date`, '%b %Y Day ' ),
-    //         case when dayofmonth( `date` ) < 16
-    //             then '01-15'
-    //         else 
-    //             CONCAT( '16-', right( last_day( `date` ), 2)  )
-    //         end )
-    // order by
-        
-    //     intake DESC
-    //     year( `date` ),
-    //     month( `date` ),
-    //     min( dayofmonth( `date` ))
-
+    
     public function lastMonthDebit($regionID = 1)
     {
 
-        // SELECT date FROM water WHERE region_id = " . $regionID . " ORDER BY date DESC LIMIT 1 into @lastDate;
-
-        //                             SELECT date FROM water WHERE MONTH(date) = month(@lastDate - INTERVAL 1 MONTH ) and region_id = " . $regionID . " ORDER BY date DESC LIMIT 1 INTO @lastMonth;
-
-        //                             SELECT (avg( `right` ) + avg( `left` ) ) as rata FROM water WHERE 
-        //                                     (dayofmonth(@lastDate) < 16 AND 
-        //                                     date >= concat(year(@lastMonth),'-', month(@lastMonth),'-01') AND 
-        //                                     date < concat(year(@lastMonth),'-', month(@lastMonth),'-16') AND
-        //                                     region_id = " . $regionID . "
-        //                                     )
-                                            
-        //                                     or
-                                            
-        //                                     (dayofmonth(@lastDate) > 15 AND 
-        //                                     date > concat(year(@lastMonth),'-', month(@lastMonth),'-15') AND 
-        //                                     date <= concat(year(@lastMonth),'-', month(@lastMonth),'-31') AND 
-        //                                     region_id = " . $regionID . "
-        //                                     )
         $lastDate = $this->db->query("SELECT date FROM water WHERE region_id = " . $regionID . " ORDER BY date DESC LIMIT 1")->row();
 
 
@@ -290,8 +234,35 @@ Class Water_model extends CI_Model
         return $this->db->query($sql)->row()->rata;
     }
 
-    public function regionAllocation($value='')
+    public function findOneYear($date='', $regionID)
     {
-        # code...
+        $sql    = "select 
+                    (
+                        avg(`right` + `left`)
+                    ) as avgDebit
+                from 
+                    water 
+                where 
+                    `date` >= ?
+                    and region_id = ? 
+                group by 
+                    CONCAT(
+                        DATE_FORMAT(`date`, '%b %Y Day '), 
+                        case when dayofmonth(`date`) < 16 then '01-15' else CONCAT(
+                            '16-', 
+                            right(
+                                last_day(`date`), 
+                                2
+                            )
+                        ) end
+                    ) 
+                order by 
+                    date ASC 
+                limit 
+                    24";
+
+        $query  = $this->db->query($sql, array($date, $regionID));
+
+        return $query;
     }
 }

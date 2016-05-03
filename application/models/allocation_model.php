@@ -10,6 +10,7 @@ Class Allocation_model extends CI_Model
 
             
         $old = $this->find(array('year' => $data['year'], 'region_id' => $data['region_id'], 'periode' => $data['periode']));
+        
         if ($old->num_rows()) {
             $this->update(array('id' => $old->row()->id), $data);
             $id = $old->row()->id;
@@ -77,5 +78,16 @@ Class Allocation_model extends CI_Model
 
         return $query;
     }
+
+    public function findOneYear($year='', $regionID, $startMonth)
+    {
+        $sql    = 'SELECT * FROM allocation WHERE (year = ? and region_id = ? and periode >= ?) or (year = ? and region_id = ? and periode >= ?)  ORDER by id, year ASC LIMIT 24';
+        echo $startMonth;
+        $startMonth = $startMonth * 2 - 3 > 2 ? $startMonth * 2 - 3 : $startMonth;
+        $query  = $this->db->query($sql, array($year, $regionID, $startMonth, $year + 1, $regionID, 0));
+        return $query;
+    }
+
+   
 
 }
